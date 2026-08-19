@@ -1,0 +1,2129 @@
+
+===== PAGE 1 =====
+Research on dynamic graph isomorphism network for tool wear stage 
+monitoring based on multi-source information fusion
+Fangcun Cao a, Xing Zhang a,b,*
+, Zejiang Zhang a, Lidong Wen b, Tongyu Chang a
+a State Key Laboratory for Manufacturing Systems Engineering, Xi’an Jiaotong University, Xi’an, Shaanxi Province 710054, China
+b State Key Laboratory for High Performance Tools, Chengdu Tool Research Institute Co., Ltd, Chengdu, Sichuan Province 610500, China
+A R T I C L E I N F O
+Keywords:
+Tool wear monitoring
+Graph neural network
+Multi-source information fusion
+Temporal graph pooling
+Deep learning
+A B S T R A C T
+Tool wear is a prominent unfavorable factor that directly affects the machining accuracy and efficiency of CNC 
+machine tools. Accurate classification monitoring of tool wear stage is of great significance for high performance 
+machining. Existing monitoring methods based on deep learning rarely improves the accuracy of identification 
+by establishing non Euclidean structural relationships between multi-sensor signals. A new method for tool wear 
+stage classification monitoring based on graph neural network (GNN) is proposed to address these limitations. 
+Using convolutional neural network (CNN) and gramian angular summation field (GASF) to extract spatiotem­
+poral features from samples. Subsequently, by taking into account both the static and dynamic characteristics of 
+temporal data, the time series is transformed into a graph structure using cosine similarity. Following this, a 
+graph isomorphism network (GIN) is employed to deeply integrate information from neighboring nodes. The 
+dimensionality of the feature matrix and adjacency matrix is progressively reduced through temporal graph 
+pooling (TGP). Finally, the classification monitoring of three stages of tool wear is realized. The experimental 
+validation was conducted based on the public PHM2010 dataset. The results show that the proposed model 
+achieves an average accuracy of 96.51 % in the state recognition task, improved by 0.97 % over the current state- 
+of-the-art model. In addition, the recognition accuracy of multi-source information fusion is significantly higher 
+than single-signal. The ablation experiments further validate the positive contribution of each module to the 
+monitoring performance. In summary, the study provides an efficient and robust solution for tool wear 
+monitoring.
+1. Introduction
+As an important participant in the machining process, cutting tools 
+will inevitably suffer from wear due to a variety of reasons, such as 
+mechanical action, heat, and chemical factors, which would directly 
+affect the surface quality and productivity of parts, and in extreme cases 
+may also lead to safety risks [1,2]. Therefore, in order to reasonably 
+control the replacement time of tool and improve economic efficiency, it 
+is necessary to study the accurate monitoring of tool wear state. Usually, 
+the tool wear process throughout the life cycle is generally divided into 
+the initial wear stage, normal wear stage and severe wear stage [3,4]. In 
+order to ensure the dimensional accuracy and surface roughness of 
+finished parts, the severe wear stage should be avoided, and the tool 
+should be changed in a timely manner before the arrival of severe stage. 
+At the same time, the premature replacement will waste the tool life and 
+increase manufacturing costs. During the actual machining process, the 
+control of tool wear mainly relies on passive organs or manual experi­
+ence, which is very easy to cause misjudgment and omission. In recent 
+years, in order to give full play to the tool cutting performance, a ma­
+jority of scholars have conducted extensive and in-depth research on 
+tool wear state monitoring [5–7].
+Different from the tool wear monitoring that quantitatively analyzes 
+the amount of wear width value on the flank face, the tool wear stage 
+identification aims to establish a nonlinear mapping relationship be­
+tween the signal characteristics and wear state, and then quickly classify 
+the wear stage. Generally speaking, the tool wear stage recognition has 
+been mainly categorized into direct and indirect methods [8]. However, 
+due to many limitations in the application of direct methods, most re­
+searchers prefer to use indirect methods [9–11]. Indirect method refers 
+to the identification of wear state from real-time signals, that is acquired 
+* Corresponding author at: Room A403, The South No.1 Building, Qujiang Campus, Xi’an Jiaotong University, Xi’an, Shaanxi Province 710054, China.
+E-mail addresses: xjjxcfc2023@stu.xjtu.edu.cn (F. Cao), xingzhang@mail.xjtu.edu.cn (X. Zhang), chekiang@stu.xjtu.edu.cn (Z. Zhang), wenlidong2@163.com
+(L. Wen), Changtongyu@stu.xjtu.edu.cn (T. Chang). 
+Contents lists available at ScienceDirect
+Measurement
+journal homepage: www.elsevier.com/locate/measurement
+https://doi.org/10.1016/j.measurement.2025.119007
+Received 17 July 2025; Received in revised form 1 September 2025; Accepted 12 September 2025  
+Measurement 257 (2026) 119007 
+Available online 15 September 2025 
+0263-2241/© 2025 Elsevier Ltd. All rights are reserved, including those for text and data mining, AI training, and similar technologies. 
+
+===== PAGE 2 =====
+for constructing a correlation model between the tool wear state and 
+monitored data. Compared with the direct method, the indirect method 
+can realize continuous and real-time monitoring without affecting the 
+machining process [12]. Since signals such as cutting force [13,14], 
+acoustic emission [15], vibration [16], current and power [17,18] are 
+closely related to the tool wear condition, they are often used for on-line 
+monitoring of tool wear state.
+Tool wear is a smooth variation process, in the transition region of 
+different wear stages, it is difficult to distinguish the tool wear due to the 
+blurred boundaries [19]. The training efficiency and recognition accu­
+racy of tool wear classification model depend on feature extraction. The 
+traditional feature extraction methods involve extracting features from 
+the time domain, frequency domain, and time–frequency domain. Sul­
+tan Binsaeid et al. [20] extracted different time and frequency domain 
+features from sensor signals, such as force, vibration, acoustic emission, 
+and spindle power. They used a data acquisition and signal processing 
+module and a correlation-based feature selection technique to evaluate 
+the importance of these features. Liao et al. [21] employed time domain 
+statistics, frequency domain analysis, and wavelet packet decomposition 
+to extract features from cutting force signals, and further utilized a ge­
+netic algorithm to identify the sensitive features that are highly corre­
+lated with the tool wear state. Based on the extracted sensitive features, 
+many machine learning methods have been widely applied to monitor 
+the tool wear status. The commonly used machine learning models 
+include: artificial neural networks (ANN) [22], support vector machines 
+(SVM) [23], decision trees (DT) [24], linear discriminant analysis (LDA) 
+[25], k-nearest neighbors (KNN) [26], and hidden Markov models 
+(HMD) [27].
+Despite the success of machine-learning based tool wear state 
+recognition models, they are usually built using shallow layers and it is 
+difficult to learn deep features from large amounts of data. At the same 
+time, the manual extraction process may lead to the loss of more 
+important information features in the original signal [28]. With the 
+further development of machine learning, deep learning (DL) can 
+automatically extract more advanced features from the original signals 
+to realize “end-to-end” tool wear state recognition [29–32]. Wang et al. 
+[33] proposed a denoising transformer autoencoder for preprocessing of 
+tool condition monitoring (TCM) classifiers, which enhances the 
+extraction of wear features through a reconstruction task. Tao et al. [34] 
+developed an integrated model with long-short-term memory (LSTM) 
+network and HMM for tool wear state classification in milling 
+machining. Considering that CNN are efficient and flexible in image 
+processing, some researchers have converted one-dimensional time-se­
+ries signals into two-dimensional images, and then used the channel- 
+space attention mechanism to improve the accuracy of feature extrac­
+tion for tool wear information, which can reduce the model misclassi­
+fication [35]. Wei et al. [36] used continuous wavelet transform to 
+convert the force and vibration signals into time–frequency images, and 
+realized multi-source information fusion through CNN, and finally 
+introduced the channel-space attention module to adaptively adjust the 
+weights. Dong et al. [37] converted one-dimensional force signals into 
+two-dimensional images based on Markov transition field, and then 
+realized tool wear classification using the adaptive-visual-Transformer- 
+Kolmogorov-Arnold network (AViTK). However, the aforementioned 
+research has primarily focused on sensor feature extraction methods 
+within Euclidean spaces. The exploration of potential non-Euclidean 
+structural relationships in tool wear monitoring signals remains 
+limited, indicating a research gap in this area.
+Sensor signals can be modeled as graphs, each feature can be rep­
+resented as a node, interconnected through hidden dependencies, 
+thereby establishing non-Euclidean structural relationships. GNN cap­
+tures the dependencies of graph by passing messages between nodes. In 
+recent years, GNN variants such as graph convolutional networks (GCN), 
+graph attention networks (GAT), graph recurrent networks (GRN), and 
+GIN have demonstrated breakthrough performance in many deep 
+learning tasks [38]. For example, GNN have achieved remarkable 
+success with graph-structured data such as social networks and medicine 
+[39]. In the field of industrial monitoring, Li et al. [40] constructed a 
+GNN-based intelligent fault diagnosis and prediction framework, effec­
+tively addressing the modeling challenge of irregular graph data in non- 
+Euclidean spaces. Wang et al. [41] innovatively proposed a dynamic 
+spatiotemporal graph model integrating performance degradation and 
+fault propagation. By incorporating unsupervised learning mechanisms, 
+it compensates for existing methods’ shortcomings in leveraging engi­
+neering prior knowledge. Zhou et al. [42] proposed the Hierarchical 
+Temporal-Modal Synchronization Fusion Framework (HTMSFF), 
+leveraging GNN technology to effectively enhance tool wear recognition 
+accuracy under multimodal monitoring data. Wu et al. [43] designed a 
+multi-view fully connected GNN that extracts spatial dependencies 
+through local and global graph convolutions, successfully achieving 
+equipment remaining life prediction. Zhou et al. [44] developed a tool 
+wear recognition model based on multi-scale edge, which utilizes 
+labeled GNN for feature extraction on small samples. The proposed 
+model outperforms CNN, AlexNet, and ResNet. In addition, Liu et al. 
+[45] proposed the TGP method, which combines graph pooling with 
+temporal processing, not only reducing the feature dimension but also 
+retaining key temporal features. However, none of the studies in the 
+field of tool wear monitoring have explored the GIN model, which 
+demonstrates superior performance in image classification tasks.
+In summary, many scholars have conducted extensive research on 
+tool wear state recognition methods, but the author believes that there 
+are still the following problems to be solved: 
+(1) The existing models perform well on the specific datasets, while 
+drop significantly in scenarios with large differences in data 
+distribution, indicating that the generalization ability of the 
+models still needs to be improved.
+(2) Most studies only rely on a single signal for tool wear state 
+recognition, failing to fully utilize the complementary nature of 
+multi-source information, which limits the further improvement 
+in recognition accuracy.
+(3) Existing methods primarily focus on Euclidean spaces, rarely 
+leveraging the potential non-Euclidean structural relationships 
+inherent in temporal data, and insufficiently exploring the 
+application of powerful GIN models.
+In order to solve the above problems, this paper proposes a new 
+method for online identification of tool wear stages based on GIN. The 
+main innovations of this paper are as follows: 
+(1) A new method for end-to-end tool wear stage classification 
+monitoring based on GIN is proposed, and a time–space correla­
+tion model of multi-source sequence signals is established. By 
+feature extraction on cutting force and vibration signals in time 
+and space dimension, multi-source information fusion is realized, 
+avoiding the time cost and professional dependence of manual 
+feature extraction.
+(2) Model the time-series signal as a graph. By comprehensively 
+considering the long-term stability and short-term time-varying 
+nature of the temporal characteristics, static and dynamic graphs 
+are constructed. Leveraging the non-Euclidean structural re­
+lationships inherent in the time-series signal enhances the accu­
+racy of identifying tool wear states.
+(3) The GIN-based TGP method is introduced. This approach in­
+tegrates graph pooling and temporal processing techniques to 
+achieve feature dimensionality reduction while preserving crit­
+ical temporal characteristics, making it particularly suitable for 
+handling time-dependent graph data.
+The rest of the paper is organized as follows: Section 2 presents the 
+monitoring method. Section 3 describes the related experiments and 
+collected data. Section 4 performs the experimental validation. Finally, 
+F. Cao et al.                                                                                                                                                                                                                                      
+Measurement 257 (2026) 119007 
+2 
+
+===== PAGE 3 =====
+the conclusions are drawn in Section 5.
+2. Monitoring methodology
+2.1. Overall framework of the monitoring model
+The paper proposes a novel method for categorizing and monitoring 
+the tool wear stages. The monitoring signals during machining process 
+are utilized as input to identify the three distinct types of tool wear 
+states. The general framework of the monitoring model is shown in 
+Fig. 1. Among them, the time series feature extraction module mines the 
+depth dependence between milling force and vibration signals under a 
+potential high-dimension space. The spatial feature extraction module 
+transforms the time series data into a two-dimensional image by the 
+GASF, and further utilizes CNN to extract the embedded spatial features 
+of tool wear. Based on the importance of each temporal feature, relevant 
+features are extracted from spatial features through an attention 
+mechanism and supplemented into the temporal features. The dynamic 
+graph generation module takes the overall invariance and local time- 
+varying nature of the images into account, and constructs the static 
+and dynamic graphs to establish the spatial correlation of different 
+features. Finally, the GIN module is used to aggregate the features of 
+current node and its neighboring nodes to obtain the tool wear- 
+dependent features, and to realize the classification monitoring of tool 
+wear stage through the TGP.
+2.2. Temporal-spatial feature extraction
+2.2.1. Temporal feature extraction
+The multivariate time series data collected during tool wear moni­
+toring is defined as Dt = {X1, X2, ⋯, Xsi, ⋯, XNs} ∈RNs×Nf ×NΔt , where Ns 
+represents the number of samples, Nf denotes the feature dimension of 
+samples, and NΔt indicates the time series length of each feature. Based 
+on the flank wear value VB of cutting tool, the tool wear stage can be 
+classified into three stages: initial wear, normal wear, and severe wear. 
+These classifications are also used to assign corresponding labels Lt =
+{
+y1, y2, ⋯, ysi, ⋯, yNs
+}
+∈RNs×1 for each sample. Actually, the objective of 
+Fig. 1. Overall framework of the tool wear monitoring model.
+F. Cao et al.                                                                                                                                                                                                                                      
+Measurement 257 (2026) 119007 
+3 
+
+===== PAGE 4 =====
+tool wear stage classifying is to train a classifier that can recognize the 
+label Lt by the multivariate time series data Dt.
+For a single sample Xsi =
+{
+x1, x2, ⋯, xfi, ⋯, xNf
+}
+∈RNf ×NΔt in the 
+preprocessed raw data Dt, in which xfi =
+{
+xfi,1, xfi,2, ⋯, xfi,tk, ⋯, xfi,NΔt
+}
+∈
+R1×NΔt represents a single feature. Considering that a single feature is not 
+yet clear enough in the time dimension, and there are too few nodes for 
+the feature, it is not convenient for the subsequent graph generation 
+module to construct rich spatial relationships. Therefore, through the 
+following equation, the temporal feature extraction is performed to fully 
+exploit the dependencies with its dimension expanded from Nf to Nsf. 
+Finally, the improved sequence features Dsf =
+{
+Xsf3
+1 , Xsf3
+2 , ⋯, Xsf3
+si , ⋯,
+Xsf3
+Ns
+}
+∈RNs×Nsf ×NΔt is obtained. 
+⎧
+⎪
+⎪
+⎪
+⎪
+⎪
+⎪
+⎪
+⎪
+⎨
+⎪
+⎪
+⎪
+⎪
+⎪
+⎪
+⎪
+⎪
+⎩
+Xsf0
+si
+= DimTran(Xsi, dim1, dim2)
+Xsf1
+si
+= Conv2d_1
+(
+Xsf0
+si
+)
+Xsf2
+si
+= Conv2d_2
+(
+Xsf1
+si
+)
+Xsf3
+si
+= DimTran(Xsf2
+si , dim1, dim2)
+(1) 
+where Conv2d represents the convolution operation. When doing spe­
+cific convolution, the computation for the cth channel is given by Oc(i,
+j) = ∑Cin−1
+k=0
+∑Km−1
+m=0
+∑Kn−1
+n=0 Wc,k(m, n)⋅Xk(i⋅s + m −p, j⋅s + n −p) + bc, in 
+which Wc ∈RCout×Cin×Km×Kn denotes the convolution kernel, X ∈RCin×H×W 
+is the input feature, O ∈RCout×Hʹ×Wʹ represents the output feature, i and j 
+correspond to the timestamps of the output features, s is the stride, p is 
+the padding, and bc is the bias term. Additionally, the ReLU activation 
+function is applied after the convolution to adding nonlinearity to solve 
+the problem of gradient vanishing. Batch normalization is also employed 
+to enhance the training speed and improve generalization capability. 
+Furthermore, the dropout regularization is utilized to randomly deac­
+tivate neurons during training, thereby preventing overfitting.
+2.2.2. Spatial feature extraction
+The acquired cutting force and vibration signals are one-dimensional 
+time series data. When employing CNN to learn features within time 
+domain, it is difficult to extract high-dimensional temporal features. To 
+address this limitation, the GASF is utilized to encode the one- 
+dimensional signals into two-dimensional data, thereby enriching the 
+temporal information. In the GASF images, the position and color of 
+pixel blocks encapsulate a high-dimensional and comprehensive map­
+ping of the one-dimensional time series signal, thereby rendering the 
+feature extraction via CNN will be more effective. Firstly, normalizing 
+all the sampling points xsf3
+fi
+=
+{
+xsf3
+fi,1, xsf3
+fi,2, ⋯, xsf3
+fi,tk, ⋯, xsf3
+fi,NΔt
+}
+∈R1×NΔt of 
+each feature can prevent input and weight polarization and speed up the 
+convergence of the model. The formula is as follows. ̃
+x
+sf3
+fi
+=
+(
+2xsf3
+fi
+−max
+(
+xsf3
+fi
+)
+−min
+(
+xsf3
+fi
+) )
+max
+(
+xsf3
+fi
+)
+−min
+(
+xsf3
+fi
+)
+∈[ −1, 1]
+(2) 
+Then, as shown in Fig. 2, the normalized ̃x
+sf3
+fi 
+is mapped on polar 
+coordinates and the formula is calculated as follows. 
+⎧
+⎨
+⎩
+rfi = [1/NΔt, 2/NΔt, ⋯, 1]
+φfi = arccos(̃x
+sf3
+fi )
+(3) 
+Subsequently, the inner product formula defined by the GASF is 
+employed to reconstruct the polar coordinates, which essentially 
+transforms the data into the cosine function of the sum of polar angles 
+between sampling points at arbitrary two time. The final GASF 
+computation formula can be expressed as: 
+Fig. 2. Spatial feature extraction by GASF and CNN.
+F. Cao et al.                                                                                                                                                                                                                                      
+Measurement 257 (2026) 119007 
+4 
+
+===== PAGE 5 =====
+In the study, the matrix size of GASF data is NΔt × NΔt. Furthermore, 
+since each feature can generate one image, and a single sample com­
+prises Nsf features, a total of Nsf images can be produced. Next, the CNN 
+is used to extract features from the GASF matrix. As shown in Eq. (6), 
+this process involves two convolutions. To fuse temporal and spatial 
+features, this paper employs a cross-attention mechanism. Attention 
+scores αsi are computed by calculating the dot product between temporal 
+and spatial features, which are then used to weight and filter the spatial 
+features. The spatial features Xsp2
+si
+∈RNsf ×NΔt were ultimately extracted. 
+⎧
+⎪
+⎪
+⎪
+⎪
+⎪
+⎪
+⎪
+⎪
+⎪
+⎨
+⎪
+⎪
+⎪
+⎪
+⎪
+⎪
+⎪
+⎪
+⎪
+⎩
+Xsp0
+si
+= Conv2d_3(GASF)
+Xsp1
+si
+= Conv2d_4
+(
+Xsp0
+si
+)
+αsi = Xsf3
+si *
+(
+Reshape
+(
+Xsp1
+si , (NΔt, H × W)
+) )
+Xsp2
+si
+= αsi*
+(
+Reshape
+(
+Xsp1
+si , (NΔt, H × W)
+) )T
+(5) 
+Finally, the filtered spatial features Xsp2
+si 
+are combined with the 
+temporal features Xsf3
+si to achieve a dynamic joint representation of both. 
+XF
+si is calculated as follows. 
+XF
+si = Xsf3
+si + Xsp2
+si
+∈RNsf ×NΔt
+(6) 
+2.3. Static and dynamic graphs generation and fusion
+In conventional graph theory, the graphs usually have fixed 
+connection relationships. However, when monitoring signals acquired 
+from tool wear experiments, predefined graph structures are absent. 
+Hence, one needs to construct a graph from scratch. In this study, the 
+extracted feature variables are designated as nodes with their corre­
+sponding feature values are assigned as node attributes, thereby estab­
+lishing the spatial correlations. The time-series data, such as cutting 
+force and vibration signals, exhibit a combination of stability and vari­
+ability by nature. From a holistic perspective, the connection relation­
+ships among feature variables remain consistent, representing the static 
+information. However, as time progresses, the node attributes continu­
+ously evolve, leading to subtle variations in the connection relationships 
+at each time interval. This constitutes the dynamic information. 
+Consequently, the study considers the stable and variable characteristics 
+of series feature simultaneously, constructing the static and dynamic 
+graph matrices. Lastly, fusing these two matrices yields an optimal dy­
+namic graph, which can reveal the significant and latent spatial corre­
+lations among these feature variables.
+2.3.1. Static graph construction
+As shown in Fig. 3, the time series feature data is first linear trans­
+formed by a multilayer perceptron (MLP), which recombines and com­
+presses the input data into a new representation space Xg ∈RNsf ×Nʹ
+Δt. 
+Xg = WgXsf3
+si + bg
+(7) 
+where Wg ∈RNʹ
+Δt×NΔt is the weight matrix. bg ∈RNʹ
+Δt×1 is the bias vector.
+During the static graph construction, all samples Xg =
+{
+xg1, ⋯, xgi, ⋯ 
+, xgj, ⋯, xNsf
+}
+within the batch Bs are concatenated along the temporal 
+dimension, resulting in a concatenated sequence of length Bs × Nʹ
+Δt. 
+Subsequently, the cosine similarity between arbitrary two features is 
+computed using Eq. (8). A value closer to one indicates a higher simi­
+larity between the features, thereby increasing the likelihood of them 
+being designated as the neighboring nodes. 
+cos(θ)gi,gj =
+∑Bs×Nʹ
+Δt
+tk=1
+(
+xgi,tk × xgj,tk
+)̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+∑
+Bs×Nʹ
+Δt
+tk=1
+(
+xgi,tk
+)2
+√
+×̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+∑
+Bs×Nʹ
+Δt
+tk=1
+(
+xgj,tk
+)2
+√
+,
+1⩽i, j⩽Nsf
+(8) 
+Finally, the adjacency matrix of static graph can be obtained as 
+follows. 
+ABs
+sg =
+⎡
+⎢⎢⎢⎢⎣
+cos(θ)g1,g1
+⋯
+cos(θ)g1,gj
+⋯
+cos(θ)g1,Nsf
+⋮
+⋱
+⋮
+⋱
+⋮
+cos(θ)gi,g1
+⋯
+cos(θ)gi,gj
+⋯
+cos(θ)gi,Nsf
+⋮
+⋱
+⋮
+⋱
+⋮
+cos(θ)Nsf ,g1
+⋯
+cos(θ)Nsf ,gj
+⋯
+cos(θ)Nsf ,Nsf
+⎤
+⎥⎥⎥⎥⎦
+(9) 
+Fig. 3. Generation and fusion process of the static and dynamic graphs.
+GASF =
+⎛
+⎜
+⎜
+⎜
+⎜
+⎝
+cos
+(
+φfi,1 + φfi,1
+)
+⋯
+cos
+(
+φfi,1 + φfi,tk2
+)
+⋯
+cos
+(
+φfi,1 + φfi,NΔt
+)
+⋮
+⋱
+⋮
+⋱
+⋮
+cos
+(
+φfi,tk1 + φfi,1
+)
+⋯
+cos
+(
+φfi,tk1 + φfi,tk2
+)
+⋯
+cos
+(
+φfi,tk1 + φfi,NΔt
+)
+⋮
+⋱
+⋮
+⋱
+⋮
+cos
+(
+φfi,NΔt + φfi,1
+)
+⋯
+cos
+(
+φfi,NΔt + φfi,tk2
+)
+⋯
+cos
+(
+φfi,NΔt + φfi,NΔt
+)
+⎞
+⎟
+⎟
+⎟
+⎟
+⎠
+∈RNΔt×NΔt
+(4) 
+F. Cao et al.                                                                                                                                                                                                                                      
+Measurement 257 (2026) 119007 
+5 
+
+===== PAGE 6 =====
+2.3.2. Dynamic graph construction
+In the construction of dynamic graph, for the samples Xg within batch 
+Bs, the concatenation is not required. Instead, the cosine similarity be­
+tween arbitrary two features is calculated directly, so that each sample 
+has a similarity matrix with the following formula. 
+cos(θ)gi,gj =
+∑Nʹ
+Δt
+tk=1
+(
+xgi,tk × xgj,tk
+)̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+∑
+Nʹ
+Δt
+tk=1
+(
+xgi,tk
+)2
+√
+×̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+∑
+Nʹ
+Δt
+tk=1
+(
+xgj,tk
+)2
+√
+,
+1⩽i, j⩽Nsf
+(10) 
+Further, the adjacency matrix of dynamic graph is achieved as 
+ABs
+dg ∈RBs×Nsf ×Nsf , where the bsth matrix in the batch size can be computed 
+as follows. 
+ABs
+dg(bs, :, :) =
+⎡
+⎢⎢⎢⎢⎣
+cos(θ)g1,g1
+⋯
+cos(θ)g1,gj
+⋯
+cos(θ)g1,Nsf
+⋮
+⋱
+⋮
+⋱
+⋮
+cos(θ)gi,g1
+⋯
+cos(θ)gi,gj
+⋯
+cos(θ)gi,Nsf
+⋮
+⋱
+⋮
+⋱
+⋮
+cos(θ)Nsf ,g1
+⋯
+cos(θ)Nsf ,gj
+⋯
+cos(θ)Nsf ,Nsf
+⎤
+⎥⎥⎥⎥⎦
+(11) 
+Finally, within a single batch, the adjacency matrix of the static 
+graph and the adjacency matrices of the dynamic graphs for each sample 
+are summed to obtain the combined adjacency matrix ABs
+g
+= ABs
+sg + ABs
+dg. 
+In order to reduce the computation costs, the top k largest values in the 
+matrix are identified and set to ones, while the remaining elements are 
+set to zeros, resulting in a sparse adjacency matrix ABs
+g ∈RBs×Nsf ×Nsf . The 
+calculation steps are shown in the following equation. The above process 
+is applied to multiple batches across the entire dataset, ultimately 
+yielding the adjacency matrix Ag ∈RNs×Nsf ×Nsf for each sample. 
+⎧
+⎪
+⎪
+⎪
+⎪
+⎨
+⎪
+⎪
+⎪
+⎪
+⎩
+index = topk
+(
+ABs
+g [:, :]
+)
+ABs
+g (index) = 1
+ABs
+g ( ∼index) = 0
+(12) 
+where topk(⋅) is the arithmetic function used to find the first k maximum 
+values.
+2.4. Time graph pooling based on GIN
+2.4.1. GIN model
+Compared with GCN and GAT, the GIN can exhibit higher sensitivity 
+in capturing graph structural features. Therefore, the paper leverages 
+GIN for more in-depth feature extraction. The inputs of GIN are the 
+feature matrix XF
+si and the adjacency matrix Ag,si. The node update pro­
+cess consists of two steps. The first step involves aggregating the features 
+of a node and its neighboring nodes, and the second one involves fitting 
+a single mapping function using a MLP. The update formula is as follows. 
+H(l)
+GIN = MLP(l)
+g
+((
+1 + ε(l) )
+⋅H(l−1) +̃ A
+(l)
+g H(l−1)
+)
+(13) 
+where H(l)
+GIN denotes the hidden features of the lth layer after processing 
+by GIN. H(l−1) represents the hidden features of the (l-1)th layer, in 
+which H(0) = XF
+si. ̃A
+(l)
+g = D
+−1
+2
+g A(l)
+g D
+1
+2g is the normalized adjacency matrix of 
+the lth layer, in which A(0)
+g
+= Ag,si, and Dg is the degree matrix of Ag. ε is 
+the weight parameter that determines the relative importance of a 
+node’s own features compared to its neighboring nodes.
+2.4.2. TGP model
+For the graph classification tasks, the graph pooling operation can be 
+employed to reduce the number of nodes, extract high-dimensional 
+features, and enhance the classification accuracy. However, some con­
+ventional pooling methods, such as max pooling, mean pooling, and sum 
+pooling, would aggregate feature vectors or matrices into a few features. 
+The resulting graph representation vectors tend to be overly smooth, 
+neglecting the potential hierarchical structures within the graph and 
+failing to learn the hierarchical representations of graph. In this regard, 
+the study adopt the TGP method. The method utilizes the temporal 
+convolutions to cluster nodes and extract temporal features, followed by 
+reconstructing the adjacency matrix using convolutional weights. By 
+integrating graph pooling with temporal processing, it not only reduces 
+the feature dimensionality but also preserves the key temporal charac­
+teristics. This makes it particularly suitable for handling the graph data 
+with temporal dependencies.
+Fig. 4. Schematic diagram of feature matrix pooling and adjacency matrix pooling.
+F. Cao et al.                                                                                                                                                                                                                                      
+Measurement 257 (2026) 119007 
+6 
+
+===== PAGE 7 =====
+As depicted in Fig. 4(a), the network architecture employs a three- 
+layer TGP scheme. In each layer, the output H(l)
+GIN of the GIN and the 
+adjacency matrix A(l)
+G are separately subjected to pooling operations, 
+with the objective of progressively reducing the number of nodes in a 
+layer-wise manner. Fig. 4(b) illustrates the pooling process of the feature 
+matrix. Herein, the number of remaining nodes is controlled by setting 
+the pooling rate autonomously, and the pooling of the feature matrix is 
+implemented using a CNN. The computation of the pooled hidden fea­
+tures H(l+1) is given by the following equation. During the convolution 
+operation, the kernel parameter is W(l) ∈RN(l+1)
+pos ×N(l)
+pre×1×S(l)
+kn, where N(l)
+pre 
+denotes the number of nodes before pooling, N(l+1)
+pos 
+represents the 
+number of nodes after pooling, and S(l)
+kn is the convolutional kernel width 
+of layer l. 
+⎧
+⎪
+⎪
+⎪
+⎪
+⎨
+⎪
+⎪
+⎪
+⎪
+⎩
+H(l)
+GIN = DimTran(H(l)
+GIN, dim1, dim2)
+H(l+1) = Conv2d
+(
+H(l)
+GIN
+)
+H(l+1) = DimTran(H(l+1), dim1, dim2)
+(14) 
+Fig. 4(c) shows the pooling process of the adjacency matrix. Firstly, 
+the learnable parameter vector Z(l)
+p ∈RS(l)
+kn×1 is randomly generated to 
+obtain the matrix S(l)
+p , as follows. 
+S(l)
+p = W(l)
+p ⋅Z(l)
+p
+(15) 
+In 
+turn, 
+one 
+calculates 
+the 
+pooled 
+adjacency 
+matrix 
+A(l+1)
+g
+∈RN(l+1)
+pos
+×N(l)
+pre, as shown in the following equation. 
+A(l+1)
+g
+= S(l)
+p A(l)
+g
+(
+S(l)
+p
+)T
+(16) 
+Additionally, during the pooling process, the batch normalization is 
+applied to the feature matrix output from pooling, thereby enhancing 
+both training speed and generalization capability. The ReLU activation 
+function is employed to introduce nonlinearity, which can effectively 
+address the vanishing gradient problem. To prevent overfitting during 
+training, some neurons are randomly dropped through regularization. In 
+the subsequent layer iteration, H(l+1) and A(l+1)
+g 
+are substituted into Eqs. 
+(13)–(16), and through the multiple layer iteration, the computational 
+capacity can be significantly improved. After undergoing three layers of 
+GIN and TGP processing, each node would aggregate the dominated 
+features of its nearby information, thereby providing a more compre­
+hensive representation of the graph properties.
+2.5. Output of the monitoring model
+Based on the beforementioned pooled outputs, an adaptive average 
+pooling layer and a linear layer are employed to generate the predicted 
+probabilities yp ∈RNs×3 of tool wear condition categories for all samples. 
+To obtain the predicted classification results of tool wear stage, the index 
+corresponding to the maximum value in yp is identified, which repre­
+sents the predicted outcome Lp ∈RNs×1. The specific calculation formula 
+is as follows. 
+{ yp = MLPo
+(
+AdaptiveAvgPool2d
+(
+H(3) ) )
+Lp = Argmax
+(
+yp
+)
+(17) 
+where MLPo is the MLP of the output layer. Argmax is the index function 
+for the maximum value.
+The following algorithm 1 shows the computation framework of the 
+entire monitoring model.
+The structural hyper-parameters of the proposed network model are 
+shown in Table 1.
+3. Experiment
+3.1. PHM2010 dataset
+The study validates the tool wear stage classification model using the 
+publicly available PHM2010 dataset. As shown in Fig. 5, the experi­
+ments were conducted on a Roders Tech RFM 760 high-speed CNC 
+machine. Six three-tooth ball-end tungsten carbide cutters are used to 
+cutting a rectangular workpiece row by row under dry milling condi­
+tions. The workpiece material is Inconel 718, and the distance of each 
+cutting path is 108 mm. The specific milling parameters were as follows: 
+a spindle speed of 10400 rpm, a feed rate of 1555 mm/min, a cutting 
+depth of 0.2 mm, a cutting width of 0.125 mm. During the cutting 
+process, a Kistler three-channel gauge acquired the milling force signal, 
+a three-channel piezoelectric accelerometer gathered the workpiece 
+vibration signal, and an acoustic emission sensor collected the AE signal. 
+The raw data contained seven channels. The multiple signals were 
+amplified and processed using a Kistler 5019A charge amplifier. Then, 
+these data were synchronized by a NI DAQ card with a sampling fre­
+quency of 50 kHz. After each cutting pass, the wear value on the tool 
+flank face is measured using a LEICA MZ12 microscope. Under these 
+cutting conditions, the full-life tool wear experiments were repeated for 
+the six tools numbered C1-C6. The experimental data were collected by 
+315 tool walks for each tool.
+Given that only the datasets for tools C1, C4, and C6 contain mea­
+surement values of flank wear for milling cutters among the dataset, the 
+study exclusively utilizes these three datasets for both analysis and 
+validation. Fig. 6(a) illustrates the trend of flank wear for the C1 tool. It 
+is evident that the wear width varies among the three cutting edges and 
+exhibits a nonlinear pattern. Consequently, assessing the overall wear 
+condition of the tool based solely on the wear value of a single tooth is 
+inaccurate. Therefore, the study adopts the average wear value of the 
+F. Cao et al.                                                                                                                                                                                                                                      
+Measurement 257 (2026) 119007 
+7 
+
+===== PAGE 8 =====
+three cutting edges to delineate the wear stages [46]. Fig. 6(b) presents 
+the full-life wear curves for the three tools. The wear curves across the 
+three datasets exhibit differences in both numerical values and local 
+trends. As shown in Fig. 6(c), which displays the wear values at each 
+time point, all three tools entered the normal wear phase around the 
+50th pass. After the 210th pass, the wear curves began to fluctuate more 
+Fig. 5. Schematic diagram of the experimental procedure for the PHM2010 dataset.
+Table 1 
+Hyper-parameters of the proposed neural network model.
+Model
+Layer
+Details
+Input data size
+Output data size
+Temporal feature 
+extraction
+Conv2d_1
+Transpose(1,2), 
+Fs = 14, Ks = (1,9), Pd = (0,4), ReLU, BatchNorm2d
+[4,1,6,288]
+[4,14,1,288]
+Conv2d_2
+Fs = 24, Ks = (1,5), Pd = (0,2), ReLU, BatchNorm2d, 
+Dropout = 0.5, Transpose(1,2),
+[4,14,1,288]
+[4,1,24,288]
+Spatial feature 
+extraction and 
+fusion
+GASF
+Image size = 288
+[4,1,24,288]
+[4,24,288,288]
+Conv2d_3
+Fs = 64, Ks = 5, 
+ReLU, BatchNorm2d
+[4,24,288,288]
+[4,64,285,285]
+Conv2d_4
+Fs = 288, Ks = 3, ReLU, 
+BatchNorm2d, Dropout = 0.5
+[4,64,285,285]
+[4,288,284,284]
+Attention score
+[4,1,24,288]-> [4,24,288] 
+[4,288,284,284]-> [4,288,80656]
+[4, 24,288] [4,288,80656]
+[4,24,80656]
+Spatial feature
+[4,288,80656]T
+[4,24,80656] [4,80656,288]
+[4,24,288]
+Fusion
+[4,24,288]-> [4,1,24,288]
+[4,1,24,288] [4,1,24,288]
+[4,1,24,288]
+Static and dynamic 
+graph generation 
+and fusion
+MLP
+Hid = 256, Hout = 64, ReLU
+[4,1,24,288]
+[4,1,24,64]
+Static
+Concatenate in time dimension
+[4,1,24,64]
+[1,1,24,24]
+Dynamic
+Without concatenate
+[4,1,24,64]
+[4,1,24,24]
+Fusion
+Broadcasting, Topk = 288
+[1,1,24,24] [4,1,24,24]
+[4,1,24,24]
+GIN and TGP
+First layer
+Eps = 0.5, Fs = 32, 
+Ks = 1, bias = True
+[4,1,24,24] [4,1,24,288]
+[4,32,24,288]
+Fs = 19, Ks = (1,18), 
+Sd = 1, Pd = (0,8)
+[4,1,24,24] [4,32,24,288]
+[4,1,19,19] [4,32,19,288]
+Second layer
+Eps = 0.5, Fs = 64, 
+Ks = 1, bias = True
+[4,1,19,19] [4,32,19,288]
+[4,64,19,288]
+Fs = 14, Ks = (1, 9), 
+Sd = 1, Pd = (0, 4)
+[4,1,19,19] [4,64,19,288]
+[4,1,14,14] [4,64,14,288]
+Third layer
+Eps = 0.5, Fs = 128, 
+Ks = 1, bias = True
+[4,1,14,14] [4,64,14,288]
+[4,128,14,288]
+Fs = 10, Ks = (1, 5), 
+Sd = 1, Pd = (0, 2)
+[4,1,14,14] [4,128,14,288]
+[4,1,10,10] [4,128,10,288]
+Output layer
+Adaptive 
+AvgPool2d
+Output size = 1
+[4,128,10,288]
+[4,128,1,1]
+MLP
+Hin = 128, Hout = 3
+[4,128]
+[4,3]
+Argmax
+Dim = 1
+[4,3]
+[4,1]
+F. Cao et al.                                                                                                                                                                                                                                      
+Measurement 257 (2026) 119007 
+8 
+
+===== PAGE 9 =====
+significantly, with some data points exhibiting abnormal variations, 
+indicating the onset of the severe wear phase. Therefore, the study 
+categorizes the wear stages as follows: the (1–50)th passes are defined as 
+the initial wear stage, the (51–210)th passes are defined as the normal 
+wear stage, and the (211–315)th passes are defined as the severe wear 
+stage.
+3.2. Dataset preprocessing
+Considering the extremely severe wear and unstable signals in the 
+later stages of each milling, the first 300 walking tool data of each data 
+set are selected in this paper, and discard the sound emission signals 
+with more noise. Besides, during the in-cutting and out-cutting processes 
+Fig. 6. The measured data of tool wear values.
+F. Cao et al.                                                                                                                                                                                                                                      
+Measurement 257 (2026) 119007 
+9 
+
+===== PAGE 10 =====
+of each tool walking, the contact between the tool teeth and the work­
+piece is incomplete, and the signals collected by the sensors will fluc­
+tuate significantly, thus affecting the training and identification of 
+monitoring model. In order to reduce the interference of unsteady 
+segment, the paper removes the initial 40,000 and final 40,000 data 
+points during each tool cutting feed, and only retains the data within the 
+stable cutting. Divide the stable phase data into 10 equal portions. Based 
+on variations in pass counts across wear stages (e.g., the stable stage 
+having the highest pass count), multiple samples of length 288 (one 
+rotational cycle) were extracted from each portion. For example, if the 
+initial wear stage has 50 cutting passes, collect 288-length sample points 
+from each of the first five segments, ultimately yielding 250 samples. 
+The raw data of the vibration and force signal and its preprocessing 
+process are shown in Fig. 7, from which several equal-length samples are 
+taken after the stabilized cutting portion is obtained from the raw data.
+In addition, the tool wear curves show that the normal wear stage 
+data is significantly higher than that of the initial and severe wear 
+stages, resulting in an obvious data imbalance of the three stages. To 
+alleviate this problem, the study adopts a stratified sampling strategy 
+with more sampling for the stage with less data and less sampling for the 
+stage with more data, to ensure that the number of samples in each stage 
+tends to be balanced. Specifically, five, two, and three samples were 
+Fig. 7. Data preprocessing of cutting force and vibration signal.
+F. Cao et al.                                                                                                                                                                                                                                      
+Measurement 257 (2026) 119007 
+10 
+
+===== PAGE 11 =====
+collected from each tool traveler data in the initial wear, normal, and 
+severe wear stages, respectively. Ultimately, 250, 320, and 270 samples 
+were obtained for the three stages, respectively. Lastly, a total of 840 
+samples for a single tool are obtained. Based on the experimental data of 
+the three tools, a total of 2520 samples were constructed in the study, 
+providing a more balanced and representative dataset for subsequent 
+analysis.
+The cross datasets A, B, D, and E were established to train and test the 
+monitoring model. The data type partitioning of these datasets is illus­
+trated in Table 2, where A dataset exclusively utilizes the cutting force 
+signals, B dataset solely employs the vibration signals, and D and E 
+datasets incorporate both the cutting force and vibration signals. The 
+experimental partitioning of the datasets is detailed in Table 3. For A, B, 
+and D datasets, the data from arbitrary two tools were used as the 
+training and validation sets, with a partitioning ratio of 0.7:0.3, while 
+the data of the remaining tool served as the test set. For E dataset, the 
+data from one tool was divided into training and validation sets with a 
+ratio of 0.7:0.3, and the data of the other two tools were separately used 
+for testing. Compared to training and testing on the same tool, this di­
+vision can better evaluate the generalization performance of monitoring 
+model.
+3.3. Evaluation indicators
+In order to evaluate the classification performance of the model, the 
+confusion matrix and the following five evaluation indicators are used, 
+which are accuracy, precision, recall, specificity and F1 score. The 
+calculation formula is as follows. 
+Accuracy =
+TP + TN
+TP + TN + FP + FN
+(18) 
+Precision =
+TP
+TP + FP
+(19) 
+Recall =
+TP
+TP + FN
+(20) 
+Specificity =
+TN
+TN + FP
+(21) 
+F1score = 2 × Recall × Precision
+Recall + Precision
+(22) 
+where TP is the number of samples correctly predicted by the model to 
+be in the positive category. FP is the number of samples incorrectly 
+predicted by the model to be in the positive category. TN is the number 
+of samples correctly predicted by the model to be in the negative cate­
+gory. FN is the number of samples incorrectly predicted by the model to 
+be in the negative category.
+Among the above parameters, the confusion matrix is a tool used to 
+evaluate the performance of a classification model. It visually demon­
+strates the correct classifications and misclassifications among different 
+categories by comparing the predicted results with the actual labels. The 
+accuracy rate reflects the classification performance across all samples, 
+representing the ratio of the number of correct predictions to the total 
+number of samples. This metric indicates the overall prediction ability of 
+the model. The precision rate measures the accuracy in identifying 
+specific stages of wear and tear, focusing on the reliability of the pre­
+diction results. Recall assesses the ability to detect the target class, 
+reflecting its coverage of positive class samples. Specificity is an 
+important measure of the ability to identify negative class samples, 
+particularly useful in addressing class imbalance problems. The F1 score 
+serves as a harmonic mean of the precision and recall rates, providing a 
+combined measure of model robustness, with values closer to one 
+indicating a more balanced classification performance.
+3.4. Hyper-parameter optimization of the model
+In order to configure the optimal hyper-parameters for the network 
+model, an optimization analysis of the hyper-parameters was performed. 
+The analysis was done on a laboratory server. The server was configured 
+with Windows 11 operating system, 60 GB RAM, NVIDIA GeForce RTX 
+4090 GPU (16,384 CUDA cores), and the CPU was assigned 18 virtual 
+CPU cores, based on AMD EPYC 9754 processor (128 physical cores). 
+The software versions used were PyCharm 2024.3 (Professional Edi­
+tion), PyTorch 1.12.0 + cu113, Anaconda3 2023.09 and CUDA version 
+12.7.
+As shown in Fig. 8(a), feature association was measured using cosine 
+similarity, and the impact of different top_k values (multiples of 24) on 
+model performance was tested. Results reveal that test accuracy first 
+rises then falls with top_k: too small a value limits neighbor node in­
+formation extraction, while too large a value introduces noise, 
+Table 2 
+Division of the datasets.
+Datasets
+Data type
+A
+Force signals
+B
+Vibration signals
+D
+Force and vibration signals
+E
+Force and vibration signals
+Table 3 
+Division of training and test datasets.
+Datasets
+Training datasets
+Test datasets
+A1/B1/D1
+C1 and C4
+C6
+A2/B2/D2
+C4 and C6
+C1
+A3/B3/D3
+C6 and C1
+C4
+E1
+C1
+C4
+C6
+E2
+C4
+C6
+C1
+E3
+C6
+C1
+C4
+Fig. 8. Analysis and selection of key model parameters.
+F. Cao et al.                                                                                                                                                                                                                                      
+Measurement 257 (2026) 119007 
+11 
+
+===== PAGE 12 =====
+degrading performance and increasing computational cost. Thus, top_k 
+was set to 6 × 24, balancing efficiency and performance. Fig. 8(b) shows 
+that model accuracy improves and stabilizes as GIN layers increase. Too 
+few layers fail to extract deep features, while too many risk overfitting. A 
+3-layer GIN module was chosen as optimal. In Fig. 8(c), gradually 
+increasing the pooling rate shows test accuracy first rising then falling, 
+peaking at 0.2. Moderate pooling extracts key features effectively, while 
+excessive pooling loses important information.
+Based on the existing experience of model training, it is known that a 
+larger initial learning rate will lead to difficult reaching the global 
+Fig. 9. Accuracy comparison under different hyper-parameter schemes.
+Fig. 10. Loss and accuracy curves for A, B, and D datasets.
+F. Cao et al.                                                                                                                                                                                                                                      
+Measurement 257 (2026) 119007 
+12 
+
+===== PAGE 13 =====
+optimum and constant oscillation in accuracy during training. If the 
+learning rate is too small, the model will converge more slowly, and 
+require more training time. Additionally, a small batch training gener­
+alizes well but leads to some problems, such as low efficiency and 
+difficult convergence. Increasing the batch size can reduce training time, 
+make gradient calculation more stable, and help the model achieve 
+better results during fine-tuning. However, it also increases the risk of 
+overfitting and requires more memory.
+Hence, the paper adopts a decay factor to dynamically adjust the 
+learning rate. If there is no improvement in the index after 10 iterations, 
+the learning rate is reduced by half, thus allowing the model to continue 
+to learn the tool wear features. The L2 regularization is used to reduce 
+the overfitting of the model and make the training process smoother, 
+and the regularization factor is set to 0.1. The cross entropy is used as the 
+loss function. The smaller the loss value is, the higher recognition ac­
+curacy the model has. The Adam optimizer was used to monitor the 
+iterative backpropagation calculation. Finally, a six hyper-parameter 
+schemes were used for model training, as shown in Fig. 9. The accu­
+racy curves of the training and validation processes are plotted in the 
+figures. The comparison shows that increasing the batch size does not 
+have much effect on the accuracy of the training set, but it leads to large 
+fluctuations in accuracy of the validation set. Besides, increasing the 
+learning rate will reduce the accuracy curves of the training and vali­
+dation sets at the same time, and the accuracy of validation set will also 
+fluctuate drastically. Combining the above analysis, it is optimal to 
+adopt the hyper-parameter setting of the first scheme.
+After determining the above key parameters, the final total number 
+of parameters for the model in this paper is 321,002, which is considered 
+medium-sized. The memory usage for forward/backward propagation is 
+245.51 MB, accounting for 99.5 % of total memory. The model’s total 
+memory requirement is 246.74 MB, making it suitable for running on 
+consumer-grade GPUs (such as NVIDIA GTX series) or high-performance 
+CPUs. This memory requirement is feasible in industrial scenarios. 
+Regarding time complexity, the data packet acquisition time is 0.5 s, the 
+preprocessing time is 0.1129 s, and the model computation time is 
+0.0296 s. Therefore, the total latency for a single sample is 
+approximately 0.6425 s, this performance meets the real-time re­
+quirements of most industrial scenarios.
+4. Validation results
+4.1. Convergence process of model training
+Based on the optimal parameters obtained in Section 3.4, the model 
+training was performed on A, B, D and E datasets. Among them, the 
+accuracy and loss curves of the training process on A, B and D datasets 
+are shown in Fig. 10. From the figure, the accuracy of the model tends to 
+converge after the 8th iteration, and the loss tends to converge after the 
+10th iteration. The high accuracy and low loss obtained from training on 
+all four datasets indicate that the model can effectively learn the 
+nonlinear mapping relationship between tool wear values and sensor 
+signals.
+The t-SNE algorithm is able to maintain the structure and relevance 
+of data in high-dimensional space. Therefore, the t-SNE is used here to 
+downscale the extracted high-dimensional features in order to visualize 
+their distribution. Fig. 11 shows the 3D visualization of the feature 
+vectors at different stages during the model training process. It can be 
+seen that the input samples are randomly distributed in Fig. 11(a), and 
+there is no obvious correlation between the tool wear stages and the 
+samples. On the contrary, as shown in Fig. 11(b–f), as the model digs 
+deeper into the features of the samples, the strong dependence features 
+of tool wear are gradually extracted, and the differentiation of features 
+between the different wear stages becomes more and more obvious. 
+Especially in the final stage in Fig. 11(f), the samples of three different 
+wear stages are clearly distinguished, which proves the effectiveness of 
+the proposed method.
+4.2. Classification results of tool wear stage
+After the model training is completed, the tool wear stage recogni­
+tion model is tested using the test set. Six performance evaluation 
+metrics, including the confusion matrix and accuracy are used to assess 
+Fig. 11. t-SNE visualization of D3 test set.
+F. Cao et al.                                                                                                                                                                                                                                      
+Measurement 257 (2026) 119007 
+13 
+
+===== PAGE 14 =====
+the effectiveness of monitoring model. Fig. 12 shows the confusion 
+matrices for A, B, and D datasets. Fig. 13 shows the confusion matrix for 
+E dataset. The confusion matrix enables us to visualize the total number 
+of samples, the distribution of samples across each category, and the 
+counts of correctly and incorrectly classified samples. Each row in the 
+matrix corresponds to the actual category, while each column indicates 
+the predicted category. The integers denote the number of samples, and 
+the percentages illustrate the proportion of these samples relative to the 
+total sample count. The diagonal elements represent the number of 
+samples accurately classified within each category, whereas the off- 
+diagonal elements signify the number of samples that were mis­
+classified and missed by the model.
+In tool wear stage identification, minimizing false alarms in the 
+initial and normal wear stages is important to avoid premature tool 
+changes that lead to waste. In the severe wear stage, the focus should be 
+on avoiding missed alarms to prevent late tool changes that will result in 
+lower part machining quality. Thus, the initial and normal wear stages 
+require more attention to the precision, while the severe wear stage 
+requires more attention to the recall and specificity. The evaluation 
+metric values for D, and E datasets are shown in Tables 4 and 5, 
+respectively. The radar charts for A, B, D, and E datasets are shown in 
+Fig. 14. The average precision rates for the four datasets in the initial and 
+normal wear stages were 95.0 %, 89.1 %, 96.5 %, and 94.4 %, 
+respectively. The combined average recall, specificity, and F1 scores for 
+the severe wear stage were 98.0 %, 94.3 %, 98.0 %, and 98.1 %, 
+respectively. The high combined mean values of recall, specificity, and 
+F1 score in the severe wear stage indicate that the model can effectively 
+distinguish between severe and non-severe wear stages. This ability to 
+recognize severe wear in time can prevent production accidents, reduce 
+maintenance costs, and ensure machining safety, which is highly sig­
+nificant in practical applications.
+Comparing the results from A, B and D datasets, the average accuracy 
+using only force signal reached 95.4 %, which is 5.4 % higher than the 
+only vibration signal with 90.0 %. This indicates a stronger dependency 
+between force signals and tool wear. Additionally, the presence of more 
+noise in vibration signals is another factor contributing to their lower 
+accuracy. When vibration and force signals were fused, the recognition 
+accuracy increased to 96.5 %, representing improvements of 1.1 % and 
+6.5 % over the individual signals, respectively. This conclusion dem­
+onstrates that the multi-information fusion can significantly outperform 
+the single-signal approaches in terms of recognition accuracy. Notably, 
+the fused approach exhibited more stable performance in accuracy, 
+precision, and recall, suggesting that the force and vibration signals 
+possess complementary characteristics, which significantly enhance the 
+classification performance. Under the E dataset, the average accuracy is 
+94.7 %, which is slightly lower than that of A and D datasets. This is 
+Fig. 12. Confusion matrix of classification results for A, B and D datasets.
+F. Cao et al.                                                                                                                                                                                                                                      
+Measurement 257 (2026) 119007 
+14 
+
+===== PAGE 15 =====
+attributed to the greater distribution differences between the training 
+and testing sets in E dataset.
+Fig. 15 shows the monitoring results of tool wear stages for the A3, 
+B1, D1, and D3 test sets. The left figures represent the probability values 
+of each sample being predicted as three categories, while the right fig­
+ures show the final classification results of the samples. As can be seen, 
+the overall recognition performance is good, and the misclassified 
+samples are mainly concentrated in the transition region between 
+different wear stages. The primary cause of misclassification lies in the 
+gradual nature of tool wear, which results in no clear distinction be­
+tween adjacent wear stages. This is corroborated by the fact that the 
+intermediate region can be accurately identified. Furthermore, the tool 
+wear curves reveal that despite identical cutting parameters across all 
+three tools, their wear curves exhibit significant variations due to un­
+controllable factors. This poses a significant challenge to accurately 
+delineating the distinct stages of tool wear. In Fig. 15(a–f), the mis­
+classified samples tend to be distributed on one side, likely due to the 
+inaccurate division of wear stages. Fig. 15(g and h) shows that the model 
+achieves the best classification results in the D3 test set, which has the 
+fewest misidentified samples in the transition region and a more 
+balanced distribution.
+In order to fully evaluate the performance of the model, the ROC 
+curve is given. The closer the curve is to the upper left corner, the better 
+the performance of the classifier. In addition, the area under the ROC 
+curve (AUC) provides a comprehensive performance metric for all 
+possible thresholds. Here, the AUC value in a range of [0,1], and the 
+larger AUC values indicates better classifier performance. As shown in 
+Fig. 16, the ROC curves and AUC values are plotted for the D and E 
+datasets, respectively. From the figures, it can be seen that the ROC 
+curves of the proposed model are very close to the upper left corner and 
+the AUC values are over 99.2 %, which indicates that the model has a 
+very well overall performance.
+Although the cutting experiments for all three tools were conducted 
+under the same machining conditions, the collected cutting force and 
+vibration signals will differ each time due to factors such as tool 
+mounting errors, changes in workpiece material properties, and envi­
+ronmental disturbances. These differences in the datasets would lead to 
+poor generalization and low accuracy when training the monitoring 
+model with one tool to predict another. Fig. 17 demonstrates the 
+comprehensive performance of the proposed model under E dataset, 
+where each data is the average of six tests. Despite the large difference in 
+the distribution of the training and test sets in E dataset, the model 
+shows good generalization and robustness, especially in the most critical 
+severe wear stage. In this stage, the precision, recall, and F1 score are 
+97.0 %, 98.2 %, and 97.5 %, respectively.
+To further validate the model’s robustness, Gaussian noise was 
+added to the D3 dataset to simulate measurement errors in real-world 
+environments. Samples with added noise were fed into the trained 
+model, and the test results are shown in the Fig. 18. To comprehensively 
+evaluate the test outcomes, accuracy, macro-average precision, macro- 
+average recall, and macro-average F1 score were adopted as evalua­
+tion metrics. The results demonstrate that even when the noise level 
+reaches a significant 0.6, the model’s metrics remain above 92.0 %. As 
+the noise level continues to increase, the model’s accuracy declines at an 
+accelerated rate. The test data indicates that the proposed model 
+Fig. 13. Confusion matrix of classification results for E dataset.
+Table 4 
+Evaluation indicators on the D dataset.
+Indicators
+D1
+D2
+D3
+Accuracy (%)
+​
+95.7
+96.1
+97.7
+Precision (%)
+Pinitial
+96.1
+91.5
+100.0
+​
+Pnormal
+98.3
+97.4
+95.5
+Recall (%)
+Rsevere
+98.9
+97.8
+97.8
+Specificity (%)
+Ssevere
+96.3
+99.6
+99.3
+F1 score (%)
+Fsevere
+95.7
+98.5
+98.1
+Table 5 
+Evaluation indicators on the E dataset.
+Indicators
+E11
+E12
+E21
+E22
+E31
+E32
+Accuracy (%)
+​
+92.9
+93.8
+95.2
+94.9
+96.7
+94.6
+Precision (%)
+Pinitial
+100.0
+96.2
+93.9
+87.7
+99.2
+100.0
+​
+Pnormal
+84.8
+92.4
+98.3
+99.3
+92.4
+88.5
+Recall (%)
+Rsevere
+96.7
+98.9
+98.9
+99.3
+96.3
+98.9
+Specificity (%)
+Ssevere
+99.5
+96.7
+96.7
+98.9
+100.0
+99.3
+F1 score (%)
+Fsevere
+97.8
+96.0
+96.0
+98.5
+98.1
+98.7
+F. Cao et al.                                                                                                                                                                                                                                      
+Measurement 257 (2026) 119007 
+15 
+
+===== PAGE 16 =====
+Fig. 14. Radar chart of evaluation indicators for A, B, D and E datasets.
+F. Cao et al.                                                                                                                                                                                                                                      
+Measurement 257 (2026) 119007 
+16 
+
+===== PAGE 17 =====
+Fig. 15. Monitoring results of tool wear stages in A3, B1, D1 and D3 test sets.
+F. Cao et al.                                                                                                                                                                                                                                      
+Measurement 257 (2026) 119007 
+17 
+
+===== PAGE 18 =====
+exhibits a certain degree of resistance to minor noise interference, 
+thereby proving its robust stability.
+4.3. Ablation experiment
+In the ablation experiments, GNN was first used as the baseline 
+model, and then feature extraction modules (Temporal feature extrac­
+tion and spatial feature extraction) were successively stacked for com­
+parison with the model proposed in this paper. The training and testing 
+were performed on the D dataset. The results are shown in Fig. 19. 
+Fig. 19(a) shows the test results of the three models on the D1 dataset, 
+and Fig. 19(b) shows the test results of the three models on the D3 
+dataset. The accuracy reflects the overall performance of the model, and 
+the F1 score is the macro average of the three wear stages, compre­
+hensively assessing the robustness of the model. The results indicate that 
+as the modules are stacked sequentially, the recognition performance for 
+tool wear stages improves progressively, demonstrating that the spatio- 
+temporal feature extraction module and the TGP based on GIN module 
+proposed in the paper effectively enhance model performance.
+In addition, five models were designed to verify the impact of each 
+module on the overall model performance. The modules of temporal 
+feature extraction, spatial feature extraction and fusion, dynamic graph 
+generation, GIN, and TGP were removed in the order of model structure. 
+The D dataset is utilized to evaluate the contribution of these modules to 
+the overall model performance. The experimental results of different 
+datasets with different models are presented in Fig. 20. From the results, 
+it can be concluded that the average accuracy of each model is 92.8 %, 
+95.6 %, 94.1 %, 95.7 %, 88.4 % and 96.5 % respectively.
+Additionally, the figure shows the decrease percentage in model 
+performance after removing each module. The results show that the 
+classification performance of the models with the elimination of the 
+correlation module are all degraded. Model 1 shows a 3.7 % decrease in 
+average accuracy compared to proposed model, which indicates that 
+temporal feature extraction has a significant role in capturing temporal 
+dependencies, and it is effective in improving the classification perfor­
+mance of the model. Model 3 shows a smaller decrease in performance 
+Fig. 16. ROC curves and AUC values for D and E datasets.
+Fig. 17. Comprehensive performance of the proposed model for E dataset.
+Fig. 18. The noise resistance capability of the proposed model.
+F. Cao et al.                                                                                                                                                                                                                                      
+Measurement 257 (2026) 119007 
+18 
+
+===== PAGE 19 =====
+compared to proposed model (0.5 % for D1 and 1.7 % for D2), however, 
+on the D3 dataset, the performance significantly decreases to 92.7 %, a 
+decrease of 5.0 %. This indicates that the dynamic graph generation 
+plays an important role in processing complex graph structure data, 
+especially in scenarios where the data dynamics change significantly. 
+Model 5 shows an average decrease of 8.1 % compared to proposed 
+model. This suggests that the TGP plays a key role in integrating tem­
+poral dimensions and graph structure information, and its removal has 
+the most significant impact on model performance. In addition, Model 2 
+and Model 4 have a role in capturing spatial structure information, 
+although their impact on overall performance is relatively limited. 
+Taken together, the synergy of the key components can significantly 
+improve the overall performance of the model, especially when dealing 
+with complex time series and graph structure data.
+4.4. Comparison with other models
+In order to verify the effectiveness and superiority of the proposed 
+model, the proposed algorithm will be compared with other published 
+benchmark algorithms. Among these, MTF-AviTK [37], HTT-Net [47], 
+and Transformer [48] represent applications of the Transformer model. 
+1DCNN-DGCCA [49] and CaAt-ResNet-1d [50] exemplify 1D-CNN. GCN 
+[51], SGCN [52], GAT [53], and GIN [54] are fundamental GNN models. 
+In the Table 6, the data for the first five models are directly referenced 
+Fig. 19. Model performance in D dataset.
+Fig. 20. Results of ablation experiments.
+F. Cao et al.                                                                                                                                                                                                                                      
+Measurement 257 (2026) 119007 
+19 
+
+===== PAGE 20 =====
+from their original papers; the latter five are constructed based on the 
+baseline models, with three layers and trained using the parameters 
+configured in Section 3.4. The comparison indicators use the accuracy 
+here. On the D dataset, The accuracy of the model proposed in this paper 
+is 95.71 %, 96.07 % and 97.74 % on the three datasets, with an average 
+accuracy of 96.51 %, which is an overall excellent performance. 
+Compared with existing models, the presented method performs best on 
+the D1 and D2 datasets, and second only to HTT-Net (98.59 %) on the D3 
+dataset. In addition, the accuracy of the method stays above 95.71 % on 
+all three datasets, and the standard deviation is 0.86, which is the 
+smallest among all the models, proving that it has good stability under 
+the premise of prioritizing accuracy. Compared with the existing 
+methods MTF-AviTK and HTT-Net, the average accuracy of the proposed 
+model in the paper has been improved by 1.88 % and 0.97 %, respec­
+tively, which can also prove the excellent performance of the proposed 
+model. Furthermore, the overall strong performance of the GNN base 
+model demonstrates the significant importance of constructing a non- 
+Euclidean space for temporal signals and extracting features from it.
+Compared to D dataset, only a limited number of researchers have 
+utilized E dataset to validate algorithms for tool wear stage recognition. 
+As discussed in Section 3.2 on dataset partitioning, the distributional 
+discrepancy between the training and testing sets in E dataset is more 
+pronounced than D dataset, thereby imposing higher demands on the 
+generalization capability and robustness of the model. To evaluate the 
+performance of the proposed model on E dataset, it was compared with 
+three existing models MTF-AviTK [37], GAF-CNN [56], and HTT-Net 
+[47], which have been tested on E dataset in prior studies. It is evident 
+that, except for E11 and E32 datasets, the proposed method outperforms 
+the other models across the remaining datasets. Furthermore, the stan­
+dard deviations of the three comparative models are 2.71, 3.13, and 
+5.43, respectively, while the proposed model exhibits the lowest stan­
+dard deviation of only 1.18, demonstrating its superior generalization 
+ability and stability compared to the other models. Fig. 21 shows the 
+comparison of the test accuracy results of each model under E dataset.
+Table 6 
+Comparison results between proposed model and other existing models on D dataset (%).
+Models
+D1
+D2
+D3
+Average value
+Standard deviation
+MTF-AviTK [37]
+95.38
+92.81
+95.71
+94.63
+1.30
+HTT-Net [47]
+94.35
+93.67
+98.59
+95.54
+2.18
+GHCRBM [55]
+89.20
+90.80
+58.40
+79.47
+14.91
+1DCNN-DGCCA [49]
+89.50
+90.00
+89.20
+89.57
+0.33
+CaAt-ResNet-1d [50]
+85.25
+87.98
+89.27
+87.50
+1.68
+Transformer [48]
+92.02
+95.60
+91.07
+92.90
+1.95
+GCN [51]
+90.24
+90.36
+86.79
+89.13
+1.66
+SGCN [52]
+91.07
+89.76
+91.19
+90.67
+0.65
+GAT [53]
+90.71
+90.60
+91.90
+91.07
+0.59
+GIN [54]
+93.10
+93.33
+91.90
+92.78
+0.63
+Proposed model
+95.71
+96.07
+97.74
+96.51
+0.86
+Fig. 21. Comparison results of the model accuracy on E dataset.
+Table 7 
+Cutting parameter information from the NASA ames experiment.
+Case
+Number of 
+passes
+Cutting depth 
+(mm)
+Feed rate 
+(mm/r)
+Workpiece 
+material
+2
+14
+0.75
+0.5
+Iron
+12
+15
+0.75
+0.5
+Iron
+13
+15
+0.75
+0.25
+Steel
+Table 8 
+Division of training and test datasets.
+Datasets
+Training datasets
+Test datasets
+T1
+C2 and C12
+C13
+T2
+C12 and C13
+C2
+T3
+C13 and C2
+C12
+F. Cao et al.                                                                                                                                                                                                                                      
+Measurement 257 (2026) 119007 
+20 
+
+===== PAGE 21 =====
+4.5. Performance on NASA datasets
+To further validate the generalization capability of this model, 
+another publicly available dataset was employed: the NASA Ames tool 
+wear dataset. Experiments were conducted on an MC-510 vertical 
+machining center at a spindle speed of 826 r/min. A KC710 face milling 
+cutter with a blade diameter of 70 mm was used to mill cast iron and 
+stainless steel blocks measuring 483 × 178 × 51 mm. Sensors collected 
+the following signals: spindle vibration and acoustic emission signals, 
+worktable vibration and acoustic emission signals, as well as DC and AC 
+signals from the spindle motor. The NASA Ames dataset involved two 
+milling runs under each of eight distinct cutting conditions, with rake 
+face wear values measured continuously until tool wear became severe 
+and the tool became unusable. From the 16 cases, the following three 
+were selected for analysis, with specific machining parameters detailed 
+in the Table 7.
+This study utilizes DC and AC signals from the spindle motor, along 
+with acoustic emission signals from both the spindle and worktable. 
+Data preprocessing follows Section 3.2, with samples collected from 
+stable cutting segments. Due to the limited volume of raw data, stratified 
+sampling was not applied to ensure sufficient training samples. Ulti­
+mately, 130 samples were collected from each case, totaling 390 sam­
+ples. Three wear stages were defined based on wear volume. Three sets 
+of cross-validation experiments were designed as Table 8.
+The samples were trained and tested on the model, with the corre­
+sponding confusion matrix shown in the Fig. 22. As seen in the figure, 
+the model performs well on the NASA dataset, correctly identifying most 
+samples in the severe wear stage. Minor misclassifications primarily 
+occur in the transitional zone between early wear and normal wear, due 
+to the lack of clear distinguishing features in this area. Detailed data for 
+each wear stage is presented in the Table 9. The accuracy rates for the 
+three tools are 99.2 %, 96.9 %, and 98.5 %, respectively, indicating that 
+the model correctly classifies most cases with highly stable overall 
+performance. Furthermore, the model achieves a good balance between 
+precision and recall, particularly excelling in handling the severe wear 
+category.
+5. Conclusions
+The paper proposes an end-to-end tool wear stage recognition 
+method based on GNN, addressing the nonlinear mapping problem be­
+tween the multi-source sequential signals and tool wear states in both 
+temporal and spatial dimensions. The effectiveness of the proposed 
+method is validated using publicly available datasets. The main con­
+clusions are as follows: 
+(1) A spatio-temporal correlation model for multi-source information 
+was established, fully utilizing the complementarity of cutting 
+force and vibration signals. Through an attention mechanism, it 
+achieved the fusion of temporal and spatial features.
+(2) For the first time, GIN and TGP are introduced into tool wear 
+stage monitoring. By comprehensively considering the long-term 
+stability and short-term variability of temporal features, the time- 
+series signal is modeled as a graph. Leveraging the inherent non- 
+Euclidean structural relationships within the time-series signal 
+enhances the accuracy of tool wear state recognition.
+(3) Cross-validation using the PHM2010 and NASA datasets 
+demonstrated the model’s robust overall performance, high­
+lighting the advantages of multi-source information fusion 
+alongside strong generalization capabilities and stability.
+(4) Experimental validation demonstrates that temporal feature 
+extraction, dynamic graph generation, and the TGP module 
+significantly enhance performance. Comparative analysis reveals 
+that this model outperforms existing methods in both accuracy 
+and stability, further validating the significant research value of 
+extracting features from the non-Euclidean space of temporal 
+signals.
+Future research should focus on expanding dataset validation to 
+include diverse machining processes and materials, ensuring the 
+model’s generalizability and robustness. Additionally, integrating the 
+GNN-based approach with advanced techniques like transfer learning or 
+reinforcement learning could enhance its adaptability to varying oper­
+ational conditions. Finally, improving the model’s explainability is 
+crucial for increasing its acceptance in industrial settings.
+Code availability
+The codes that support the findings of this study are available from 
+corresponding author upon reasonable request.
+Consent to participate
+All authors agree to participate. Consent for publication all authors 
+agree to publish.
+CRediT authorship contribution statement
+Fangcun Cao: Writing – original draft, Visualization, Validation, 
+Software, Methodology, Investigation, Formal analysis, Data curation, 
+Conceptualization. Xing Zhang: Writing – review & editing, Validation, 
+Supervision, Project administration, Investigation, Conceptualization. 
+Zejiang Zhang: Writing – review & editing, Visualization, Supervision. 
+Lidong Wen: Supervision, Funding acquisition. Tongyu Chang: 
+Writing – review & editing, Visualization, Supervision.
+Fig. 22. The confusion matrices of T dataset.
+Table 9 
+Evaluation indicators on the T dataset.
+Indicators
+T1
+T2
+T3
+Accuracy (%)
+​
+99.2
+96.9
+98.5
+Precision (%)
+Pinitial
+95.2
+90.9
+100.0
+​
+Pnormal
+100.0
+97.4
+93.8
+Recall (%)
+Rsevere
+100.0
+98.3
+100.0
+F. Cao et al.                                                                                                                                                                                                                                      
+Measurement 257 (2026) 119007 
+21 
+
+===== PAGE 22 =====
+Ethics approval
+Not applicable.
+Declaration of competing interest
+The authors declare that they have no known competing financial 
+interests or personal relationships that could have appeared to influence 
+the work reported in this paper.
+Acknowledgements
+This work was financially supported by the National Natural Science 
+Foundation of China (No. 52475487), the National Major Science and 
+Technology Project of China (No. 2024ZD0711401), the Technology 
+Innovation Guidance Program of Shaanxi Province (No. 2025QCY-KXJ- 
+060), the Key Research and Development Program of Shaanxi Province 
+(No. 2025CY-YBXM-108), and the Open Project Funding of State Key 
+Laboratory for High Performance Tools (No. GXNGJSKL-2024-13).
+Data availability
+The data that support the findings of this study are available from 
+corresponding author upon reasonable request.
+References
+[1] X. Luo, K. Cheng, R. Holt, X. Liu, Modeling flank wear of carbide tool insert in 
+metal cutting, Wear 259 (2005) 1235–1240, https://doi.org/10.1016/j. 
+wear.2005.02.044.
+[2] Y. Yang, Y. Guo, Z. Huang, N. Chen, L. Li, Y. Jiang, N. He, Research on the milling 
+tool wear and life prediction by establishing an integrated predictive model, 
+Measurement 145 (2019) 178–189, https://doi.org/10.1016/j. 
+measurement.2019.05.009.
+[3] S. Li, J. Li, K. Zhu, Application of physics-guided deep learning model in tool wear 
+monitoring of high-speed milling, Mech. Syst. Sig. Process. 224 (2025) 111949, 
+https://doi.org/10.1016/j.ymssp.2024.111949.
+[4] Y. Wang, M. Chang, X. Huang, Y. Li, J. Tang, Cutting tool wear prediction based on 
+the multi-stage wiener process, Int. J. Adv. Manuf. Technol. 129 (2023) 
+5319–5333, https://doi.org/10.1007/s00170-023-12648-8.
+[5] D.Y. Pimenov, A. Bustillo, S. Wojciechowski, V.S. Sharma, M.K. Gupta, 
+M. Kunto˘glu, Artificial intelligence systems for tool condition monitoring in 
+machining: analysis and critical review, J. Intell. Manuf. 34 (2023) 2079–2121, 
+https://doi.org/10.1007/s10845-022-01923-2.
+[6] M. Chehrehzad, G. Kecibas, C. Besirova, U. Uresin, M. Irican, I. Lazoglu, Tool wear 
+prediction through AI-assisted digital shadow using industrial edge device, 
+J. Manuf. Process. 113 (2024) 117–130, https://doi.org/10.1016/j. 
+jmapro.2024.01.052.
+[7] Y. Altintas, D. Aslan, Integration of virtual and on-line machining process control 
+and monitoring, CIRP Ann. 66 (2017) 349–352, https://doi.org/10.1016/j. 
+cirp.2017.04.047.
+[8] D. Peng, H. Li, Intelligent monitoring of milling tool wear based on milling force 
+coefficients by prediction of instantaneous milling forces, Mech. Syst. Sig. Process. 
+208 (2024) 111033, https://doi.org/10.1016/j.ymssp.2023.111033.
+[9] X. Zhu, G. Chen, C. Ni, X. Lu, J. Guo, Hybrid CNN-LSTM model driven image 
+segmentation and roughness prediction for tool condition assessment with 
+heterogeneous data, Rob. Comput. Integr. Manuf. 90 (2024) 102796, https://doi. 
+org/10.1016/j.rcim.2024.102796.
+[10] S. Li, Z. Ling, K. Zhu, Image super resolution by double dictionary learning and its 
+application to tool wear monitoring in micro milling, Mech. Syst. Sig. Process. 206 
+(2024) 110917, https://doi.org/10.1016/j.ymssp.2023.110917.
+[11] B.S. Prasad, K.A. Prabha, P.V.S.G. Kumar, Condition monitoring of turning process 
+using infrared thermography technique – an experimental approach, Infrared Phys. 
+Technol. 81 (2017) 137–147, https://doi.org/10.1016/j.infrared.2016.12.023.
+[12] X. Wei, X. Liu, C. Yue, L. Wang, S.Y. Liang, Y. Qin, Tool wear state recognition 
+based on feature selection method with whitening variational mode 
+decomposition, Rob. Comput. Integr. Manuf. 77 (2022) 102344, https://doi.org/ 
+10.1016/j.rcim.2022.102344.
+[13] D. Mishra, K.R. Pattipati, G.M. Bollas, Gaussian mixture model for tool condition 
+monitoring, J. Manuf. Process. 131 (2024) 1001–1013, https://doi.org/10.1016/j. 
+jmapro.2024.09.038.
+[14] J. Ma, Y. Zhang, F. Jiao, X. Cui, D. Zhang, L. Ren, B. Zhao, X. Pang, Dynamic 
+milling force model considering vibration and tool flank wear width for monitoring 
+tool states in machining of Ti-6AI-4V, J. Manuf. Process. 124 (2024) 1519–1540, 
+https://doi.org/10.1016/j.jmapro.2024.07.022.
+[15] C. Wang, Z. Bao, P. Zhang, W. Ming, M. Chen, Tool wear evaluation under 
+minimum quantity lubrication by clustering energy of acoustic emission burst 
+signals, Measurement 138 (2019) 256–265, https://doi.org/10.1016/j. 
+measurement.2019.02.004.
+[16] N.S. Bajaj, A.D. Patange, R. Jegadeeshwaran, K.A. Kulkarni, R.S. Ghatpande, A. 
+M. Kapadnis, A bayesian optimized discriminant analysis model for condition 
+monitoring of face milling cutter using vibration datasets, J. Nondestruct. Eval. 
+Diagnost. Prognost. Eng. Syst. 5 (2022) 021002, https://doi.org/10.1115/ 
+1.4051696.
+[17] C. Peng, J. Zheng, T. Chen, Z. Jing, Z. Wang, Y. Su, Y. Shi, Tool wear feature 
+extraction in BTA deep hole drilling process based on maximum probability multi- 
+synchrosqueezing transform of spindle current signal, Measurement 241 (2025) 
+115780, https://doi.org/10.1016/j.measurement.2024.115780.
+[18] P. Kundu, X. Luo, Y. Qin, W. Chang, A. Kumar, A novel current sensor indicator 
+enabled WAFTR model for tool wear prediction under variable operating 
+conditions, J. Manuf. Process. 82 (2022) 777–791, https://doi.org/10.1016/j. 
+jmapro.2022.08.036.
+[19] K. Zhang, H. Yuan, P. Nie, A method for tool condition monitoring based on sensor 
+fusion, J. Intell. Manuf. 26 (2015) 1011–1026, https://doi.org/10.1007/s10845- 
+015-1112-y.
+[20] S. Binsaeid, S. Asfour, S. Cho, A. Onar, Machine ensemble approach for 
+simultaneous detection of transient and gradual abnormalities in end milling using 
+multisensor fusion, J. Mater. Process. Technol. 209 (2009) 4728–4738, https://doi. 
+org/10.1016/j.jmatprotec.2008.11.038.
+[21] X. Liao, G. Zhou, Z. Zhang, J. Lu, J. Ma, Tool wear state recognition based on 
+GWO–SVM with feature selection of genetic algorithm, Int. J. Adv. Manuf. Technol. 
+104 (2019) 1051–1063, https://doi.org/10.1007/s00170-019-03906-9.
+[22] B. Kilundu, P. Dehombreux, X. Chiementin, Tool wear monitoring by machine 
+learning techniques and singular spectrum analysis, Mech. Syst. Sig. Process. 25 
+(2011) 400–415, https://doi.org/10.1016/j.ymssp.2010.07.014.
+[23] M. Elangovan, V. Sugumaran, K.I. Ramachandran, S. Ravikumar, Effect of SVM 
+kernel functions on classification of vibration signals of a single point cutting tool, 
+Expert Syst. Appl. 38 (2011) 15202–15207, https://doi.org/10.1016/j. 
+eswa.2011.05.081.
+[24] M. Elangovan, S.B. Devasenapati, N.R. Sakthivel, K.I. Ramachandran, Evaluation of 
+expert system for condition monitoring of a single point cutting tool using principle 
+component analysis and decision tree algorithm, Expert Syst. Appl. 38 (2011) 
+4450–4459, https://doi.org/10.1016/j.eswa.2010.09.116.
+[25] M. Hassan, A. Sadek, M.H. Attia, V. Thomson, A novel generalized approach for 
+real-time tool condition monitoring, J. Manuf. Sci. Eng. 140 (2018) 021010, 
+https://doi.org/10.1115/1.4037553.
+[26] J. Ou, H. Li, G. Huang, G. Yang, Intelligent analysis of tool wear state using stacked 
+denoising autoencoder with online sequential-extreme learning machine, 
+Measurement 167 (2021) 108153, https://doi.org/10.1016/j. 
+measurement.2020.108153.
+[27] K. Zhu, Y.S. Wong, G.S. Hong, Multi-category micro-milling tool wear monitoring 
+with continuous hidden markov models, Mech. Syst. Sig. Process. 23 (2009) 
+547–560, https://doi.org/10.1016/j.ymssp.2008.04.010.
+[28] C. Wang, B. Shen, Auxiliary input-enhanced siamese neural network: a robust tool 
+wear prediction framework with improved feature extraction and generalization 
+ability, Mech. Syst. Sig. Process. 211 (2024) 111243, https://doi.org/10.1016/j. 
+ymssp.2024.111243.
+[29] B. Qin, Y. Wang, K. Liu, S. Jiang, Q. Luo, A novel online tool condition monitoring 
+method for milling titanium alloy with consideration of tool wear law, Mech. Syst. 
+Sig. Process. 199 (2023) 110467, https://doi.org/10.1016/j.ymssp.2023.110467.
+[30] Z. Huang, W. Li, J. Zhu, L. Wang, Cross-domain tool wear condition monitoring via 
+residual attention hybrid adaptation network, J. Manuf. Syst. 72 (2024) 406–423, 
+https://doi.org/10.1016/j.jmsy.2023.12.003.
+[31] Y. Zou, K. Ding, K. Shi, X. Lai, K. Zhang, G. Ding, G. Qin, Wear identification of end 
+mills based on a feature-weighted convolutional neural network under unbalanced 
+samples, J. Manuf. Process. 89 (2023) 64–76, https://doi.org/10.1016/j. 
+jmapro.2023.01.054.
+[32] Y. Peng, Q. Song, R. Wang, X. Yang, Z. Liu, Z. Liu, A tool wear condition 
+monitoring method for non-specific sensing signals, Int. J. Mech. Sci. 263 (2024) 
+108769, https://doi.org/10.1016/j.ijmecsci.2023.108769.
+[33] H. Wang, S. Wang, W. Sun, J. Xiang, Multi-sensor signal fusion for tool wear 
+condition monitoring using denoising transformer auto-encoder Resnet, J. Manuf. 
+Process. 124 (2024) 1054–1064, https://doi.org/10.1016/j.jmapro.2024.07.002.
+[34] Z. Tao, Q. An, G. Liu, M. Chen, A novel method for tool condition monitoring based 
+on long short-term memory and hidden Markov model hybrid framework in high- 
+speed milling Ti-6Al-4V, Int. J. Adv. Manuf. Technol. 105 (2019) 3165–3182, 
+https://doi.org/10.1007/s00170-019-04464-w.
+[35] R. Li, P. Wei, X. Liu, C. Li, J. Ni, W. Zhao, L. Zhao, K. Hou, Cutting tool wear state 
+recognition based on a channel-space attention mechanism, J. Manuf. Syst. 69 
+(2023) 135–149, https://doi.org/10.1016/j.jmsy.2023.06.010.
+[36] P. Wei, R. Li, X. Liu, H. Gao, M. Dai, Y. Zhang, W. Zhao, E. Liu, Research on tool 
+wear state identification method driven by multi-source information fusion and 
+multi-dimension attention mechanism, Rob. Comput. Integr. Manuf. 88 (2024) 
+102741, https://doi.org/10.1016/j.rcim.2024.102741.
+[37] S. Dong, Y. Meng, S. Yin, X. Liu, Tool wear state recognition study based on an MTF 
+and a vision transformer with a Kolmogorov-Arnold network, Mech. Syst. Sig. 
+Process. 228 (2025) 112473, https://doi.org/10.1016/j.ymssp.2025.112473.
+[38] J. Zhou, G. Cui, S. Hu, Z. Zhang, C. Yang, Z. Liu, L. Wang, C. Li, M. Sun, Graph 
+neural networks: a review of methods and applications, AI Open 1 (2020) 57–81, 
+https://doi.org/10.1016/j.aiopen.2021.01.001.
+[39] T.N. Kipf, M. Welling, Semi-supervised classification with graph convolutional 
+networks, (2017), Doi: 10.48550/arXiv.1609.02907.
+F. Cao et al.                                                                                                                                                                                                                                      
+Measurement 257 (2026) 119007 
+22 
+
+===== PAGE 23 =====
+[40] T. Li, Z. Zhou, S. Li, C. Sun, R. Yan, X. Chen, The emerging graph neural networks 
+for intelligent fault diagnostics and prognostics: a guideline and a benchmark 
+study, Mech. Syst. Sig. Process. 168 (2022) 108653, https://doi.org/10.1016/j. 
+ymssp.2021.108653.
+[41] X. Wang, J. Yan, X. Xu, A novel dynamic spatio-temporal graph based condition 
+monitoring framework for consistency retention of digital twin, J. Manuf. Syst. 79 
+(2025) 455–465, https://doi.org/10.1016/j.jmsy.2025.01.006.
+[42] Y. Zhou, R. Li, T. Xia, F. Zhang, D. Wang, L. Xi, Hierarchical temporal-modal 
+synchronous fusion framework for tool wear recognition with multimodal 
+monitoring data integrating uncertainty quantification, J. Manuf. Process. 149 
+(2025) 964–986, https://doi.org/10.1016/j.jmapro.2025.06.008.
+[43] J. Wu, D. He, Z. Jin, M. Zhao, X. Li, Y. Chen, Multi-view fully connected graph to 
+fuse multi-sensor signals for mechanical equipment remaining useful life 
+prediction, J. Manuf. Syst. 80 (2025) 1029–1052, https://doi.org/10.1016/j. 
+jmsy.2025.05.009.
+[44] Y. Zhou, G. Zhi, W. Chen, Q. Qian, D. He, B. Sun, W. Sun, A new tool wear 
+condition monitoring method based on deep learning under small samples, 
+Measurement 189 (2022) 110622, https://doi.org/10.1016/j. 
+measurement.2021.110622.
+[45] H. Liu, D. Yang, X. Liu, X. Chen, Z. Liang, H. Wang, Y. Cui, J. Gu, TodyNet: 
+temporal dynamic graph neural network for multivariate time series classification, 
+Inf. Sci. 677 (2024) 120914, https://doi.org/10.1016/j.ins.2024.120914.
+[46] Z. Ma, M. Zhao, X. Dai, Y. Chen, A hybrid-driven probabilistic state space model for 
+tool wear monitoring, Mech. Syst. Sig. Process. 200 (2023) 110599, https://doi. 
+org/10.1016/j.ymssp.2023.110599.
+[47] Z. Xue, N. Chen, Y. Wu, Y. Yang, L. Li, Hierarchical temporal transformer network 
+for tool wear state recognition, Adv. Eng. Inf. 58 (2023) 102218, https://doi.org/ 
+10.1016/j.aei.2023.102218.
+[48] A. Vaswani, N. Shazeer, N. Parmar, J. Uszkoreit, L. Jones, A.N. Gomez, L. Kaiser, I. 
+Polosukhin, Attention is all you need, (2023). Doi: 10.48550/arXiv.1706.03762.
+[49] Y. Yin, S. Wang, J. Zhou, Multisensor-based tool wear diagnosis using 1D-CNN and 
+DGCCA, Appl. Intell. 53 (2023) 4448–4461, https://doi.org/10.1007/s10489-022- 
+03773-0.
+[50] L. Dong, C. Wang, G. Yang, Z. Huang, Z. Zhang, C. Li, An improved resNet-1d with 
+channel attention for tool wear monitor in smart manufacturing, Sensors 23 (2023) 
+1240, https://doi.org/10.3390/s23031240.
+[51] T.N. Kipf, M. Welling, Semi-supervised classification with graph convolutional 
+networks, (2017). Doi: 10.48550/arXiv.1609.02907.
+[52] F. Wu, T. Zhang, A.H. de S. Jr, C. Fifty, T. Yu, K.Q. Weinberger, Simplifying graph 
+convolutional networks, (2019). Doi: 10.48550/arXiv.1902.07153.
+[53] P. Veliˇckovi´c, G. Cucurull, A. Casanova, A. Romero, P. Li`o, Y. Bengio, Graph 
+attention networks, (2018). Doi: 10.48550/arXiv.1710.10903.
+[54] K. Xu, W. Hu, J. Leskovec, S. Jegelka, How powerful are graph neural networks?, 
+(2019). Doi: 10.48550/arXiv.1810.00826.
+[55] G. Li, Y. Wang, J. He, Q. Hao, H. Yang, J. Wei, Tool wear state recognition based on 
+gradient boosting decision tree and hybrid classification RBM, Int. J. Adv. Manuf. 
+Technol. 110 (2020) 511–522, https://doi.org/10.1007/s00170-020-05890-x.
+[56] G. Martínez-Arellano, G. Terrazas, S. Ratchev, Tool wear classification using time 
+series imaging and deep learning, Int. J. Adv. Manuf. Technol. 104 (2019) 
+3647–3662, https://doi.org/10.1007/s00170-019-04090-6.
+F. Cao et al.                                                                                                                                                                                                                                      
+Measurement 257 (2026) 119007 
+23 

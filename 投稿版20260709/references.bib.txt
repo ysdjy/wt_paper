@@ -1,0 +1,431 @@
+@article{bernini2023mill,
+  title={Mill condition monitoring based on instantaneous identification of specific force coefficients under variable cutting conditions},
+  author={Bernini, Luca and Albertelli, Paolo and Monno, Michele},
+  journal={Mechanical Systems and Signal Processing},
+  volume={185},
+  pages={109820},
+  year={2023},
+  publisher={Elsevier}
+}
+
+@article{bernini2024hybrid,
+  title={Hybrid prognostics to estimate cutting inserts remaining useful life based on direct wear observation},
+  author={Bernini, Luca and Malguzzi, Ugo and Albertelli, Paolo and Monno, Michele},
+  journal={Mechanical Systems and Signal Processing},
+  volume={210},
+  pages={111163},
+  year={2024},
+  publisher={Elsevier}
+}
+
+@article{cao2025research,
+  title={Research on dynamic graph isomorphism network for tool wear stage monitoring based on multi-source information fusion},
+  author={Cao, Fangcun and Zhang, Xing and Zhang, Zejiang and Wen, Lidong and Chang, Tongyu},
+  journal={Measurement},
+  pages={119007},
+  year={2025},
+  publisher={Elsevier}
+}
+
+@article{cheng2026mutual,
+  title={Mutual information-guided causal feature selection method for quality prediction of complex products},
+  author={Cheng, Jiali and Wang, Yan and Li, Bin and Cai, Zhiqiang and Si, Shubin},
+  journal={Reliability Engineering \& System Safety},
+  pages={112536},
+  year={2026},
+  publisher={Elsevier}
+}
+
+@article{cheng2022intelligent,
+  title={Intelligent tool wear monitoring and multi-step prediction based on deep learning model},
+  author={Cheng, Minghui and Jiao, Li and Yan, Pei and Jiang, Hongsen and Wang, Ruibin and Qiu, Tianyang and Wang, Xibin},
+  journal={Journal of Manufacturing Systems},
+  volume={62},
+  pages={286--300},
+  year={2022},
+  publisher={Elsevier}
+}
+
+@article{dong2026tool,
+  title={Tool Wear Trend Prediction Using Acoustic Emission Signals: A Composite Multiscale Fractional Diversity Entropy Approach},
+  author={Dong, Xinfeng and Liu, Shiying and Li, Xinyong and Zhang, Lei and Zhao, Fu and Chen, SiYu and Tian, Xiaoqing and Gao, Weiwei and Zhang, Li},
+  journal={Results in Engineering},
+  pages={110719},
+  year={2026},
+  publisher={Elsevier}
+}
+
+@article{feng2026hybrid,
+  title={A hybrid model for tool wear monitoring via physics-based and data-driven utilizing unscented Kalman Filter},
+  author={Feng, Chunhua and Ye, Hui and Li, Weidong and Huang, Zhiwen and Li, Ming and Chen, Jiaqi and Xu, Xun},
+  journal={Advanced Engineering Informatics},
+  volume={72},
+  pages={104448},
+  year={2026},
+  publisher={Elsevier}
+}
+
+@article{han2026online,
+  title={Online dynamic parameter calibration of a physics-driven hybrid model for tool wear prediction},
+  author={Han, Zhiming and Luo, Weichao and Liang, Xiaojun and Yang, Chunhua and Gui, Weihua and Wang, Xiaohao and Zhang, Min},
+  journal={Journal of Manufacturing Systems},
+  volume={86},
+  pages={676--693},
+  year={2026},
+  publisher={Elsevier}
+}
+
+@article{heydarlou2026machine,
+  title={On-machine tool wear monitoring system using strain-gauge signals and edge force coefficients with physics-informed machine learning},
+  author={Heydarlou, Mahdi Mohamadyari and Araghizad, Arash Ebrahimi and Yamada, Yuki and Boujnah, Haythem and Irino, Naruhiro and Budak, Erhan},
+  journal={CIRP Annals},
+  year={2026},
+  publisher={Elsevier}
+}
+
+@article{huang2026cascaded,
+  title={Cascaded self-attention hybrid model for synergistic prediction of tool wear and classification of surface roughness in the turning process},
+  author={Huang, Jiadong and Liu, Kuo and Jiang, Yeming and Niu, Mengmeng and Wang, Xingzhe and Liu, Haibo and Wang, Yongqing},
+  journal={Mechanical Systems and Signal Processing},
+  volume={244},
+  pages={113785},
+  year={2026},
+  publisher={Elsevier}
+}
+
+@article{ismail2022quality,
+  title={Quality monitoring in multistage manufacturing systems by using machine learning techniques},
+  author={Ismail, Mohamed and Mostafa, Noha A and El-Assal, Ahmed},
+  journal={Journal of intelligent manufacturing},
+  volume={33},
+  number={8},
+  pages={2471--2486},
+  year={2022},
+  publisher={Springer}
+}
+
+@article{jin2026research,
+  title={Research on transfer monitoring model of tool wear driven by adaptive signal processing and multimodal feature fusion},
+  author={Jin, Shenhua and Cheng, Yaonan and Zhai, Wenjie and Zhou, Xingwei and Xue, Jing},
+  journal={Measurement},
+  pages={121688},
+  year={2026},
+  publisher={Elsevier}
+}
+
+@article{li2025enhancing,
+  title={Enhancing random surface anomaly detection in real-world using a four-stage one-class approach},
+  author={Li, Pulin and Wu, Guocheng and Zhou, Yanjie and Leng, Jiewu},
+  journal={Pattern Recognition Letters},
+  volume={194},
+  pages={32--40},
+  year={2025},
+  publisher={Elsevier}
+}
+
+@article{li2023steps,
+  title={A steps-ahead tool wear prediction method based on support vector regression and particle filtering},
+  author={Li, Yuxiong and Huang, Xianzhen and Tang, Jiwu and Li, Shangjie and Ding, Pengfei},
+  journal={Measurement},
+  volume={218},
+  pages={113237},
+  year={2023},
+  publisher={Elsevier}
+}
+
+@article{li2025novel,
+  title={A novel physics-informed model for tool wear monitoring under multi-machining conditions},
+  author={Li, Ziteng and You, Zhichao and Gu, Dongyun and Zhang, Zhichao and Ding, Fei and Qiao, Zheng and Wu, Yangong and Wang, Bo},
+  journal={Measurement},
+  pages={119191},
+  year={2025},
+  publisher={Elsevier}
+}
+
+@article{liu2026physics,
+  title={Physics-informed multi-task heterogeneous transfer learning network for robust milling tool wear and RUL prediction under anomalous data conditions},
+  author={Liu, Jinrui and Wang, Pei and Zhou, Kesong and Wang, Qinfeng and Wang, Hui},
+  journal={Journal of Manufacturing Systems},
+  volume={84},
+  pages={403--425},
+  year={2026},
+  publisher={Elsevier}
+}
+
+@article{ma2023hybrid,
+  title={A hybrid-driven probabilistic state space model for tool wear monitoring},
+  author={Ma, Zhipeng and Zhao, Ming and Dai, Xuebin and Chen, Yang},
+  journal={Mechanical Systems and Signal Processing},
+  volume={200},
+  pages={110599},
+  year={2023},
+  publisher={Elsevier}
+}
+
+@article{mei2026novel,
+  title={A novel multi-task sequential network integrating wear information for tool breakage monitoring},
+  author={Mei, Shenping and Mo, Xuandong and Xia, Mingyuan and Hu, Xiaofeng},
+  journal={Advanced Engineering Informatics},
+  volume={71},
+  pages={104342},
+  year={2026},
+  publisher={Elsevier}
+}
+
+@article{mo2025semi,
+  title={Semi-supervised multi-task learning approach for simultaneously monitoring tool wear and breakage using reliable pseudo-labels},
+  author={Mo, Xuandong and Mei, Shenping and Hu, Xiaofeng},
+  journal={Journal of Manufacturing Processes},
+  volume={149},
+  pages={610--631},
+  year={2025},
+  publisher={Elsevier}
+}
+
+@article{niu2025semi,
+  title={A semi-supervised learning method combining tool wear laws for machining tool wear states monitoring},
+  author={Niu, Mengmeng and Liu, Kuo and Wang, Yongqing},
+  journal={Mechanical Systems and Signal Processing},
+  volume={224},
+  pages={112032},
+  year={2025},
+  publisher={Elsevier}
+}
+
+@article{peng2026novel,
+  title={A novel tool wear and remaining useful life prediction network based on multi-scale time--frequency information of milling force},
+  author={Peng, Chao and Zheng, Jianming and Chen, Ting and Shi, Yuhua and Guo, Liang and Jing, Zhangshuai and Wang, Zhenyu},
+  journal={Mechanical Systems and Signal Processing},
+  volume={244},
+  pages={113763},
+  year={2026},
+  publisher={Elsevier}
+}
+
+@article{peng2026frequency,
+  title={Frequency-aware and bionic-aligned collaborative modeling for cross-domain tool wear monitoring under small-sample conditions},
+  author={Peng, Yezhen and Kang, Weimin and Hu, Qirui and Yu, Fengwen and Zhou, Wenhong and Yao, Xinhua and Luan, Congcong and Hu, Songyu and Fu, Jianzhong},
+  journal={Journal of Manufacturing Systems},
+  volume={84},
+  pages={223--241},
+  year={2026},
+  publisher={Elsevier}
+}
+
+@article{qiang2023integrating,
+  title={Integrating physics-informed recurrent Gaussian process regression into instance transfer for predicting tool wear in milling process},
+  author={Qiang, Biyao and Shi, Kaining and Liu, Ning and Ren, Junxue and Shi, Yaoyao},
+  journal={Journal of Manufacturing Systems},
+  volume={68},
+  pages={42--55},
+  year={2023},
+  publisher={Elsevier}
+}
+
+@article{qin2026tool,
+  title={A tool wear state monitoring method for SSAE based on mechanism prior weight adaptation},
+  author={Qin, Yiyuan and Liu, Xianli and Huang, Lihang and Zhang, Anshan and Yue, Caixu and Liu, Zhifeng},
+  journal={Robotics and Computer-Integrated Manufacturing},
+  volume={101},
+  pages={103316},
+  year={2026},
+  publisher={Elsevier}
+}
+
+@article{shang2014lasso,
+  title={LASSO-based diagnosis scheme for multistage processes with binary data},
+  author={Shang, Yanfen and Zi, Xuemin and Tsung, Fugee and He, Zhen},
+  journal={Computers \& Industrial Engineering},
+  volume={72},
+  pages={198--205},
+  year={2014},
+  publisher={Elsevier}
+}
+
+@article{su2026data,
+  title={A data-driven multi-stage framework for optimization of machining parameters in TC4 turning against cemented carbide tool wear evolution},
+  author={Su, Zebin and Yang, Yesong and He, Lin and Tian, Pengfei and Yang, Jindou and others},
+  journal={Materials Today Communications},
+  pages={114936},
+  year={2026},
+  publisher={Elsevier}
+}
+
+@article{tang2026research,
+  title={Research on multi-sensor tool wear monitoring based on an improved hidden Markov model},
+  author={Tang, Haotian and Liu, Weiwei and Li, Linguang and Guo, Jiang},
+  journal={Procedia CIRP},
+  volume={139},
+  pages={304--312},
+  year={2026},
+  publisher={Elsevier}
+}
+
+@article{wang2025mechanism,
+  title={Mechanism-driven data model for tool condition monitoring},
+  author={Wang, Shuo and Li, Shenshen and Lin, Xin and Shi, Yungao and Zhu, Kunpeng},
+  journal={Mechanical Systems and Signal Processing},
+  volume={237},
+  pages={113042},
+  year={2025},
+  publisher={Elsevier}
+}
+
+@article{wang2025physics,
+  title={Physics-informed self-supervised learning for tool wear monitoring leveraging signal and degradation features under limited labels},
+  author={Wang, Zhenchi and Lu, Yong and Deng, Kenan and Liang, Junran and Gao, Dong},
+  journal={Advanced Engineering Informatics},
+  volume={67},
+  pages={103503},
+  year={2025},
+  publisher={Elsevier}
+}
+
+@article{wang2025physics,
+  title={Physics-informed Gaussian process regression for tool wear monitoring with uncertainty quantification},
+  author={Wang, Zenghui and Zhou, Guanghui and Zhang, Chao and Xiao, Qinge and Zio, Enrico},
+  journal={Reliability Engineering \& System Safety},
+  pages={111984},
+  year={2025},
+  publisher={Elsevier}
+}
+
+@article{xin2026multi,
+  title={Multi-task hierarchical domain adaptation multi-expert attention network for cross-domain tool wear monitoring and remaining useful life estimation},
+  author={Xin, Junbo and Huang, Hua and Wu, Yadong and Ren, Yapeng and Wang, Keren and Zhang, Zixiang},
+  journal={Computers \& Industrial Engineering},
+  pages={112114},
+  year={2026},
+  publisher={Elsevier}
+}
+
+@article{xu2025deep,
+  title={Deep-learning-driven intelligent tool wear identification of high-precision machining with multi-scale CNN-BiLSTM-GCN},
+  author={Xu, Zhicheng and Zhang, Baolong and Fan, Louis Luo and Yan, Edward Hengzhou and Li, Dongfang and Zhao, Zejia and Yip, Wai Sze and To, Suet},
+  journal={Advanced Engineering Informatics},
+  volume={65},
+  pages={103234},
+  year={2025},
+  publisher={Elsevier}
+}
+
+@article{ye2025multivariate,
+  title={Multivariate failure prognosis of cutting tools under heterogeneous operating conditions},
+  author={Ye, Zhenggeng and Wang, Le and Yang, Hui and Cai, Zhiqiang},
+  journal={Advanced Engineering Informatics},
+  volume={65},
+  pages={103198},
+  year={2025},
+  publisher={Elsevier}
+}
+
+@article{yang2026simultaneous,
+  title={Simultaneous tool wear condition and surface roughness prediction under limited samples},
+  author={Yang, Hanbo and Jiang, Gedong and Tian, Wenwen and Mei, Xuesong and Nee, AYC and Ong, SK},
+  journal={Journal of Manufacturing Processes},
+  volume={157},
+  pages={912--921},
+  year={2026},
+  publisher={Elsevier}
+}
+
+@article{yang2026intelligent,
+  title={Intelligent tool wear monitoring approach in milling of titanium alloys},
+  author={Yang, Shucai and Jiang, Runjie and Song, Zekun and Yu, Dongqi},
+  journal={Robotics and Computer-Integrated Manufacturing},
+  volume={98},
+  pages={103181},
+  year={2026},
+  publisher={Elsevier}
+}
+
+@article{yue2026research,
+  title={Research on tool wear monitoring based on digital twin and contrastive learning},
+  author={Yue, Caixu and Yue, Zongcheng and Lu, Yao and Liu, Xianli and Liu, Zhifeng},
+  journal={Journal of Manufacturing Systems},
+  volume={86},
+  pages={1272--1289},
+  year={2026},
+  publisher={Elsevier}
+}
+
+@article{zhang2025tool,
+  title={Tool wear prediction with few samples based on stacked BiLSTM and parallel residuals with multi-head self-attention},
+  author={Zhang, Hao and Yang, Weikun and Xu, Weiyang and Wu, Chenchen and Ma, Junwen and Liu, Jianglong and He, Jialong},
+  journal={Measurement},
+  pages={119078},
+  year={2025},
+  publisher={Elsevier}
+}
+
+@article{zhang2026pi,
+  title={PI-KAF: A physics-informed constrained online interpretable monitoring method for tool wear},
+  author={Zhang, Liguo and Song, Qinghua and Ma, Haifeng and Liu, Zhanqiang},
+  journal={Journal of Manufacturing Systems},
+  volume={84},
+  pages={135--151},
+  year={2026},
+  publisher={Elsevier}
+}
+
+@article{zhang2026tool,
+  title={Tool wear monitoring and multi-step forecasting in deep hole boring based on physics-informed neural network and ARIMA model},
+  author={Zhang, Pengfei and Zhao, Hanxiao and Sun, Chao and Li, Ang and Zhang, Hongzhe and Sugita, Naohiko and Shu, Liming},
+  journal={Mechanical Systems and Signal Processing},
+  volume={249},
+  pages={114078},
+  year={2026},
+  publisher={Elsevier}
+}
+
+@article{zhao2026towards,
+  title={Towards interpretable foreknowledge with multimodal information fusion: Physical-knowledge inspired time-varying tool wear intelligent prediction},
+  author={Zhao, Shengqiang and Peng, Fangyu and Hao, Xiuqing and He, Ning and Su, Juntong and Chen, Ni and Zhao, Guolong and Yang, Yinfei and Zhang, Yunfeng and Wang, Hao},
+  journal={Journal of Manufacturing Systems},
+  volume={86},
+  pages={435--455},
+  year={2026},
+  publisher={Elsevier}
+}
+
+@article{zhou2025online,
+  title={An Online Cutting Tool Wear Monitoring Method Based on the Integration of DSCNN and Pre-training/Fine-tuning Transfer Learning},
+  author={Zhou, Tingting and Xing, Chao and Hu, Tianliang and Meng, Lingpeng and Chen, Zhaoqiang and Xiao, Guangchun and Zhang, Min and Xu, Chonghai},
+  journal={Digital Engineering},
+  pages={100085},
+  year={2025},
+  publisher={Elsevier}
+}
+
+@article{zhou2025hierarchical,
+  title={Hierarchical temporal-modal synchronous fusion framework for tool wear recognition with multimodal monitoring data integrating uncertainty quantification},
+  author={Zhou, Yujun and Li, Rourou and Xia, Tangbin and Zhang, Fengqi and Wang, Dong and Xi, Lifeng},
+  journal={Journal of Manufacturing Processes},
+  volume={149},
+  pages={964--986},
+  year={2025},
+  publisher={Elsevier}
+}
+
+@article{zhu2024physics,
+  title={Physics-informed hidden markov model for tool wear monitoring},
+  author={Zhu, Kunpeng and Li, Xin and Li, Shenshen and Lin, Xin},
+  journal={Journal of Manufacturing Systems},
+  volume={72},
+  pages={308--322},
+  year={2024},
+  publisher={Elsevier}
+}
+
+@article{zhu2026enhancing,
+  title={Enhancing tool wear state identification in imbalanced and small sample scenarios through conservative adaptive synthetic sampling},
+  author={Zhu, Yunwei and Huang, Haisong and Yi, Junhui and Liao, Zihao and Li, Manman},
+  journal={Engineering Applications of Artificial Intelligence},
+  volume={177},
+  pages={114797},
+  year={2026},
+  publisher={Elsevier}
+}
+
+
+

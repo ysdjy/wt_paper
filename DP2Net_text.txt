@@ -1,0 +1,763 @@
+
+===== PAGE 1 =====
+Mechanical Systems and Signal Processing 215 (2024) 111421
+Available online 15 April 2024
+0888-3270/© 2024 Elsevier Ltd. All rights reserved.
+DP2Net: A discontinuous physical property-constrained 
+single-source domain generalization network for tool wear 
+state recognition 
+Xuwei Lai a, Kai Zhang a,b,*, Qing Zheng a,b, Minghang Zhao c, Guofu Ding a,b, 
+Baoping Tang d, Zisheng Li e 
+a School of Mechanical Engineering, Southwest Jiaotong University, Chengdu 610031, China 
+b Technology and Equipment of Rail Transit Operation and Maintenance Key Laboratory of Sichuan Province, Southwest Jiaotong University, 
+Chengdu 610031, China 
+c School of Ocean Engineering, Harbin Institute of Technology at Weihai, Weihai 264209, China 
+d College of Mechanical Engineering, Chongqing University, Chongqing 400044, China 
+e School of Manufacturing Science and Engineering, Southwest University of Science and Technology, Mianyang 621010, China   
+A R T I C L E I N F O  
+Keywords: 
+Single-domain generalization 
+Physic property 
+Tool wear 
+A B S T R A C T  
+Cross-conditions tool wear monitoring has a wide application prospect in manufacturing. How­
+ever, the data distribution discrepancies caused by the inconsistency of process elements restrict 
+the generalization of models under cross-conditions or even similar conditions. The existing 
+methods based on diversity enhancement make it difficult to effectively establish the correlation 
+between the source domain and target domains, which limits the improvement of model gener­
+alization. Therefore, this paper details the cause of data distribution discrepancies and proposes a 
+discontinuous physical property-constrained single-source domain generalization network for 
+milling tool wear monitoring. Firstly, a spatial attention mechanism is introduced to weight key 
+signal segments adaptively. Secondly, the generation module is constrained by a standard sample 
+and is used to generate diverse samples with physical properties. Thirdly, extensive recognition 
+experiments on an open dataset and machining experiments with three distribution discrepancy 
+levels were conducted to verify the effectiveness of the proposed method. Finally, feature visu­
+alizations provide consistency and interpretability.   
+1. Introduction 
+Tools are the key executors of machine tools, known as the teeth of the manufacturing industry. They are always in a continuous 
+wear state, and their excessive wear will deteriorate product quality and equipment performance, increase manufacturing costs, and 
+even cause unsafe accidents [1]. Real-time and precise tool wear monitoring has always been crucial in modern manufacturing. 
+Industrial cameras and other direct measuring techniques accurately assess tool wear under any working conditions, but the 
+machining must be paused, significantly reducing production efficiency. Experiments under specific conditions determine the key 
+parameters of traditional physical [2] or statistical models, so the generalization is challenging to meet the practical application. At 
+* Corresponding author at: School of Mechanical Engineering, Southwest Jiaotong University, Chengdu 610031, China. 
+E-mail address: zhangkai@swjtu.edu.cn (K. Zhang).  
+Contents lists available at ScienceDirect 
+Mechanical Systems and Signal Processing 
+journal homepage: www.elsevier.com/locate/ymssp 
+https://doi.org/10.1016/j.ymssp.2024.111421 
+Received 10 December 2023; Received in revised form 24 March 2024; Accepted 9 April 2024   
+
+===== PAGE 2 =====
+Mechanical Systems and Signal Processing 215 (2024) 111421
+2
+present, the data-driven approach represented by deep learning (DL) has attracted the common attention of academia and industry 
+[34]. DL aims to establish a nonlinear mapping relationship between the physical signal and the tool wear in a high-dimensional space. 
+Xue et al. [5] carried out interactive weighting of the features of different channel monitoring signals with the channel attention 
+mechanism and convolutional neural network, effectively improving the accuracy of tool wear state recognition. Liu et al. [6] proposed 
+a multi-input parallel convolution structure for multi-scale feature extraction of signals from different sensors during milling and 
+adaptive differentiation of the importance of different signals. Guo et al. [7] explored a mechanism-guided interpretable tool wear 
+monitoring DL model. Zhou et al. [8] conducted a study on small sample scenarios in tool wear monitoring. Zou et al. [9] discussed 
+sample imbalance in tool wear monitoring. Qiang et al. [10] improved the generalization of the tool wear monitoring model based on 
+transfer learning (TL) with limited target domain data. Leon et al. [11] provide a comprehensive review of relevant methods. 
+With the development of manufacturing technology and the change in production mode, the structure and material of tools and the 
+machining conditions are increasingly complicated and varied, which undoubtedly challenge the generalization of tool wear state 
+monitoring methods. Traditional DL relies on the assumption of independent and identical distribution (i.i.d.). That means there are no 
+data distribution discrepancies (DDD) between the historical data used for model training and the data to be inferred. This assumption 
+is not consistent with the actual situation. As shown in Fig. 1, TL imparts knowledge, such as target domain data/features, into the 
+model in the training process, allowing the model parameters to update under pre-adaptation to the data distribution to be inferred 
+[12]. TL greatly improves the generalization performance of the model on target domains. However, it is uncertain whether the TL 
+model can be used for data outside of the predetermined target domains [13]. At the same time, a basic demand for a tool wear 
+monitoring model is that the model trained on the data of the tool-cutting processes can be applied to other tools of the same type under 
+exactly the same or slightly different conditions. TL methods have difficulty meeting the actual processing requirements for the reason 
+that they need a target distribution in advance in the model training process. 
+In recent years, domain generalization (DG) has attracted much attention from scholars in DL-related fields. The aim is to train the 
+model using existing source domain (SD) data and test it on target domain (TD) data with unknown distribution. This is highly 
+consistent with the actual needs of many industries. Ren et al. [14] proposed domain-invariant feature fusion networks (DIFFN) fusing 
+intra-domain and inter-domain invariant features to improve the model generalization under unknown target conditions. Ren et al. 
+[15] proposed domain fuzzy generalization networks (DFGN) with domain fuzzy and metric learning strategies, enhancing the ca­
+pabilities of learning domain-invariant and discriminative features. Recently, the emergence of attention-based DG has stimulated 
+interest in new architectures. Attention mechanisms can achieve adaptive weighting of high-value spatial/channel/time/branch 
+through dynamic adjustment and obtain more relevant information to the task [16]. A large number of scholars have carried out 
+research on DG based on attention mechanisms. Ng et al. [17] proposed a channel-wise and spatial-wise hybrid domain attention 
+mechanism that achieved domain generalization on several datasets. Hua et al. [18] captured the critical features of fundus images in 
+channel, position, and spatial regions with a multi-scale attention mechanism. In fault diagnosis, attention mechanisms have also been 
+Fig. 1. Illustration of traditional DL, TL, MSDG, and SSDG.  
+X. Lai et al.                                                                                                                                                                                                             
+
+===== PAGE 3 =====
+Mechanical Systems and Signal Processing 215 (2024) 111421
+3
+proven to improve model generalization [1920]. 
+In this work, as shown in Fig. 1, DG is divided into multi-source domain generalization (MSDG) and single-source domain 
+generalization (SSDG) according to [21], that is, the number of domains involved during model training. Shen et al. [13] introduced a 
+domain generalization network combing invariance and specificity, employing a knowledge extraction branch for domain invariant 
+features via correlation alignment and triplet losses and a similarity indication branch for diagnostic decisions by selectively 
+combining prediction scores based on similarities. Shi et al. [22] proposed a reliable feature-assisted contrastive generalization net that 
+learns device-independent knowledge and enhances generalization with a feature-assisted module. Li et al. [23] applied domain 
+enhancement, utilizing adversarial training for domain-invariant features. Li et al. [1] proposed a semi-supervised multi-source meta- 
+domain generalization method for tool wear state prediction. However, challenges remain in applying MSDG to practical engineering. 
+For instance, what level of DDD among multiple SDs is necessary to ensure the model’s generalization? How many SDs are necessary 
+for the model’s generalization, and for which classes of TDs is it effective? 
+For SSDG, the prevailing technological emphasis lies in expanding the data distribution in the SD with adversarial domain 
+enhancement [2425] or direct transformations of inputs. Wang et al. [26] proposed multi-scale style generative and adversarial 
+contrastive networks (MSG-CAN) with a multi-scale style generation strategy to ensure that the generated samples contain abundant 
+state information. Cugu et al. [27] argue that consistent interpretations should be provided when enhancing the SSDG. Under this 
+concept, different visual corruptions are used to corrupt the original input randomly and combined with the attention mechanism, 
+enhancing the model to pay attention to the same semantics through uniform loss of attention constraints to improve the model’s 
+generalization. Fan et al. [25] proposed an adaptive standardization and rescaling normalization. The impact on DG of the statistics of 
+normalization layers is studied. Bayasi et al. [28] proposed an additional network, BoosterNet, which can be directly added to any 
+network. With a unique feature culpability measure, BoosterNet is episodically trained on critical unit data features that contribute 
+most and least to class-specific prediction errors within the core network. Ouyang et al. [29] focused on intensities and texture- 
+acquisition shifts caused by different acquisition processes in medical images, taking a causal-inspired approach to data enhance­
+ment. In the industrial field, Zhao and Shen [30] proposed an adversarial mutual information-guided single-domain generalization 
+network (AMINet). Specifically, AMINet evaluates and minimizes mutual information upper bound using contrastive log-ratio to 
+generate samples with novel distributions. Oord et al. [31] assessed InfoNCE for mutual information lower bound, utilizing supervised 
+contrastive loss to maximize it. Ultimately, they achieved single-domain generalization-based fault diagnosis. 
+Existing SSDG methods increase the possibility of overlapping between SDs and TDs. However, these approaches exhibit 
+randomness, particularly in industrial signals such as tool wear monitoring. The challenge persists with slight degradation symptoms 
+and strong interference, further increasing the uncertainty of effective distribution expansion. Hence, a pivotal challenge addressed in 
+this paper is establishing the correlation between the generated domain (GD) and TD distribution while expanding data based on a 
+single SD. As consistent with the ideas of [27], this paper holds that the consistent interpretation between SD and TD should be 
+considered when data diversity enhancement is carried out. Therefore, this paper proposes a discontinuous physical property- 
+constrained SSDG network (DP2Net) for milling tool wear monitoring. A spatial attention mechanism [32] is used first to constrain 
+the discontinuous periodic physical properties in the signal. Then, diversity generation is carried out based on the features under this 
+constraint. Besides, a standard trend sample based on the milling discontinuity mechanism is introduced to constrain the physical 
+properties further. Finally, the attention-weighted and generated features are used to train together and improve the model’s 
+generalization. 
+The three main contributions of this article are summarized as follows.  
+1) The DDD in tool wear monitoring is defined, especially whether it exists under the same working condition, which is analyzed in 
+detail. This helps to determine which machining conditions the model is suitable for a TD in advance. According to our literature 
+search, this article is the first to define and address SSDG-based tool wear state monitoring.  
+2) A feature constraint and generation network that considers the consistent interpretation of features of both SD and TD called 
+DP2Net is proposed. The discontinuous periodic physical properties in milling establish the correlation among SD, GD, and TD. This 
+makes up for the lack of correlation between generated data distribution and TD based on SSDG. The generated features have the 
+same physical properties as the TD.  
+3) The generalization ability of the DP2Net under different DDD is analyzed through experiments. 
+The rest of this article is organized as follows. Section 2 details the DDD problem in tool wear. Section 3 describes the proposed 
+method in detail. Section 4 presents the experimental results and analyses. Finally, conclusions are drawn in Section 5. 
+2. Data distribution discrepancies in tool wear 
+In DL, the DDD refers to the metric discrepancy in the distribution fitted between the training and test data, also known as covariate 
+shift [33]. In this paper, a practical application-oriented question is put forward: which factors will lead to DDD? The existing defi­
+nition of DDD is based on statistics and is the measurement after the discrepancies are generated, cannot determine the cause of the 
+discrepancies in advance. As a result, the trained model cannot be determined for which scenarios to use effectively. 
+The situation of DDD in the tools wear monitoring task is analyzed to clearly state the problem to be solved. At present, for tool wear 
+monitoring, as shown in Eq. (1), whether the DDD exists mainly depends on whether the process elements (PE) such as equipment, tool 
+structure/materials, and workpieces change; that is, there will be significant discrepancies in data distribution across working con­
+ditions (changes in any PE). This is also the main scenario in the current academic field when discussing model generalization. 
+X. Lai et al.                                                                                                                                                                                                             
+
+===== PAGE 4 =====
+Mechanical Systems and Signal Processing 215 (2024) 111421
+4
+{ D = 0
+if : PEi = PEj
+D = 1
+if : PEi ∕= PEj
+(1)  
+where D refers to whether the DDD exists. When it is 1, it means they exist, while 0 means there is no discrepancy. The subscripts i and j 
+represent any process elements under different cutting tasks. PE is defined as follows: 
+PE =
+{
+M, T, W, Pp
+}
+(2)  
+where M refers to the machine tool, T refers to the tool, W refers to the workpiece, and Pp refers to the specific process parameters. 
+The DDD is essentially caused by different incentives for the tool wear process. Most existing studies believe that the data obey the 
+same distribution with the same equipment under the same working conditions [23]. That is when the PE of the processing task in Eq. 
+(2) does not change, it is considered that there is no DDD. Tools are usually mass-produced and mass-used in actual processing, even 
+with the same equipment and process parameters for cutting. In this case, the PE in Fig. 2 does not seem to be changed. However, the 
+actual situation is that the performance of the M is always in a slow decay process due to the wear and impact of the mechanical parts 
+[34]. At the same time, in each process, there are also W and T position errors [35]. In addition, even if the same type and batch of tools 
+are being manufactured, there will be geometric errors, resulting in inconsistent tool edge lines, spiral angles, and other geometric 
+parameters. 
+Therefore, in the actual processing scenario, PE is: 
+PE =
+{
+M(t), T(gt, pt), W(gw, pw), Pp
+}
+(3) 
+Fig. 2. DDD caused by process systems.  
+Fig. 3. Framework of proposed method.  
+X. Lai et al.                                                                                                                                                                                                             
+
+===== PAGE 5 =====
+Mechanical Systems and Signal Processing 215 (2024) 111421
+5
+where M(t) indicates that machine performance is a function of time. T(gt, pt) represents the tool’s geometric and position error. W(gw, 
+pw) represents the workpiece’s geometric and position errors. 
+The above factors are real in practice, but there is a lack of relevant technology to measure them comprehensively and accurately in 
+real-time. In short, the elements in Eq. (3) can never be consistent under different cutting tasks. In the tool wear monitoring task, the 
+DDD always exists. This phenomenon can be demonstrated by the performance of existing tool wear monitoring models [836]. Data 
+verification of this conclusion will be discussed in section 4. 
+To sum up, this paper aims to improve the generalization of the tool wear monitoring model, that is, the model trained with one 
+processing (source domain) data can be directly applied to other processings (target domains). 
+3. Proposed methods 
+The proposed method framework is shown in Fig. 3. It contains a discontinuous physical property-guided spatial attention module 
+S, a domain generation module G, and a feature extraction module F. 
+The proposed framework complies with the ideal of data-mechanism fusion. Specifically, the signal length corresponding to each 
+tooth is calculated by sampling rate, sindle speed, and number of teeth. and the result is used as the design criterion of the con­
+volutional kernel in module S. This is for extracting the signal fragment corresponding to each tooth (that is, related to wear) in the 
+signal. A similar design is carried out for the convolution kernel in module G. In addition, a standard trend vector is constructed to 
+constrain the GD according to the axial cutting depth in the process parameters, the tool structure parameters (diameter, helix angle, 
+number of teeth), and the physical properties of the monotonically increasing wear trend. 
+3.1. Cross-domain consistency constraints: Discontinuous physical property-guided spatial attention module 
+As mentioned in the introduction, it is difficult to establish the correlation between the SD and the TD due to the lack of specific 
+information on the TD. As a result, the GD has strong randomness and lack of interpretability. This work proposes a cross-domain 
+consistency constraint method based on discontinuous physical properties to guide spatial attention [32]. Specifically, the method 
+mainly calculates the data distribution formed by the contact between the milling tool flank and the workpiece through the tool 
+structure parameters and process parameters. This result is taken as the size of the convolution kernel, which is calculated as follows: 
+k =
+(fs* 60
+Nspeed)/n
+kpool
+(4)  
+where fs is the sampling frequency of raw signals (Hz), Nspeed is spindle speed (RPM), n is the number of teeth, and kpool is the kernel size 
+and stride set for the first average pooling layer. 
+For milling processing, each tooth is gradually in contact with the workpiece. That is, the signal obtained by the tool rotation of one 
+circle can be divided into n segments according to the number of teeth (n), and each segment also contains the corresponding signal of 
+the groove (not flank). Eq. (4) calculates the corresponding signal segment of each tooth after downsampling. The result of Eq. (4) is 
+taken as the receptive field of the convolution layer in S. So that S receives the signal length corresponding to one tooth each time and 
+adaptively captures the signal corresponding to the flank. 
+The structure of S is shown in Fig. 4. 
+With S, all signals will be constrained by discontinuous physical properties at the same spatial scale, which can obtain the “pure” 
+signal fragments that are theoretically most relevant to tool wear at the spatial scale. In theory, features (Fa) weighted by attention 
+weight (Wa) are more semantically efficient than the raw signal, so it will be used as the input of G. 
+3.2. Generation and constraints 
+The structure of G is shown in Fig. 5, which includes one pooling layer, three convolution layers, and a transposed convolution 
+Fig. 4. Structure of S. BN demotes Batch Normalization Layer. ReLU denotes Rectified Linear Unit.  
+X. Lai et al.                                                                                                                                                                                                             
+
+===== PAGE 6 =====
+Mechanical Systems and Signal Processing 215 (2024) 111421
+6
+layer. Among them, except for the number of channels of the convolutional layer (1, 4, and 4, respectively), other parameters of the 
+pooling and convolutional layers are consistent with those in S. More importantly, AdaIN [37] further increases the diversity in the 
+generation process. 
+This module introduces a standard trend vector (Vst) derived from discontinuous physical properties, which is used to constrain the 
+basic trend of generated samples to establish the association with other domains. Vst is a series of numbers of equal length to input, 
+which is periodically composed of monotonically rising intervals from −1 to 1 and continuous 0 values, as shown in Fig. 5. Specifically, 
+the percentage P of the length of each monotone rising interval in the total length of the series is: 
+P = Ap/tanβ
+(D × π)/n
+(5)  
+where Ap is the axial cutting depth (mm). β and D are the helix angle (◦) and the tool’s diameter (mm). 
+The total length L of the monotone interval and the 0-value interval is: 
+L = fs × (60/Nspeed)
+n
+(6) 
+With MSELoss, Vst and the generated weight (Wg) are constrained so that Wg is implanted with discontinuous physical properties 
+consistent with other domains. The raw input is then weighted to give the generated features (Fg). 
+LMSE = 1
+nS
+∑
+nS
+i=1
+(Wi
+g −Vst)
+2
+(7)  
+where nS denotes the amount of SD’s sample. 
+3.3. Training and optimization 
+This paper uses deep convolutional neural networks with wide first-layer kernels (WDCNN) as F. As a classic network model, 
+WDCNN has a good suppression effect on the noise in physical signals and has a wide range of applications in industry, so it is often 
+used as a basic network. The structure and parameters adopted are consistent with those in [38]. The probabilities of different classes 
+are output by a linear layer. 
+The training of the proposed method consists of two steps. Specifically, S and F are first trained on a single SD to obtain optimized S. 
+The trained S is used for spatial weighting of the SD, the weighted features are input to G for diversity generation, and the weighted 
+features are input to F for generalization training. 
+In the first step, S and F are optimized with minimal cross-entropy loss: 
+LCE = −
+∑
+c
+yc
+SlogYc
+S
+(8)  
+where yS, YS are real and predicted labels, respectively. The superscript c denotes different categories. 
+The second step measures the distance between the SD and GD features before the linear layer by maximum mean discrepancy 
+(MMD) [39]. The MMD maximization is used for optimizing G, to maximize the diversity of the generated features. 
+LMMD =̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+1
+n2
+s
+∑
+ns
+i,j=1
+k
+(
+xi
+S, xj
+S
+)
+−
+2
+n2
+s
+∑
+ns
+i,j=1
+k
+(
+xi
+S, xj
+G
+)
++ 1
+n2
+s
+∑
+ns
+i,j=1
+k
+(
+xi
+G, xj
+G
+)
+√
+√
+√
+√
+(9) 
+Fig. 5. Structure of G.  
+X. Lai et al.                                                                                                                                                                                                             
+
+===== PAGE 7 =====
+Mechanical Systems and Signal Processing 215 (2024) 111421
+7
+where k(xS,xG) = exp(−‖xS −xG‖2/2γ2), γ is the width of the nucleus. xS, xG are TD and GD samples, respectively. 
+Then, G is optimized by: 
+LG = LMSE −α*LMMD
+(10)  
+where α is a weight coefficient set as 20 in this paper. 
+Finally, the task loss is minimized to enable F to be generalized to diverse distributions: 
+Ltask = 1
+ns
+∑
+ns
+i=1
+LCE(Yi
+S, yi
+S) + 1
+ns
+∑
+ns
+i=1
+LCE(Yi
+G, yi
+G)
+(11) 
+In summary, the proposed method is shown in Algorithm 1.  
+Algorithm 1: 
+# Pre-training stage
+Input: Source dataset DataS = {xi
+S, yi
+S}
+nS
+i=1 with Fourier low-pass filtering.
+Model: S and F.
+for epoch = 1 to 100, do
+Randomly 
+sample (xi
+S, yi
+S) from DataS.
+Train S and F using Eq. (9).
+Return: trained S.
+# Training stage
+Input: Source dataset with Fourier low-pass filtering. 
+Model: G, F, and trained S.
+for epoch = 1 to 100, do
+Randomly sample (xi
+S, yi
+S) from DataS.
+Train G using Eq. (10).
+Train F using Eq. (11).
+Return: 
+Trained F.
+# Inference stage
+Input: Target datasets with Fourier low-pass filtering.
+Model: Trained S and F.Output: Final decisions.  
+Besides, the monitoring signal is the coupling of the entire process system. Especially, the interference of the machine tool components, 
+and it is clear that such interference will affect the decision-making preferences of the model. Generally, the performance of the 
+machine tool is relatively stable in the short term, so it can be regarded as a natural frequency. Besides, the frequency related to tool 
+wear is mainly concentrated in the low-frequency part. Therefore, this paper first carries out low-pass filtering for signals. 
+4. Experimental study 
+4.1. Dataset description  
+1) PHM2010[40]. The dataset came from the PHM 2010 challenge. Three ball-nose carbide milling tools with three flutes were tested 
+in the same machining conditions. Tool life cycle signals were collected and sampled at 5 kHz.  
+2) Machining experiments. The same type of three-tooth integral end mill (material: carbide, diameter: 16 mm, helix angle: 35◦) was 
+used in the experiment. The experiment is tested on a 5-axis CNC milling center THM6380 IV, and the workpieces are carbon steel 
+40. Specifically, 420 mm was continuously milled each time in a vertical straight line along the y direction, and then the width of 
+flank wear was measured in situ. The experimental process is shown in Fig. 6. 
+All data are divided into three categories according to different degrees of Pp in Eq. (3). To test the effectiveness of the proposed 
+method under different working conditions (different distribution differences). Specifically, case I is based on Eq. (2), which is used to 
+verify that there are DDD in the same working conditions. Any process parameter variation is set in case II to amplify DDD. In case III, 
+all process parameters except the spindle speed are completely changed. The specific parameter settings are shown in Table 1. 
+Where N is the spindle speed, RPM. Ap is the axial cutting depth, mm. Ae is the radial cutting depth, mm. f is the feed rate, mm/min. 
+C1, C4, and C6 are from the PHM 2010 dataset; other tools are from machining experiments. 
+Fig. 6. Machining experiment process.  
+X. Lai et al.                                                                                                                                                                                                             
+
+===== PAGE 8 =====
+Mechanical Systems and Signal Processing 215 (2024) 111421
+8
+4.2. Data distribution discrepancies measurement and preprocessing 
+First, MMD is used to measure the DDD between signals under different working conditions. The result is shown in Fig. 7(a). The 
+data of PHM 2010 belongs to the constant condition, but the DDD among C1, C4, and C6 is obviously large. As shown in Fig. 7(b), it is 
+the DDD measurement result of machining experiment data. It can be found that the DDD under different process parameters and wear 
+stages are inconsistent, which is consistent with Eq. (3) defined in this paper. At the same time, the uncertainty of the influence of 
+working conditions on the DDD is also proved. 
+As mentioned above, the vibration signal is low-pass filtered. Specifically, the PHM 2010 dataset’s low pass frequency is set at 1733 
+Hz (spindle frequency less than six times [7]), while the low pass frequency of the machining experiments data is set at 600 Hz (10 
+times of the tooth pass frequency [32]). By comparing the DDD between the original signal and the signal processed by low-pass 
+filtering, it can be found that the homologous noise in the original signal will reduce the DDD of different working conditions. This 
+results in much noise as features while ignoring the high-value signals associated with tool wear, resulting in a fake generalization 
+improvement. Therefore, it is necessary to filter the signal. 
+Then, all signals are separated into initial wear (I), steady wear (II), and accelerated wear (III) according to [41] and failure stage 
+(IV, while mean VB > 0.3 mm, GB/T 16460–2016). For the PHM 2010 dataset, the force signal in the x-direction is taken as the 
+monitoring data. The length of each sample is 4608 (contains 16 cycles of data). According to the method in [36], each tool in the 
+PHM2010 data set is divided into different states, too. Each class contains 2000 samples, respectively. C1 is SD, and C4 and C6 are TDs. 
+For the machining experiments dataset, the length of each sample is 6000 (contains 12 cycles data), in which M1 and M2 each class 
+contains 250, 400, M3, M4, and M5 each class contains 250, 400, and 400 samples, respectively. Besides, the vibration signal in the x- 
+direction is taken as this experiment’s monitoring data to verify the proposed method’s effectiveness on different signals and consider 
+the cost and convenience of obtaining signals in actual processing. M1 is the SD. The data of other tools is used as TDs. Besides, due to 
+the introduction of spatial attention, each segment aligned in time was performed [7]. Finally, SD is divided into two parts, with 70 % 
+as the training set and 30 % as validation set. All TDs are used as test sets. 
+4.3. Comparative methods and results 
+To verify the validity and superiority of the proposed method, several successful and related DG methods are used for comparison. 
+Besides, several ablation experiments are implemented. All methods are carried out on the i7-11800H 16 GB platform with Python 
+3.9.7-Pytorch 1.10.1 and NVIDIA’s GeForce GTC 3060 GPU. The code implementation of the methodology involved in this study is as 
+follows: 
+Table 1 
+Eight machining conditions’ parameter settings for varying data distribution discrepancies.   
+Tools 
+Pp   
+N 
+Ap 
+Ae 
+f 
+Case I 
+C1, C4, C6 
+10,400 
+0.2 
+0.125 
+1555 
+M1, M2 
+1200 
+3 
+1.8 
+180 
+Case II 
+M3 
+1200 
+3 
+2 
+180 
+M4 
+1200 
+3 
+1.8 
+200 
+Case III 
+M5 
+1200 
+4 
+2 
+220  
+Fig. 7. DDD measurement results of (a) PHM2010 data and (b) machining experiments data.  
+X. Lai et al.                                                                                                                                                                                                             
+
+===== PAGE 9 =====
+Mechanical Systems and Signal Processing 215 (2024) 111421
+9
+1) PDEN [42]. The progressive domain expansion network (PDEN) is a state-of-the-art SSDG method that continuously improves the 
+diversity of generated data by gradually training new generative models and imposing consistency constraints on each round of the 
+generative model training process. The PDEN code can be obtained at https://github.com/lileicv/PDEN.  
+2) AMINet [30]. As mentioned in the introduction, AMINet is the only method for SSDG fault diagnosis for now. Samples are 
+generated based on the features after the Fourier transform as input, and mutual information is used to restrict the upper and lower 
+bounds of the generation process to improve the generalization of the model in other fields.  
+3) WDCNN [38] (with raw signal). WDCNN is a classic fault diagnosis method. It is often used as a basic method of fault diagnosis.  
+4) WDCNN (with Fourier low-pass filtered signal). Unlike the previous method, which directly uses the raw signal as input, this 
+method uses the signal after low-pass filtering as input.  
+5) S&WDCNN (with raw signal). The proposed S combined with WDCNN takes the raw signal as input without G.  
+6) S&WDCNN (with Fourier low-pass filtered signal). Similarly, the difference with the previous method is that the input signal is 
+processed after low-pass filtering.  
+7) G&WDCNN. The proposed G combined with WDCNN takes the filtered signal as input without S.  
+8) The proposed method. 
+For PDEN and AMINet, the parameter Settings in the original work are adopted. The batch size of all methods is set to 64. For 
+methods 3)-8), the learning rate of the Adam optimizer was set as 0.001. The kpool is the undersampling of the pooling layer, so it is set 
+to 4 for high computational efficiency. The α was set as 20 (experimentally tried).. The k of the PHM 2010 dataset was estimated to be 
+25 and the k of the machining experiments dataset was calculated to be 41. The learning rate’s cosine attenuation strategy was applied 
+to the training process of the feature extraction module, and the attenuation period was 20 epochs. Moreover, the learning rate for G 
+was always 0.00001, and the Adam optimizer was also adopted. 
+The experimental results of all methods are shown in Table 2. 
+Table 2 
+Experimental results of all methods in different cases (accuracy %).    
+Case I 
+Case II 
+Case III 
+Method 
+Task (TD) 
+1 (C4) 
+2 (C6) 
+3 (M2) 
+4 (M3) 
+5 (M4) 
+6 (M5) 
+(1) 
+PDEN 
+76.13 
+86.93 
+75.98 
+86.28 
+67.17 
+76.52 
+(2) 
+AMINet 
+63.74 
+87.45 
+77.54 
+72.96 
+78.73 
+81.01 
+(3) 
+WDCNN(raw) 
+82.21 
+71.59 
+58.01 
+61.98 
+86.13 
+65.67 
+(4) 
+WDCNN(filtered) 
+78.70 
+69.39 
+62.22 
+78.15 
+77.49 
+62.29 
+(5) 
+S&WDCNN(raw) 
+74.76 
+55.71 
+66.05 
+78.93 
+79.76 
+66.54 
+(6) 
+S&WDCNN(filtered) 
+80.17 
+76.86 
+65.20 
+90.55 
+84.83 
+76.63 
+(7) 
+G&WDCNN(filtered) 
+90.98 
+76.00 
+83.04 
+85.27 
+84.32 
+84.50 
+(8) 
+Proposed 
+90.91 
+87.66 
+92.05 
+93.01 
+91.64 
+88.57 
+* Tasks 1 and 2 use C1 as SD. All other tasks use M1 as SD. 
+Fig. 8. Average accuracy and standard deviation.  
+X. Lai et al.                                                                                                                                                                                                             
+
+===== PAGE 10 =====
+Mechanical Systems and Signal Processing 215 (2024) 111421
+10
+In addition, the average accuracy and standard deviation of different methods on the two datasets were counted, and the results are 
+shown in Fig. 8. The proposed method achieves the best results in terms of average identification accuracy on both datasets. Mean­
+while, the standard deviations are 1.63 on the PHM 2010 dataset and 1.66 in the machining experiments. 
+4.4. Analysis 
+4.4.1. Results analysis 
+T-SNE visualizes the features extracted under different methods (before the classification layer). 
+From Fig. 9(a), PDEN achieves separation among different classes, but classes I and III overlap with classes II and IV, respectively. In 
+Fig. 9(b), for AMINet, the aliasing among different classes is not serious, but the distance is relatively close, which is not conducive to 
+the discrimination of different classes. Compared with Fig. 9(c) and (d), it is conducive to improving the distance among classes when 
+the signal is filtered. Still, it does not promote the aggregation of similar features. From Fig. 9(e) and (f), with the addition of S, the 
+intra-class aggregation is improved, but the distance among classes is not improved well. At the same time, it can be found that in Fig. 9 
+(f), compared with the previous method, when S is applied to the filtered signal, the features become more divergent compared with 
+the raw signal. On the one hand, the large number of homologous noises mentioned in Fig. 4 will bury the weak wear difference. On the 
+other hand, adding S restrains the inter-domain consistency. However, the F lacks corresponding constraints, so the feature is more 
+divergent. From Fig. 9(g), adding G constraints improves intra-class and inter-class distances. However, due to the lack of consistency 
+and constraint of S on SD and TD, the constraint of the inter-domain distance of similar domains is poor. Fig. 9(h) shows better inter- 
+class distance and intra-domain aggregation. 
+Moreover, a set of confusion matrices of the proposed method is created under each task, as shown in Fig. 10. For case I (tasks 1–3), 
+misjudgment mainly occurs between classes III and IV. For tasks under the same working conditions, accurately identifying the failure 
+stage and the accelerated wear is always the most challenging task. Class III is misjudged as II for case II (task 4, task 5). For case III 
+Fig. 9. T-SNE visualization. (a)-(h) correspond to methods 1)-8) involved in this study, respectively.  
+X. Lai et al.                                                                                                                                                                                                             
+
+===== PAGE 11 =====
+Mechanical Systems and Signal Processing 215 (2024) 111421
+11
+Fig. 10. Confusion matrix visualization. (a)-(f) correspond to tasks 1–6 involved in this study, respectively.  
+Fig. 11. Consistency between . 
+Source and generation domains. (a)-(c) are the waveforms after standardization of input, Wa, and Wg, respectively. (d)-(e) are their heat map 
+X. Lai et al.                                                                                                                                                                                                             
+
+===== PAGE 12 =====
+Mechanical Systems and Signal Processing 215 (2024) 111421
+12
+(task 6), the obvious trend is that the wrong prediction results are towards the more severe wear stage. From the working condition 
+setting of case III, it is easy to think that the cutting amount of the tool is much larger than SD. That is, compared with the tool in SD. 
+The tool in this TD will produce greater cutting resistance even at the same wear stage. One of the characteristics of severe tool wear is 
+that the resistance will increase so that the model may give a more severe assessment. 
+4.4.2. Consistency analysis 
+Here, the consistency among SD, GD, and TD is visually analyzed. Firstly, in Fig. 11(a)–(c), the input sample input (signal after low- 
+pass filtering) and its corresponding Wa, and Wg are shown, respectively. Specifically, for better comparison, all the data/features were 
+normalized. Further, the data point (500) corresponding to each rotation of the tool is reshaped into [500 × 12] and then plotted into 
+the heat map form as shown in Fig. 11(d)–(f). 
+By comparing Fig. 11(d) and (e), it can be found that the Wa obtained after the input is weighted by S shows a strong periodic 
+discontinuity that conforms to the theoretical expectation (black vertical stripe in Fig. 11(e)), which means that S pays special attention 
+to a part of the input. More importantly, this discreteness maintains a high consistency in every turn of the tool rotation. As shown in 
+Fig. 11(f), the diversity of the generated feature Wg is enhanced in the region emphasized by Wa, but it still maintains a good periodic 
+discontinuity as a whole. Therefore, it can be considered that a consistency between the SD and the GD satisfies the theoretical 
+expectation. 
+The same visualizations are carried out for all TD’s data. As shown in Fig. 12. All the different stages of TDs show the above periodic 
+discontinuity. 
+Further, it can be found that for all tasks, as the wear increases, the area of focus of S becomes more concentrated. On the one hand, 
+the wear form in the early stage is mainly run-in wear, which does not form a strong incentive signal. So, it is difficult to effectively 
+Fig. 12. Consistency of target domains. The hot maps from top to bottom are tasks 3–6, and from left to right are wear stage I-IV.  
+X. Lai et al.                                                                                                                                                                                                             
+
+===== PAGE 13 =====
+Mechanical Systems and Signal Processing 215 (2024) 111421
+13
+distinguish the cutting signal from the non-cutting signal segment. On the other hand, as the tool wear increases, the incentive formed 
+by the flank at the moment of contact with the workpiece is stronger, thus forming a stronger cycle boundary. In addition, there are 
+some differences in the performance of S in different TDs, mainly in the degree of suppression of unimportant regions. However, this 
+does not affect the periodic discontinuity and final accuracy. 
+To sum up, it is reasonable to believe that the method proposed in this paper establishes an interpretable consistency constraint 
+among SD, GD, and TDs that meets the theoretical expectation. 
+5. Conclusion 
+This paper details and defines the data distribution discrepancies in tool wear monitoring. Unlike the existing postmortem statistics, 
+this paper’s definition is an ex-ante one, which helps determine the applicable condition of the monitoring model. A discontinuous 
+physical property-constrained single-source domain generalization network is proposed to address the cross-conditions milling tool 
+wear state recognition. A reliable consistency association is established among source, target, and generating domains. An open dataset 
+and extensive machining experiments verify the generalization of the proposed method under different distribution discrepancy levels. 
+The proposed method achieves a 12.69 % improvement in average accuracy on the PHM 2010 dataset and a 23.37 % improvement in 
+the machining experiments, compared with the benchmark results of WDCNN. Feature visualizations provide consistency and 
+interpretability. 
+In future work, many factors should be considered, such as the impact of different spindle speeds on the spatial distribution of 
+signals. Spindle speed is a crucial and variable process parameter in actual machining. When the spindle speed changes, the signal 
+length corresponding to one tool rotation will change; the signal will be deformed in space (low speed means elongation, high speed 
+means compression). Conventional networks, such as convolutional networks, have difficulty dealing effectively with the problem of 
+signal spatial transformation, and it is difficult to ensure spatial invariance. Therefore, the consistency among source, generating, and 
+target domains under different spindle speeds is worth exploring. Moreover, the generalization boundary of the model, that is, to what 
+extent the generalization of a DL model is reliable under DDD, needs to be further studied. 
+CRediT authorship contribution statement 
+Xuwei Lai: Writing – original draft, Visualization, Validation, Methodology, Investigation, Data curation, Conceptualization. Kai 
+Zhang: Writing – review & editing. Qing Zheng: Writing – review & editing. Minghang Zhao: Writing – review & editing. Guofu 
+Ding: Project administration, Conceptualization. Baoping Tang: Supervision, Conceptualization. Zisheng Li: Visualization, Valida­
+tion, Methodology, Conceptualization. 
+Declaration of competing interest 
+The authors declare that they have no known competing financial interests or personal relationships that could have appeared to 
+influence the work reported in this paper. 
+Data availability 
+The authors do not have permission to share data. 
+Acknowledgments 
+This work is supported by the National Natural Science Foundation of China (Grant No. 52205130), the Major State Basic Research 
+Program in Sichuan Province of China (Grant No. 2022ZDZX0002), and the Fundamental Research Funds for the Central Universities 
+(Grant No. 2682022CX006). 
+References 
+[1] W. Li, H. Fu, Y. Zhuo, C. Liu, H. Jin, Semi-supervised multi-source meta-domain generalization method for tool wear state prediction under varying cutting 
+conditions, J. Manuf. Syst. 71 (2023) 323–341, https://doi.org/10.1016/j.jmsy.2023.09.011. 
+[2] P. Tr¨ober, H.A. Weiss, T. Kopp, R. Golle, W. Volk, On the correlation between thermoelectricity and adhesive tool wear during blanking of aluminum sheets, Int. 
+J. Mach. Tools Manuf. (2017), https://doi.org/10.1016/j.ijmachtools.2017.03.005. 
+[3] K. Zhang, B. Tang, L. Deng, Q. Tan, H. Yu, A fault diagnosis method for wind turbines gearbox based on adaptive loss weighted meta-ResNet under noisy labels, 
+Mech. Syst. Signal Process. (2021), https://doi.org/10.1016/j.ymssp.2021.107963. 
+[4] T. Zuo, K. Zhang, Q. Zheng, X. Li, Z. Li, G. Ding, M. Zhao, A hybrid attention-based multi-wavelet coefficient fusion method in RUL prognosis of rolling bearings, 
+Reliab. Eng. Syst. Saf. (2023), https://doi.org/10.1016/j.ress.2023.109337. 
+[5] Z. Xue, L. Li, N. Chen, W. Wu, Y. Zou, N. Yu, Tool Wear State Recognition Based on One-Dimensional Convolutional Channel Attention, Micromachines. 14 
+(2023), https://doi.org/10.3390/mi14111983. 
+[6] Q. Liu, D. Li, J. Ma, X. Wei, Z. Bai, A multi-input parallel convolutional attention network for tool wear monitoring, Int. J. Comput. Integr. Manuf. 00 (2023) 
+1–17, https://doi.org/10.1080/0951192X.2023.2294440. 
+[7] H. Guo, Y. Zhang, K. Zhu, Interpretable deep learning approach for tool wear monitoring in high-speed milling, Comput. Ind. (2022), https://doi.org/10.1016/j. 
+compind.2022.103638. 
+X. Lai et al.                                                                                                                                                                                                             
+
+===== PAGE 14 =====
+Mechanical Systems and Signal Processing 215 (2024) 111421
+14
+[8] Y. Zhou, G. Zhi, W. Chen, Q. Qian, D. He, B. Sun, W. Sun, A new tool wear condition monitoring method based on deep learning under small samples, 
+Measurement. (2022), https://doi.org/10.1016/j.measurement.2021.110622. 
+[9] Y. Zou, K. Ding, K. Shi, X. Lai, K. Zhang, G. Ding, G. Qin, Wear identification of end mills based on a feature-weighted convolutional neural network under 
+unbalanced samples, J. Manuf. Process. (2023), https://doi.org/10.1016/j.jmapro.2023.01.054. 
+[10] B. Qiang, K. Shi, N. Liu, J. Ren, Y. Shi, Integrating physics-informed recurrent Gaussian process regression into instance transfer for predicting tool wear in 
+milling process, J. Manuf. Syst. 68 (2023) 42–55, https://doi.org/10.1016/j.jmsy.2023.02.019. 
+[11] M.A. Lara de Leon, J. Kolarik, R. Byrtus, J. Koziorek, P. Zmij, R. Martinek, Tool Condition Monitoring Methods Applicable in the Metalworking Process, Arch. 
+Comput. Methods Eng. 31 (2024) 221–242, https://doi.org/10.1007/s11831-023-09979-w. 
+[12] S. Yao, Q. Kang, M.C. Zhou, M.J. Rawa, A. Abusorrah, A survey of transfer learning for machinery diagnostics and prognostics, Artif. Intell. Rev. (2023), https:// 
+doi.org/10.1007/s10462-022-10230-4. 
+[13] C. Zhao, W. Shen, A domain generalization network combing invariance and specificity towards real-time intelligent fault diagnosis, Mech. Syst. Signal Process. 
+(2022), https://doi.org/10.1016/j.ymssp.2022.108990. 
+[14] H. Ren, J. Wang, W. Huang, X. Jiang, Z. Zhu, Domain-invariant feature fusion networks for semi-supervised generalization fault diagnosis, Eng. Appl. Artif. 
+Intell. (2023), https://doi.org/10.1016/j.engappai.2023.107117. 
+[15] H. Ren, J. Wang, Z. Zhu, J. Shi, W. Huang, Domain fuzzy generalization networks for semi-supervised intelligent fault diagnosis under unseen working 
+conditions, Mech. Syst. Signal Process. (2023), https://doi.org/10.1016/j.ymssp.2023.110579. 
+[16] M. Guo, T. Xu, J. Liu, Z. Liu, P. Jiang, T. Mu, S. Zhang, R. Martin, M. Cheng, S. Hu, Attention mechanisms in computer vision: A survey, Comput. Vis, Media. 8 
+(2022) 331–368, https://doi.org/10.1007/s41095-022-0271-y. 
+[17] W.W.Y. Ng, Q. Zhang, C. Zhong, J. Zhang, Improving domain generalization by hybrid domain attention and localized maximum sensitivity, Neural Networks. 
+171 (2024) 320–331, https://doi.org/10.1016/j.neunet.2023.12.014. 
+[18] K. Hua, X. Fang, Z. Tang, Y. Cheng, Z. Yu, DCAM-NET: A novel domain generalization optic cup and optic disc segmentation pipeline with multi-region and 
+multi-scale convolution attention mechanism, Comput. Biol. Med. (2023), https://doi.org/10.1016/j.compbiomed.2023.107076. 
+[19] B. Chen, T. Liu, C. He, Z. Liu, L. Zhang, Fault Diagnosis for Limited Annotation Signals and Strong Noise Based on Interpretable Attention Mechanism, IEEE Sens. 
+J. (2022), https://doi.org/10.1109/JSEN.2022.3169341. 
+[20] Y. Chen, D. Zhang, H. Zhang, Q.G. Wang, Dual-Path Mixed-Domain Residual Threshold Networks for Bearing Fault Diagnosis, IEEE Trans. Ind. Electron. (2022), 
+https://doi.org/10.1109/TIE.2022.3144572. 
+[21] T. Gokhale, R. Anirudh, J.J. Thiagarajan, B. Kailkhura, C. Baral, Y. Yang, Improving Diversity with Adversarially Learned Transformations for Domain 
+Generalization, in: Proc. - 2023 IEEE Winter Conf. Appl. Comput. Vision, WACV 2023, 2023. doi: 10.1109/WACV56688.2023.00051. 
+[22] Z. Shi, J. Chen, X. Zhang, Y. Zi, C. Li, J. Chen, A reliable feature-assisted contrastive generalization net for intelligent fault diagnosis under unseen machines and 
+working conditions, Mech. Syst. Signal Process. 188 (2023) 110011, https://doi.org/10.1016/j.ymssp.2022.110011. 
+[23] X. Li, W. Zhang, H. Ma, Z. Luo, X. Li, Domain generalization in rotating machinery fault diagnostics using deep neural networks, Neurocomputing. 403 (2020) 
+409–420, https://doi.org/10.1016/j.neucom.2020.05.014. 
+[24] Y.P. Liu, D. Zeng, Z. Li, P. Chen, R. Liang, SS-Norm: Spectral-spatial normalization for single-domain generalization with application to retinal vessel 
+segmentation, IET Image Process. (2023), https://doi.org/10.1049/ipr2.12782. 
+[25] X. Fan, Q. Wang, J. Ke, F. Yang, B. Gong, M. Zhou, Adversarially Adaptive Normalization for Single Domain Generalization, in: Proc. IEEE Comput. Soc. Conf. 
+Comput. Vis. Pattern Recognit., 2021. doi: 10.1109/CVPR46437.2021.00811. 
+[26] J. Wang, H. Ren, C. Shen, W. Huang, Z. Zhu, Multi-scale style generative and adversarial contrastive networks for single domain generalization fault diagnosis, 
+Reliab. Eng. Syst. Saf. 243 (2024) 109879, https://doi.org/10.1016/j.ress.2023.109879. 
+[27] I. Cugu, M. Mancini, Y. Chen, Z. Akata, Attention Consistency on Visual Corruptions for Single-Source Domain Generalization, IEEE Comput. Soc. Conf. Comput. 
+Vis. Pattern Recognit, Work. (2022-June (2022)) 4164–4173, https://doi.org/10.1109/CVPRW56347.2022.00461. 
+[28] N. Bayasi, G. Hamarneh, R. Garbi, BoosterNet: Improving Domain Generalization of Deep Neural Nets using Culpability-Ranked Features, Proc. IEEE Comput. 
+Soc. Conf. Comput. Vis. Pattern Recognit. 2022-June (2022) 528–538. doi: 10.1109/CVPR52688.2022.00062. 
+[29] C. Ouyang, C. Chen, S. Li, Z. Li, C. Qin, W. Bai, D. Rueckert, Causality-inspired Single-source Domain Generalization for Medical Image Segmentation, IEEE 
+Trans. Med. Imaging. 42 (2022) 1095–1106, https://doi.org/10.1109/TMI.2022.3224067. 
+[30] C. Zhao, W. Shen, Adversarial Mutual Information-Guided Single Domain Generalization Network for Intelligent Fault Diagnosis, IEEE Trans. Ind. Informatics. 
+19 (2022) 2909–2918, https://doi.org/10.1109/TII.2022.3175018. 
+[31] A. van den Oord, Y. Li, O. Vinyals, Representation Learning with Contrastive Predictive Coding, (2018). http://arxiv.org/abs/1807.03748. 
+[32] X. Lai, K. Zhang, Q. Zheng, Z. Li, G. Ding, K. Ding, A frequency-spatial hybrid attention mechanism improved tool wear state recognition method guided by 
+structure and process parameters, Measurement. 214 (2023) 112833, https://doi.org/10.1016/j.measurement.2023.112833. 
+[33] H. Shimodaira, Improving predictive inference under covariate shift by weighting the log-likelihood function, J. Stat. Plan. Inference. (2000), https://doi.org/ 
+10.1016/s0378-3758(00)00115-4. 
+[34] L. Congbo, S. Xin, H. Xiaobo, Z. Xikun, W. Shaoqing, Online Monitoring Method for NC Milling Tool Wear by Digital Twin-driven, China, Mech. Eng. 33 (2022) 
+78–87, https://doi.org/10.3969/j.issn.1004-132X.2022.01.009. 
+[35] S. Zhu, G. Ding, S. Qin, J. Lei, L. Zhuang, K. Yan, Integrated geometric error modeling, identification and compensation of CNC machine tools, Int. J. Mach. 
+Tools Manuf. (2012), https://doi.org/10.1016/j.ijmachtools.2011.08.011. 
+[36] G. Martínez-Arellano, G. Terrazas, S. Ratchev, Tool wear classification using time series imaging and deep learning, Int. J. Adv. Manuf. Technol. (2019), https:// 
+doi.org/10.1007/s00170-019-04090-6. 
+[37] T. Karras, S. Laine, T. Aila, A Style-Based Generator Architecture for Generative Adversarial Networks, IEEE Trans. Pattern Anal. Mach. Intell. (2021), https:// 
+doi.org/10.1109/TPAMI.2020.2970919. 
+[38] W. Zhang, C. Li, G. Peng, Y. Chen, Z. Zhang, A deep convolutional neural network with new training methods for bearing fault diagnosis under noisy 
+environment and different working load, Mech. Syst. Signal Process. (2018), https://doi.org/10.1016/j.ymssp.2017.06.022. 
+[39] A. Gretton, K.M. Borgwardt, M. Rasch, B. Sch¨olkopf, A.J. Smola, A kernel method for the two-sample-problem, Adv. Neural Inf. Process. Syst. (2007), https:// 
+doi.org/10.7551/mitpress/7503.003.0069. 
+[40] X. Li, B. Lim, J. Zhou, S. Huang, S. Phua, K. Shaw, M. Er, Fuzzy neural network modelling for tool wear estimation in dry milling operation, in: Annu. Conf. 
+Progn. Heal. Manag. Soc. PHM 2009, 2009. 
+[41] Y. Zhang, K. Zhu, X. Duan, S. Li, Tool wear estimation and life prognostics in milling: Model extension and generalization, Mech. Syst. Signal Process. (2021), 
+https://doi.org/10.1016/j.ymssp.2021.107617. 
+[42] L. Li, K. Gao, J. Cao, Z. Huang, Y. Weng, X. Mi, Z. Yu, X. Li, B. Xia, Progressive Domain Expansion Network for Single Domain Generalization, in: Proc. IEEE 
+Comput. Soc. Conf. Comput, Vis. Pattern Recognit, 2021, https://doi.org/10.1109/CVPR46437.2021.00029. 
+X. Lai et al.                                                                                                                                                                                                             

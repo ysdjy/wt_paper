@@ -1,0 +1,45 @@
+# ===== Raw datasets (available from original public sources, not code) =====
+/archive/
+/archive.zip
+/Multivariate time series data of milling processes with varying tool wear and machine tools/
+/Multivariate time series data of milling processes with varying tool wear and machine tools.zip
+
+# ===== Training outputs / checkpoints (large binaries, regenerable from code) =====
+/outputs/
+**/*.pth
+**/*.pt
+**/*.ckpt
+
+# ===== Cached preprocessed data (large, regenerable via each baseline's build_dataset.py / preprocessing.py) =====
+baselines/*/data/images/
+baselines/*/data/windows/
+baselines/*/data/windows_unified/
+**/*.npy
+**/*.npz
+
+# ===== Redundant zip duplicates of already-extracted folders =====
+/投稿版20260709.zip
+/代码.7z
+补充材料/小论文.zip
+补充材料/小论文/
+
+# ===== experiments_mendeley: numbered pipeline-stage run artifacts (data, not code) =====
+experiments_mendeley/00_dataset_audit/
+experiments_mendeley/01_features/
+experiments_mendeley/03_sanity_check/
+experiments_mendeley/04_overall_comparison/
+experiments_mendeley/05_generalization/
+experiments_mendeley/06_ablation/
+experiments_mendeley/07_semantic_consistency/
+experiments_mendeley/08_plot_data/
+experiments_mendeley/10_logs/
+
+# ===== Python / OS cruft =====
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+Thumbs.db
+
+# ===== Session-internal state (not project content) =====
+/.claude/
