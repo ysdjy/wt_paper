@@ -1,0 +1,12 @@
+2026-08-20 19:20:20,597 tcn_gru D3: train=['C4', 'C6'] test=C1 seed=42
+2026-08-20 19:21:15,602 epoch 10 val_acc=0.9833 val_macro_f1=0.9842 wait=1
+2026-08-20 19:21:28,908 epoch 20 val_acc=1.0000 val_macro_f1=1.0000 wait=0
+2026-08-20 19:21:46,345 epoch 30 val_acc=1.0000 val_macro_f1=1.0000 wait=1
+2026-08-20 19:22:02,755 epoch 40 val_acc=1.0000 val_macro_f1=1.0000 wait=0
+2026-08-20 19:22:18,841 epoch 50 val_acc=1.0000 val_macro_f1=1.0000 wait=3
+2026-08-20 19:22:33,773 epoch 60 val_acc=1.0000 val_macro_f1=1.0000 wait=2
+2026-08-20 19:22:48,485 epoch 70 val_acc=1.0000 val_macro_f1=1.0000 wait=12
+2026-08-20 19:23:02,600 epoch 80 val_acc=1.0000 val_macro_f1=1.0000 wait=9
+2026-08-20 19:23:17,802 epoch 90 val_acc=1.0000 val_macro_f1=1.0000 wait=7
+2026-08-20 19:23:33,295 epoch 100 val_acc=1.0000 val_macro_f1=1.0000 wait=17
+2026-08-20 19:23:35,882 tcn_gru D3 DONE acc=0.8816

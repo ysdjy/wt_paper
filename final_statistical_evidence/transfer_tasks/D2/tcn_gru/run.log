@@ -1,0 +1,4 @@
+2026-08-20 19:15:03,984 tcn_gru D2: train=['C1', 'C6'] test=C4 seed=42
+2026-08-20 19:16:15,050 epoch 10 val_acc=0.5167 val_macro_f1=0.5056 wait=8
+2026-08-20 19:16:30,496 epoch 20 val_acc=0.5167 val_macro_f1=0.4866 wait=18
+2026-08-20 19:16:31,474 tcn_gru D2 DONE acc=0.5691

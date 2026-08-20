@@ -1,0 +1,2 @@
+2026-08-20 19:23:02,299 multitask_tcn_gru+dc_psr D3: train=['C4', 'C6'] test=C1 seed=42
+2026-08-20 19:24:57,446 multitask_tcn_gru D3 DONE acc=0.8553; dc_psr DONE acc=0.8618

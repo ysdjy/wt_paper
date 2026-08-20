@@ -1,0 +1,2 @@
+2026-08-20 19:25:03,289 htt_net D3: train=['C4', 'C6'] test=C1 seed=42
+2026-08-20 19:25:52,272 htt_net D3 DONE acc=0.9112
