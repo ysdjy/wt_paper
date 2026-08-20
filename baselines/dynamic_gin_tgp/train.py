@@ -115,10 +115,34 @@ def set_seed(seed: int):
 # Datasets
 # ---------------------------------------------------------------------------
 class ProtocolADataset(Dataset):
-    """Rows: condition, run_id, stage_original, portion_idx."""
+    """Rows: condition, run_id, stage_original, portion_idx.
 
-    def __init__(self, manifest: pd.DataFrame):
-        self.manifest = manifest.reset_index(drop=True)
+    IMPORTANT: rows are shuffled (fixed seed) at construction time,
+    regardless of the input manifest's own order. Reason: the model's
+    static graph (Eq.7-9, model.py::build_static_graph) is built by
+    CONCATENATING every sample in a batch before computing cosine
+    similarity -- i.e. a sample's prediction depends on which other
+    samples share its batch (confirmed directly: feeding the same
+    sample with two different sets of "batch-mates" gives two different
+    predictions). Any manifest/loader that groups a run's 10 portions
+    into consecutive rows (e.g. build_protocol_a_manifest's per-run
+    ordering) combined with shuffle=False (needed at eval time so
+    predictions align with their metadata row-for-row) would make every
+    evaluation batch homogeneous -- all 4 samples from the SAME run,
+    hence the SAME true label. That lets the static-graph mechanism leak
+    the true label into each sample's own prediction through its
+    batch-mates, producing artificially inflated (meaningless) eval
+    accuracy. This was caught from a real training run: Protocol B's
+    val_run_acc jumped to 100% by epoch 1 while train_acc was still
+    ~67% -- far faster than every other baseline in this project using
+    the identical data split (compare outputs/mtf_avitk/unified_protocol/
+    training_log.csv's much more gradual climb). Shuffling once here
+    (not per-DataLoader-epoch, so evaluation order/results stay
+    reproducible across repeated calls) breaks the run-homogeneity
+    shortcut for both Protocol A's val/test loaders and Protocol B's."""
+
+    def __init__(self, manifest: pd.DataFrame, shuffle_seed: int = 12345):
+        self.manifest = manifest.sample(frac=1.0, random_state=shuffle_seed).reset_index(drop=True)
 
     def __len__(self):
         return len(self.manifest)
@@ -133,15 +157,23 @@ class ProtocolADataset(Dataset):
 
 class ProtocolBSegmentDataset(Dataset):
     """One row per (condition, run_id) x 10 portions. `label_df` supplies
-    condition/run_id/stage_id for the runs in this split."""
+    condition/run_id/stage_id for the runs in this split.
 
-    def __init__(self, label_df: pd.DataFrame):
+    Rows are shuffled (fixed seed) at construction time -- see
+    ProtocolADataset's docstring for why this matters: without it, every
+    eval-time batch (built with shuffle=False so predictions stay
+    row-aligned with their metadata) would contain only consecutive
+    portions of a single run, letting the batch-dependent static-graph
+    mechanism (Eq.7-9) leak the true label into each sample's own
+    prediction via its batch-mates."""
+
+    def __init__(self, label_df: pd.DataFrame, shuffle_seed: int = 12345):
         rows = []
         for _, r in label_df.iterrows():
             for portion_idx in range(10):
                 rows.append({"condition": r["condition"], "run_id": int(r["run_id"]),
                              "stage_id": int(r["stage_id"]), "portion_idx": portion_idx})
-        self.rows = pd.DataFrame(rows)
+        self.rows = pd.DataFrame(rows).sample(frac=1.0, random_state=shuffle_seed).reset_index(drop=True)
 
     def __len__(self):
         return len(self.rows)

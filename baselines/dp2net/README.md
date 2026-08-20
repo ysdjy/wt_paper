@@ -160,24 +160,40 @@ A completed run writes `DONE.flag`.
 
 ## Results
 
-**Protocol A (paper sanity check)**: not yet run on GPU (built and
-unit-tested on a CPU-only machine while GPU was occupied by a concurrent
-baseline in this project). **Run the training command above and fill in
-this table:**
+**Protocol A (paper sanity check)** -- real GPU run (RTX 3070 Ti Laptop, 8GB):
 
 | Target | Paper | Our reproduction | Note |
 |---|---|---|---|
-| C4 | 90.91% | TBD | 4-stage in paper, adapted 3-stage here (Stage IV empty) |
-| C6 | 87.66% | TBD | 4-stage in paper, adapted 3-stage here (Stage IV empty) |
+| C4 | 90.91% | **82.67%** (gap -8.24pp) | 4-stage in paper, adapted 3-stage here (Stage IV empty) |
+| C6 | 87.66% | **81.15%** (gap -6.51pp) | 4-stage in paper, adapted 3-stage here (Stage IV empty) |
 
-**Protocol B-S / B-D1 (unified)**: not yet run. Fill in after running
-the commands above (B-D1 is what enters the DC-PSR D1 main comparison
-table):
+Both results are non-degenerate (Macro-F1 0.82/0.81), consistent with a
+working reproduction; the gap vs. the paper is larger than for
+`dynamic_gin_tgp` (-0.59pp), plausibly reflecting this baseline's larger
+number of Missing/adapted items (Vst's D/beta assumption, the I/II/III
+boundary proxy) on top of ordinary optimization variance.
 
-| Variant | Acc | Macro-F1 | E-F1 | M-F1 | L-F1 | M-Pre | M-Rec | M->E | M->L | Rev | Jump | Smooth |
+**Protocol B-D1 (unified, main table)** -- all 5 seeds complete;
+**B-S** (supplementary, single-source) running:
+
+| Variant/Seed | Acc | Macro-F1 | E-F1 | M-F1 | L-F1 | M-Pre | M-Rec | M->E | M->L | Rev | Jump | Smooth |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| B-S (C1->C6) | | | | | | | | | | | | |
-| B-D1 (C1+C4->C6) | | | | | | | | | | | | |
+| B-D1, seed 42 | 0.9079 | 0.9078 | 0.8485 | 0.8968 | 0.9783 | 0.8289 | 0.9767 | 0.0000 | 0.0233 | 4 | 0 | 0.0519 |
+| B-D1, seed 52 | 0.8794 | 0.8865 | 0.8444 | 0.8319 | 0.9832 | 0.9691 | 0.7287 | 0.2713 | 0.0000 | 3 | 0 | 0.0530 |
+| B-D1, seed 62 | 0.9492 | 0.9506 | 0.9845 | 0.9339 | 0.9333 | 1.0000 | 0.8760 | 0.0233 | 0.1008 | 2 | 0 | 0.0514 |
+| B-D1, seed 72 | 0.8603 | 0.8632 | 0.8920 | 0.8281 | 0.8696 | 0.8346 | 0.8217 | 0.1783 | 0.0000 | 3 | 0 | 0.0610 |
+| B-D1, seed 82 | 0.9397 | 0.9408 | 0.9596 | 0.9272 | 0.9357 | 0.9167 | 0.9380 | 0.0620 | 0.0000 | 4 | 0 | 0.0612 |
+| **B-D1, mean+-std** | **0.9073+-0.0381** | **0.9098+-0.0365** | **0.9058+-0.0639** | **0.8836+-0.0509** | **0.9400+-0.0457** | **0.9099+-0.0773** | **0.8682+-0.0979** | **0.1070+-0.1146** | **0.0248+-0.0436** | **3.2+-0.8** | **0.0+-0.0** | **0.0557+-0.0050** |
+| B-S, seed 42 | 0.9587 | 0.9592 | 0.9841 | 0.9517 | 0.9419 | 0.9143 | 0.9922 | 0.0078 | 0.0000 | 3 | 0 | 0.0558 |
+
+B-D1's 5-seed mean (90.73%+-3.81pp) is notably strong and, importantly,
+**more stable across seeds than `dynamic_gin_tgp`'s Protocol B result**
+(std 3.81pp vs 6.83pp on Acc) on the identical split.
+
+B-D1's seed-42 accuracy (90.79%) is notably higher than Protocol A's
+paper-comparison numbers -- plausible given Protocol B uses DC-PSR's
+cleaner E/M/L labels and pooled C1+C4 source data, but treat as
+preliminary until the remaining 4 seeds confirm it's not a lucky draw.
 
 ## Caveats
 
@@ -192,4 +208,7 @@ table):
   (`tests/test_pipeline.py`, 15/15), including both training stages'
   gradient flow and the MMD-maximization direction check (Eq.10's
   `-alpha*MMD` sign, verified not accidentally flipped).
-- Full 100+100-epoch convergence has NOT yet been verified on real data.
+- Full 100+100-epoch convergence is **confirmed** on real GPU training
+  (Results above). Unlike `dynamic_gin_tgp`, no cross-sample batch
+  dependence exists in this architecture (S/G/F all process one sample
+  at a time), so no evaluation-methodology bugs were found here.

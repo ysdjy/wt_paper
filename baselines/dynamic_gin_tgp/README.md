@@ -166,25 +166,38 @@ for this fast-path; if you truly only want to re-evaluate, load
 
 ## Results
 
-**Protocol A (paper sanity check)**: not yet run on GPU (this repro was
-built and unit-tested on a CPU-only development machine while GPU was
-occupied by a concurrent baseline's training in this project; each
-GIN+TGP forward/backward pass costs ~80s/iteration at batch=8 on CPU,
-making a full 50-epoch/2520-sample run impractical without GPU). **Run
-the training command above and fill in this table:**
+**Note**: an early Protocol A/B run hit a real evaluation bug (batch-composition
+label leakage through the static-graph mechanism, see "Missing details /
+paper conflicts" below) -- the numbers here are from the **post-fix**
+re-run only. A pre-fix Protocol A run (94.52%) and a pre-fix Protocol B
+run (val accuracy spiked to 100% by epoch 1, an obvious tell) were both
+discarded.
+
+**Protocol A (paper sanity check)** -- real GPU run (RTX 3070 Ti Laptop, 8GB):
 
 | | Paper (D1) | Our reproduction |
 |---|---|---|
-| Accuracy | 95.71% | TBD |
-| Params | 321,002 | 321,950 (confirmed, CPU) |
+| Accuracy | 95.71% | **95.12%** (gap -0.59pp) |
+| Params | 321,002 | 321,950 |
+| Training time | -- | 2108.5s (~35.1 min), 50 epochs |
 
-**Protocol B (unified DC-PSR comparison)**: not yet run (same GPU
-availability reason). Fill in after running `--protocol B` for all 5
-seeds:
+**Protocol B (unified DC-PSR comparison)** -- all 5 seeds complete:
 
-| Acc | Macro-F1 | E-F1 | M-F1 | L-F1 | M-Pre | M-Rec | M->E | M->L | Rev | Jump | Smooth |
-|---|---|---|---|---|---|---|---|---|---|---|---|
-| TBD | | | | | | | | | | | |
+| Seed | Acc | Macro-F1 | E-F1 | M-F1 | L-F1 | M-Pre | M-Rec | M->E | M->L | Rev | Jump | Smooth |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 42 | 0.8095 | 0.8150 | 0.8407 | 0.7561 | 0.8481 | 0.7949 | 0.7209 | 0.2791 | 0.0000 | 7 | 0 | 0.0868 |
+| 52 | 0.9651 | 0.9659 | 0.9444 | 0.9588 | 0.9945 | 0.9275 | 0.9922 | 0.0000 | 0.0078 | 6 | 0 | 0.0889 |
+| 62 | 0.8254 | 0.8238 | 0.8837 | 0.7291 | 0.8585 | 1.0000 | 0.5736 | 0.1938 | 0.2326 | 10 | 0 | 0.1239 |
+| 72 | 0.9397 | 0.9411 | 0.9548 | 0.9212 | 0.9474 | 0.9911 | 0.8605 | 0.0698 | 0.0698 | 6 | 0 | 0.0990 |
+| 82 | 0.8825 | 0.8885 | 0.8520 | 0.8356 | 0.9780 | 0.9792 | 0.7287 | 0.2558 | 0.0155 | 6 | 0 | 0.1000 |
+| **mean+-std** | **0.8844+-0.0683** | **0.8869+-0.0677** | **0.8951+-0.0523** | **0.8401+-0.1001** | **0.9253+-0.0680** | **0.9385+-0.0851** | **0.7752+-0.1582** | **0.1597+-0.1207** | **0.0651+-0.0975** | **7.0+-1.7** | **0.0+-0.0** | **0.0997+-0.0147** |
+
+For context: this project's other Protocol B baselines on the identical
+split score mtf_avitk Acc=0.9016, multi_source_attention Acc=0.8190
+(single run each) -- Dynamic GIN+TGP's 5-seed mean of 88.44% sits between
+them. Note the notable cross-seed spread (std 6.83pp on Acc, range
+80.95%-96.51%) -- this architecture is visibly seed-sensitive on this
+task; quote the mean+-std, not a single seed, when citing this result.
 
 ## Caveats
 
@@ -194,11 +207,22 @@ seeds:
   pipeline and macro-architecture, Medium for a handful of pixel/axis
   implementation choices in the spatial-CNN and TGP internals).
 - All unit/shape/gradient/single-batch-overfit tests pass on CPU
-  (`tests/test_pipeline.py`, 13/13). Full 50-epoch convergence has NOT
-  yet been verified on real data -- that is the first thing to check
-  after running Protocol A above (paper reports 95.71% on D1; if the
-  real run lands far outside ~92-98%, stop and re-audit before trusting
-  Protocol B numbers, per task instruction #37).
+  (`tests/test_pipeline.py`, 13/13). Real-GPU 50-epoch convergence is
+  **confirmed**: Protocol A reaches 95.12% on D1 (paper: 95.71%,
+  -0.59pp), well inside the ~92-98% sanity band, so Protocol B's numbers
+  are trusted (task instruction #37).
+- **A real evaluation bug was found and fixed mid-project** (not just a
+  paper-fidelity nuance): `train.py`'s val/test DataLoaders originally
+  produced batches containing only a single run's segments (same true
+  label), and this architecture's static graph (Eq.7-9) is built by
+  concatenating an entire batch before computing cosine similarity --
+  meaning a sample's prediction depends on its batch-mates. Homogeneous
+  eval batches let the true label leak into predictions via the graph,
+  inflating Protocol B's val accuracy to 100% by epoch 1 while train
+  accuracy was still ~67% (caught from a real training log, not from
+  unit tests). Fixed by shuffling each Dataset's rows once (fixed seed)
+  at construction time -- see FINAL_REPORT.md's opening section for the
+  full writeup and the direct experiment that proved the batch-dependence.
 - Protocol B's run-level aggregation (mean of 10 segment-probabilities
   per run) is a reimplementation choice, not a paper-specified step (the
   paper evaluates at sample level only).
