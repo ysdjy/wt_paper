@@ -1,0 +1,35 @@
+[generic-baselines seed 52] base.FEATURE_FILE = C:\Users\banghai\Documents\BaiduSyncdisk\西工大\王婷\论文\baselines\htt_net\data\run_level_features_all.csv
+[generic-baselines seed 52] base.RANDOM_SEED  = 52
+[generic-baselines seed 52] output dir        = C:\Users\banghai\Documents\BaiduSyncdisk\西工大\王婷\论文\final_five_seed_sweep\results\generic_baselines\seed52
+====================================================================================================
+Rechecked comparison experiment B1-B12: C1+C4 -> C6
+Output dir: C:\Users\banghai\Documents\BaiduSyncdisk\西工大\王婷\论文\final_five_seed_sweep\results\generic_baselines\seed52
+====================================================================================================
+
+FINAL_comparison_results.csv
+Method               Method_name Stage_definition                  Model_type    Acc  Macro-F1   E-F1   M-F1   L-F1  M-Pre  M-Rec    M→E    M→L  Rev  Jump  Smooth
+    B1          Fixed-stage Rule      Fixed-stage    wear-threshold reference 0.6447    0.6145 0.4587 0.5970 0.7879 0.5755 0.6202 0.0000 0.3798    0     0  0.0132
+    B2 Relative-stage Proxy Rule   Relative-stage sensor-derived q_proxy rule 0.5757    0.4871 0.7304 0.0000 0.7309 0.0000 0.0000 0.4806 0.5194    5    11  0.0726
+    B3            Fixed-stage RF      Fixed-stage                          RF 0.9474    0.9490 0.9231 0.9350 0.9889 0.9829 0.8915 0.1085 0.0000    5     0  0.1106
+    B4        Relative-stage SVM   Relative-stage                         SVM 0.8651    0.8695 0.8723 0.8392 0.8970 0.8492 0.8295 0.1705 0.0000   10     0  0.1574
+    B5         Relative-stage RF   Relative-stage                          RF 0.9803    0.9806 0.9708 0.9764 0.9945 0.9920 0.9612 0.0310 0.0078    5     0  0.1146
+    B6    Relative-stage XGBoost   Relative-stage                     xgboost 0.8783    0.8765 0.8054 0.8702 0.9540 0.7949 0.9612 0.0388 0.0000    9     0  0.1397
+    B7        Relative-stage MLP   Relative-stage                         MLP 0.9375    0.9403 0.9767 0.9218 0.9223 0.9825 0.8682 0.0310 0.1008    9     0  0.1328
+    B8        Relative-stage TCN   Relative-stage                         TCN 0.7533    0.7474 0.8571 0.5902 0.7948 1.0000 0.4186 0.2171 0.3643    7     9  0.0827
+    B9        Relative-stage GRU   Relative-stage                         GRU 0.8816    0.8835 0.8889 0.8378 0.9239 1.0000 0.7209 0.1628 0.1163    2     0  0.0452
+   B10    Relative-stage TCN-GRU   Relative-stage                     TCN-GRU 0.8586    0.8603 0.8842 0.8000 0.8966 1.0000 0.6667 0.1705 0.1628    3     0  0.0670
+   B11        Multi-task TCN-GRU   Relative-stage   TCN-GRU + auxiliary heads 0.7993    0.8027 0.9231 0.6904 0.7948 1.0000 0.5271 0.1085 0.3643    3     1  0.0544
+   B12                  FGDS-PSI   Relative-stage                    Proposed 0.8618    0.8705 0.9825 0.8056 0.8235 1.0000 0.6744 0.0233 0.3023    3     0  0.0401
+
+B2 check: uses true VB-derived q on C6 = False
+
+DEBUG_B10_vs_B11_check.csv
+method  train_windows  val_windows  test_windows  input_dim  selected_features  train_early  train_middle  train_late  best_epoch  best_val_acc  best_val_macro_f1  best_val_MRec  test_acc  test_macro_f1  test_MF1
+   B10            416           60           304         45                 45          125           173         118          59           1.0                1.0            1.0    0.8586         0.8603    0.8000
+   B11            416           60           304         45                 45          125           173         118          13           1.0                1.0            1.0    0.7993         0.8027    0.6904
+
+B12 vs B11 comparison
+Macro-F1 difference: 0.0678
+M-F1 difference    : 0.1152
+M→L difference     : -0.0620
+Smooth difference  : -0.0144
