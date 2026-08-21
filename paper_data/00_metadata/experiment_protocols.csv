@@ -1,5 +1,7 @@
 ﻿protocol_id,dataset_id,aggregation,uncertainty,notes
-PHM_D1_COMMON_304,PHM2010,304-run point + moving-block bootstrap CI,bootstrap_95CI,all 9 methods aligned to run_id 12..315
-PHM_TRANSFER_D1_D2_D3_FROZEN,PHM2010,task point estimates,none; separate across-task std table,D2/D3 native universes differ by method family
+PHM_D1_COMMON_304,PHM2010,fixed official model point estimate + moving-block bootstrap 95% CI,moving_block_bootstrap_95CI,main manuscript comparison; all 9 methods aligned to run_id 12..315; not a training-seed study
+PHM_D1_D2_D3_COMMON_304,PHM2010,task point estimates on common run_id 12..315,none; separate across-task descriptive std,D1 fixed official values; D2/D3 recomputed from existing predictions after deterministic filtering; no retraining
+PHM_D1_ORIGINAL_5SEED_AUDIT,PHM2010,mean/std across training seeds,across_seed_std,AUDIT_SUPPORTING only; original preprocessing/training-seed coupled sweep
+PHM_D1_FIXED_PREPROCESS_SEED_SENSITIVITY,PHM2010,mean/std across TRAIN_SEED with preprocessing fixed at seed 42,across_seed_std,AUDIT_SUPPORTING only; never replaces fixed official D1 main comparison
 NASA_ORIGINAL_SPLIT,NASA_MILLING,task points and across-task mean/std,across_task_std,"N1-N4, seed 2026"
-MENDELEY_DUAL_SOURCE_5SEED,MENDELEY_CROSS_MACHINE,mean/std across seeds within task,across_seed_std,seeds 42/52/62/72/82
+MILLING_CROSS_MACHINE_5SEED,MILLING_CROSS_MACHINE,mean/std across seeds within task,across_seed_std,seeds 42/52/62/72/82; hosted on Mendeley Data

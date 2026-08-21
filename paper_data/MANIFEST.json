@@ -2,15 +2,15 @@
   "schema_version": "1.0",
   "repository": {
     "branch": "diagnostic/fixed-preprocess-5seed",
-    "commit": "28ed66b967945cfaf39ef97d4814507e8f25e4c1"
+    "commit": "7b9fa2bae3826c5af55edcaa61dc1790cd0f1b9a"
   },
   "counts_by_status": {
-    "DERIVED": 58,
-    "AUTHORITATIVE": 313,
-    "AUDIT_SUPPORTING": 4,
-    "CANONICAL_COPY": 2
+    "DERIVED": 64,
+    "AUTHORITATIVE": 294,
+    "CANONICAL_COPY": 20,
+    "AUDIT_SUPPORTING": 14
   },
-  "catalog_entries": 377,
+  "catalog_entries": 392,
   "prediction_level_files": 224,
   "checksum_policy": "all files except MANIFEST.json and CHECKSUMS.csv; DATA_CATALOG self hash excluded in its own row",
   "validation_report": "paper_data/90_provenance/VALIDATION_REPORT.md"

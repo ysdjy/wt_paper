@@ -6,14 +6,24 @@
     "dataset": "PHM2010",
     "task": {
       "name": "D1",
-      "train_conditions": ["C1", "C4"],
+      "train_conditions": [
+        "C1",
+        "C4"
+      ],
       "test_condition": "C6"
     },
     "feature_file": {
       "path": "baselines/htt_net/data/run_level_features_all.csv",
       "sha256": "6e8affeb681d0b386e453421a0df7a66932138199eb236403d27b797c11eeb88",
-      "shape": [945, 345],
-      "condition_counts": {"C1": 315, "C4": 315, "C6": 315},
+      "shape": [
+        945,
+        345
+      ],
+      "condition_counts": {
+        "C1": 315,
+        "C4": 315,
+        "C6": 315
+      },
       "provenance": "Recovered copy of the manuscript's original run-level feature table; reconstructed_v1_superseded is not used."
     },
     "formal_backbone_checkpoint": {
@@ -95,11 +105,27 @@
     "run_id_min": 12,
     "run_id_max": 315,
     "n": 304,
-    "ordering": ["condition", "cut_index"]
+    "ordering": [
+      "condition",
+      "cut_index"
+    ]
   },
   "metric_evaluator": {
     "source": "代码/main_experiment_3_fgds_psi_optimized.py:254-345",
-    "metrics": ["Acc", "Macro-F1", "E-F1", "M-F1", "L-F1", "M-Precision", "M-Recall", "M→E", "M→L", "Rev", "Jump", "Smooth"],
+    "metrics": [
+      "Acc",
+      "Macro-F1",
+      "E-F1",
+      "M-F1",
+      "L-F1",
+      "M-Precision",
+      "M-Recall",
+      "M→E",
+      "M→L",
+      "Rev",
+      "Jump",
+      "Smooth"
+    ],
     "smooth_definition": "Mean L1 distance between adjacent stage-probability vectors in C6 run order.",
     "metrics_recomputed": true
   },
@@ -122,7 +148,10 @@
     "protocol_mismatch": false,
     "A1_A4_labels_all_equal": true,
     "A1_A4_probability_matrices_all_distinct": true,
-    "A1_A4_pairwise_max_abs_probability_difference_range": [0.017271588653685388, 0.21523936896432982],
+    "A1_A4_pairwise_max_abs_probability_difference_range": [
+      0.017271588653685388,
+      0.21523936896432982
+    ],
     "main_prediction_vs_main_summary_max_abs_difference": 2.352982614306498e-09,
     "separate_7_6_prediction_vs_summary_within_float_tolerance": true,
     "formal_vs_old_main_checkpoints_tensor_equal": false,
@@ -138,16 +167,302 @@
     "comparison_output": "figures/fig4_ablation/ABLATION_RECOMPUTED.csv"
   },
   "authoritative_key_values": {
-    "A1": {"Acc": 0.9901315789473685, "Macro-F1": 0.9902304781561747, "M-F1": 0.9882352941176471, "M-Rec": 0.9767441860465116, "M→E": 0.02325581395348819, "M→L": 0.0, "Rev": 0, "Jump": 0, "Smooth": 0.02359267461909713},
-    "A2": {"Acc": 0.9901315789473685, "Macro-F1": 0.9902304781561747, "M-F1": 0.9882352941176471, "M-Rec": 0.9767441860465116, "M→E": 0.02325581395348819, "M→L": 0.0, "Rev": 0, "Jump": 0, "Smooth": 0.019907228357515235},
-    "A3": {"Acc": 0.9901315789473685, "Macro-F1": 0.9902304781561747, "M-F1": 0.9882352941176471, "M-Rec": 0.9767441860465116, "M→E": 0.02325581395348819, "M→L": 0.0, "Rev": 0, "Jump": 0, "Smooth": 0.020855330400735835},
-    "A4": {"Acc": 0.9901315789473685, "Macro-F1": 0.9902304781561747, "M-F1": 0.9882352941176471, "M-Rec": 0.9767441860465116, "M→E": 0.02325581395348819, "M→L": 0.0, "Rev": 0, "Jump": 0, "Smooth": 0.020532626034720433},
-    "A5": {"Acc": 0.9769736842105263, "Macro-F1": 0.9775120581308953, "M-F1": 0.9725490196078431, "M-Rec": 0.9612403100775194, "M→E": 0.03875968992248032, "M→L": 0.0, "Rev": 0, "Jump": 0, "Smooth": 0.013594679587787121},
-    "A6": {"Acc": 0.9868421052631579, "Macro-F1": 0.9871020928241414, "M-F1": 0.984375, "M-Rec": 0.9767441860465116, "M→E": 0.02325581395348819, "M→L": 0.0, "Rev": 0, "Jump": 0, "Smooth": 0.01876092891182185}
+    "A1": {
+      "Acc": 0.9901315789473685,
+      "Macro-F1": 0.9902304781561747,
+      "M-F1": 0.9882352941176471,
+      "M-Rec": 0.9767441860465116,
+      "M→E": 0.02325581395348819,
+      "M→L": 0.0,
+      "Rev": 0,
+      "Jump": 0,
+      "Smooth": 0.02359267461909713
+    },
+    "A2": {
+      "Acc": 0.9901315789473685,
+      "Macro-F1": 0.9902304781561747,
+      "M-F1": 0.9882352941176471,
+      "M-Rec": 0.9767441860465116,
+      "M→E": 0.02325581395348819,
+      "M→L": 0.0,
+      "Rev": 0,
+      "Jump": 0,
+      "Smooth": 0.019907228357515235
+    },
+    "A3": {
+      "Acc": 0.9901315789473685,
+      "Macro-F1": 0.9902304781561747,
+      "M-F1": 0.9882352941176471,
+      "M-Rec": 0.9767441860465116,
+      "M→E": 0.02325581395348819,
+      "M→L": 0.0,
+      "Rev": 0,
+      "Jump": 0,
+      "Smooth": 0.020855330400735835
+    },
+    "A4": {
+      "Acc": 0.9901315789473685,
+      "Macro-F1": 0.9902304781561747,
+      "M-F1": 0.9882352941176471,
+      "M-Rec": 0.9767441860465116,
+      "M→E": 0.02325581395348819,
+      "M→L": 0.0,
+      "Rev": 0,
+      "Jump": 0,
+      "Smooth": 0.020532626034720433
+    },
+    "A5": {
+      "Acc": 0.9769736842105263,
+      "Macro-F1": 0.9775120581308953,
+      "M-F1": 0.9725490196078431,
+      "M-Rec": 0.9612403100775194,
+      "M→E": 0.03875968992248032,
+      "M→L": 0.0,
+      "Rev": 0,
+      "Jump": 0,
+      "Smooth": 0.013594679587787121
+    },
+    "A6": {
+      "Acc": 0.9868421052631579,
+      "Macro-F1": 0.9871020928241414,
+      "M-F1": 0.984375,
+      "M-Rec": 0.9767441860465116,
+      "M→E": 0.02325581395348819,
+      "M→L": 0.0,
+      "Rev": 0,
+      "Jump": 0,
+      "Smooth": 0.01876092891182185
+    }
   },
   "warnings": [
     "The formal comparison CSV stores probabilities rounded to four decimals; full A2-A5 probabilities were regenerated from the frozen formal checkpoint and current code without retraining.",
     "A1-A4 identical classification metrics reflect identical argmax labels despite materially different probability matrices.",
     "Future Fig.4 code must read AUTHORITATIVE_A1_A6.csv, not the old main or independent 7.6 summaries."
-  ]
+  ],
+  "fig4_v2": {
+    "audit_result": "PASS_INFERENCE_ONLY",
+    "experiment_protocol_changed": false,
+    "training_performed": false,
+    "inference_only": true,
+    "dataset": "PHM2010",
+    "task": "D1: train C1+C4, test C6",
+    "test_universe": {
+      "condition": "C6",
+      "window_length": 12,
+      "run_id_min": 12,
+      "run_id_max": 315,
+      "n": 304
+    },
+    "authoritative_summary": {
+      "path": "figures/fig4_ablation/AUTHORITATIVE_A1_A6.csv",
+      "sha256": "2bd8032f8e7e0261cd957cd9ed44381c58ebf781990e19fe2976eb13af6f2bd4"
+    },
+    "formal_checkpoint": {
+      "path": "补充材料/小论文/4_comparison_experiment_recheck/3_models/B11_B12_multitask_tcn_gru.pth",
+      "sha256": "17299bbc71baa8148a0c3916084b034ec0efe4120a36b06f2b2cb8a6919ec69b"
+    },
+    "frozen_preprocessing": {
+      "directory": "protocol_diagnostic_fixed_preprocess/frozen_preprocess",
+      "selected_features": "protocol_diagnostic_fixed_preprocess/frozen_preprocess/selected_features_seed42.json",
+      "scaled_test_table": "protocol_diagnostic_fixed_preprocess/frozen_preprocess/feat_test_frozen.csv",
+      "hash_manifest": {
+        "preprocess_seed": 42,
+        "raw_feature_file_sha256": "6e8affeb681d0b386e453421a0df7a66932138199eb236403d27b797c11eeb88",
+        "files": {
+          "raw_feature_sha256.txt": "add7bb2c03ecc6c3c1cd59336aaa0d4695ce6fd8f3b7a223ac083e0025d43f7d",
+          "stage_labels.csv": "0e7890491df431153f413e7ca5568418b836086ab8939a157afbd679f95b040e",
+          "stage_thresholds.csv": "6540095cba0734f094d77e29898f07bc8b96b5a5ecc7e081fd33784789292ec2",
+          "split_manifest.csv": "a7197a8e6d33f85075c451dd10fa6233200d642f1ddfad6279e170eea49b5231",
+          "selected_features_seed42.json": "3a7fedb02d2dffa9e9cd4397e11b7446c7c7c15741942208649b14d1b95cf7d0",
+          "selected_features_scored_seed42.csv": "ab494d9b47ba41002deaaaf7fa5f8130e25a5428920da35ba586d9892ee1ccd5",
+          "gmm_seed42.pkl": "4708f67f14b043b2ec1c79e6b45de1a934f9aa232b61aa5de369e443f242311c",
+          "fine_state_labels_seed42.csv": "8b1eb7b149cfe8b378e55d3cefc356446adaa736b2ab2bed73c0ea2422fabfbb",
+          "scaler_mean.npy": "ec305b387db97e290163439a4986d3c82e2fde6f01c1bd19ccc547da132e8084",
+          "scaler_scale.npy": "91334d10643bd738fda318c071a91c8e5ee3134da54714086d6eec3341089f28",
+          "feat_train_frozen.csv": "210bff3f32dc168f51ffaaf750525ddb81375fb4d0cf0f5a0985077f2d4ea3df",
+          "feat_val_frozen.csv": "0cf50e0036844bd5ee0ad4a160dff08bcb22bc383a99b6e2ade5ce595d56aa69",
+          "feat_test_frozen.csv": "1f35c99898fc02a9db6132b7a095d6d8cbeaaa747dd85b281ae80ffb4e7006fe",
+          "window_manifest.csv": "a1ec6910e449653fd322a39a0db5b5dcd7b700e79f1801aef1a95d7f095e58c5"
+        }
+      },
+      "refit_or_reselection_performed": false
+    },
+    "formal_probability_anchor": {
+      "path": "补充材料/小论文/4_comparison_experiment_recheck/1_results/FINAL_comparison_predictions.csv",
+      "sha256": "a434e94d431d1d1638f4c62285b66dda4d4cad1bfb09de752521c78864e591f7",
+      "stored_precision": "four decimals"
+    },
+    "probability_inference_source": {
+      "path": "代码/main_experiment_3_fgds_psi_optimized.py",
+      "sha256": "0696085eb69de26e003870f1464cfc54f4c030ceb12a162faeca2c45c1ef3f5f",
+      "function": "apply_probability_inference",
+      "A1_A6_mapping": {
+        "A1": "raw",
+        "A2": "raw_fine",
+        "A3": "raw_prior",
+        "A4": "mix",
+        "A5": "ordered",
+        "A6": "final"
+      },
+      "parameters": {
+        "eta": 0.75,
+        "fine_weight": 0.3,
+        "temperature": 1.2,
+        "mid_floor": 0.12,
+        "late_tau": 0.66,
+        "early_tau": 0.38,
+        "order_blend": 0.25
+      }
+    },
+    "trajectory_definition": {
+      "relative_tool_life": "(run_id - 12) / (315 - 12) over the evaluated C6 L=12 universe",
+      "local_variation": "L1 norm of adjacent (p_E, p_M, p_L) probability vectors",
+      "local_display_smoothing": {
+        "method": "centered rolling arithmetic mean",
+        "window_runs": 11,
+        "raw_values_preserved": true
+      },
+      "cumulative_variation": "cumulative sum of local L1 variation; starts at zero"
+    },
+    "outputs": {
+      "probability_trajectories": {
+        "path": "A1_A6_probability_trajectories.csv",
+        "sha256": "238ec344414b89c6f0690ba2a1038959d834c994ab99ac1dd7b461ed13548e0e",
+        "rows": 1824
+      },
+      "lifecycle_variation": {
+        "path": "A1_A6_lifecycle_variation.csv",
+        "sha256": "ac291edbb6b52c992e7314b327ebcc1bb13503a040ceb8849d4aa0d7a33cd7a9",
+        "rows": 1824
+      },
+      "cumulative_variation": {
+        "path": "A1_A6_cumulative_variation.csv",
+        "sha256": "1b318c8148d54f2fc7b5b1dd5eedf746fc4e8aef4eaeb05d456c35b5061674fb",
+        "rows": 1824
+      }
+    },
+    "validation": {
+      "max_authoritative_metric_abs_difference": 1.1102230246251565e-16,
+      "formal_A1_labels_equal_B11": true,
+      "formal_A6_labels_equal_B12": true,
+      "A1_vs_rounded_B11_probability_max_abs_difference": 0.0004318184852600271,
+      "A6_vs_rounded_B12_probability_max_abs_difference": 0.0002292012384465525,
+      "probability_sum_max_abs_error": 1.1781230568885803e-07,
+      "all_local_means_equal_authoritative_smooth": true,
+      "all_cumulative_endpoints_equal_smooth_times_303": true
+    },
+    "runtime": {
+      "python": "3.11.15",
+      "torch": "2.7.1+cu118",
+      "numpy": "2.4.6",
+      "pandas": "3.0.5",
+      "device": "NVIDIA GeForce RTX 3070 Ti Laptop GPU",
+      "model_mode": "eval",
+      "autograd": "torch.inference_mode"
+    },
+    "plot": {
+      "script": {
+        "path": "plot_fig4_ablation_v2.py",
+        "sha256": "64764e0b3056ea90af46f880cf18ee42494f117445675223b0baf949922763c4"
+      },
+      "data_audit": {
+        "path": "FIG4_V2_DATA_AUDIT.md",
+        "sha256": "941a61bd738ea9c46d122fe5271cf5e83563611f05cc4a4130491d3dc9b1071a"
+      },
+      "panel_sources": {
+        "a": [
+          "AUTHORITATIVE_A1_A6.csv"
+        ],
+        "b": [
+          "A1_A6_lifecycle_variation.csv"
+        ],
+        "c": [
+          "AUTHORITATIVE_A1_A6.csv",
+          "ABLATION_RECOMPUTED.csv"
+        ],
+        "d": [
+          "A1_A6_cumulative_variation.csv"
+        ]
+      },
+      "outputs": {
+        "pdf": {
+          "path": "fig4_ablation_v2.pdf",
+          "sha256": "0136fb07d6fe030d6a36d46361a7b86054caa4125a3fbfdb7861a4ce64269ccd",
+          "bytes": 102962
+        },
+        "png": {
+          "path": "fig4_ablation_v2.png",
+          "sha256": "e513b156881226b46d5369ebba62f7eea8d9094efe57fb62948c6ef811c8d7ef",
+          "bytes": 823763
+        },
+        "svg": {
+          "path": "fig4_ablation_v2.svg",
+          "sha256": "3264ed09bdf664b93340e32ef0fcc58370afa782a05e1edc29532286ed3ec0cc",
+          "bytes": 193207
+        }
+      },
+      "titles_below_panels": true,
+      "total_title": false,
+      "backend": "Python/matplotlib",
+      "png_dpi": 600,
+      "svg_text_editable": true
+    }
+  },
+  "fig4_refined": {
+    "audit_result": "PASS_INFERENCE_ONLY",
+    "experiment_protocol_changed": false,
+    "training_performed": false,
+    "script": {
+      "path": "plot_fig4_ablation_refined.py",
+      "sha256": "447147a03e15984de192a58368de89dcd53f6eef56a2bbba247c1dbe30a2d332"
+    },
+    "refinement_notes": {
+      "path": "FIG4_REFINEMENT_NOTES.md",
+      "sha256": "0cb119fb5c533d31a45e70772623239322ba9cf8acc38767a5e8cd0b2f15cbe6"
+    },
+    "panel_sources": {
+      "a": [
+        "AUTHORITATIVE_A1_A6.csv"
+      ],
+      "b": [
+        "A1_A6_lifecycle_variation.csv"
+      ],
+      "c": [
+        "AUTHORITATIVE_A1_A6.csv",
+        "ABLATION_RECOMPUTED.csv"
+      ],
+      "d": [
+        "A1_A6_cumulative_variation.csv"
+      ]
+    },
+    "visual_changes_only": true,
+    "point_value_labels": {
+      "a_Smooth": "all A1-A6",
+      "c_M_to_E": "all A1-A6",
+      "c_M_to_L": "all A1-A6"
+    },
+    "right_panel_legends": "single-column vertical",
+    "local_display_smoothing_window_runs": 11,
+    "outputs": {
+      "pdf": {
+        "path": "fig4_ablation_refined.pdf",
+        "sha256": "af2d0930d8e7f00227293b013b5139a8ad5a95af53fe186800d2ce1294a6b7cf",
+        "bytes": 105777
+      },
+      "png": {
+        "path": "fig4_ablation_refined.png",
+        "sha256": "3f702b20b256ceae24851a909c0fe714f731a767f95e41229c51fabf030c4a2e",
+        "bytes": 854499
+      },
+      "svg": {
+        "path": "fig4_ablation_refined.svg",
+        "sha256": "887a61230d189192a58104ca7ef48345d252e3ae230c82c8bba89beeb01c797d",
+        "bytes": 202435
+      }
+    },
+    "titles_below_panels": true,
+    "backend": "Python/matplotlib",
+    "png_dpi": 600,
+    "svg_text_editable": true
+  }
 }

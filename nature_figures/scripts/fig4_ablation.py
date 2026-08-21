@@ -18,7 +18,7 @@ from common import (
 )
 
 
-SOURCE = "补充材料/小论文/3_main_experiment_fgds_psi/1_results/FINAL_ablation_outputs.csv"
+SOURCE = "paper_data/01_PHM2010/03_ablation/A1_A6_AUTHORITATIVE.csv"
 METHODS = ["A1", "A2", "A3", "A4", "A5", "A6"]
 
 
@@ -32,7 +32,7 @@ def normalize_columns(values: np.ndarray) -> np.ndarray:
 
 def make_figure():
     apply_style()
-    df = read_csv(SOURCE).set_index("Method").loc[METHODS].copy()
+    df = read_csv(SOURCE).set_index("ID").loc[METHODS].copy()
     metric_map = {
         "Acc": "Acc",
         "Macro-F1": "Macro-F1",
@@ -46,7 +46,7 @@ def make_figure():
     delta["Smooth benefit"] = float(ref["Smooth"]) - pd.to_numeric(df["Smooth"])
     norm = normalize_columns(delta.to_numpy(float))
 
-    export = df.reset_index()[["Method", "Output", "Acc", "Macro-F1", "M-F1", "M-Rec", "Smooth"]].copy()
+    export = df.reset_index()[["ID", "Configuration", "Acc", "Macro-F1", "M-F1", "M-Rec", "Smooth"]].copy()
     for col in delta.columns:
         export[f"delta_{col}"] = delta[col].to_numpy(float)
     write_plot_data(export, "fig4_D1_ablation_A1_A6.csv")

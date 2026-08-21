@@ -1,14 +1,18 @@
 {
-  "Acc": 0.6666666666666666,
-  "MacroF1": 0.666275659824047,
-  "E_F1": 0.8,
-  "M_F1": 0.6181818181818182,
+  "Acc": 0.6578947368421053,
+  "MacroF1": 0.6610686741742118,
+  "E_F1": 0.782122905027933,
+  "M_F1": 0.6204379562043796,
   "L_F1": 0.5806451612903226,
-  "M_Precision": 0.5182926829268293,
+  "M_Precision": 0.5214723926380368,
   "M_Recall": 0.7657657657657657,
   "M_to_E": 0.03603603603603572,
   "M_to_L": 0.19819819819819642,
-  "Rev": 55,
+  "Rev": 54,
   "Jump": 0,
-  "Smooth": 0.642417370505455
+  "Smooth": 0.6586540355678191,
+  "n_test": 304,
+  "test_universe": "run_id_12_315_common_304",
+  "source_predictions": "paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multi_source_attention/predictions.csv",
+  "retrained": false
 }

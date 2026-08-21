@@ -10,7 +10,7 @@ This directory is the only permitted data entrypoint for manuscript numbers, tab
 - PHM2010 A1-A6: `01_PHM2010/03_ablation/A1_A6_AUTHORITATIVE.csv` (the only permitted ablation source)
 - PHM2010 Fig.5 semantics: `01_PHM2010/04_semantics/C6_lifecycle_probability_wear.csv` and `C6_hidden_representation.csv`
 - NASA original N1-N4: `02_NASA/original_split_mean_std.csv` plus task/prediction evidence
-- Mendeley cross-machine: `03_MENDELEY_CROSS_MACHINE/overall_by_task_mean_std.csv` plus seed/prediction/semantic evidence
+- MTW-CM (Multivariate time series data of milling processes with varying tool wear and machine tools; hosted on Mendeley Data): `03_MENDELEY_CROSS_MACHINE/overall_by_task_mean_std.csv` plus seed/prediction/semantic evidence. The folder name `03_MENDELEY_CROSS_MACHINE` is a retained path only, not the formal dataset name.
 
 ## Derived data
 
@@ -27,4 +27,4 @@ python paper_data/99_scripts/build_paper_data.py
 python paper_data/99_scripts/validate_paper_data.py
 ```
 
-Repository anchor: branch `diagnostic/fixed-preprocess-5seed`, commit `28ed66b`. The task-start state is frozen in `90_provenance/REPOSITORY_STATE.md`.
+Repository anchor: branch `diagnostic/fixed-preprocess-5seed`, commit `7b9fa2b`. The task-start state is frozen in `90_provenance/REPOSITORY_STATE.md`.

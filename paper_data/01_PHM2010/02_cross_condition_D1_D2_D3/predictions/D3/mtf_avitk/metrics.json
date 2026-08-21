@@ -1,8 +1,8 @@
 {
-  "Acc": 0.8412698412698413,
-  "MacroF1": 0.834860553347462,
-  "E_F1": 0.9417040358744395,
-  "M_F1": 0.8015873015873016,
+  "Acc": 0.8355263157894737,
+  "MacroF1": 0.8327336690841747,
+  "E_F1": 0.9353233830845771,
+  "M_F1": 0.8015873015873017,
   "L_F1": 0.7612903225806451,
   "M_Precision": 0.7163120567375887,
   "M_Recall": 0.9099099099099099,
@@ -10,5 +10,9 @@
   "M_to_L": 0.07207207207207143,
   "Rev": 9,
   "Jump": 0,
-  "Smooth": 0.11478802999040368
+  "Smooth": 0.11661177490673268,
+  "n_test": 304,
+  "test_universe": "run_id_12_315_common_304",
+  "source_predictions": "paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/mtf_avitk/predictions.csv",
+  "retrained": false
 }

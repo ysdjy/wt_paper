@@ -1,4 +1,4 @@
-condition,run_id,true_stage,pred_stage,p_early,p_middle,p_late
+﻿condition,run_id,true_stage,pred_stage,p_early,p_middle,p_late
 C4,12,early,early,0.99671185,3.9809063e-05,0.0032483547
 C4,13,early,early,0.9987943,8.51118e-05,0.0011205552
 C4,14,early,early,0.99875045,8.2352635e-05,0.0011671459

@@ -1,4 +1,4 @@
-﻿dataset_id,dataset_name,role,canonical_root,notes
-PHM2010,PHM2010 milling tool wear,main benchmark,01_PHM2010,D1 common universe has 304 runs
-NASA_MILLING,NASA Milling,external small-sample validation,02_NASA,only real B9-B12 original N1-N4 evidence retained
-MENDELEY_CROSS_MACHINE,Multivariate time series data of milling processes with varying tool wear and machine tools,third cross-machine dataset,03_MENDELEY_CROSS_MACHINE,3 machines; 9 tools; 6418 runs; T8 early truncation
+﻿dataset_id,dataset_name,dataset_short_name,hosting_platform,hosting_role,role,canonical_root,notes
+PHM2010,PHM2010 milling tool wear,PHM2010,PHM Society Data Challenge repository,distribution source,main benchmark,01_PHM2010,D1/D2/D3 use run_id 12..315 common 304-run universes
+NASA_MILLING,NASA Ames milling data set,NASA Milling,NASA Prognostics Data Repository,distribution source,external small-sample validation,02_NASA,only real B9-B12 original N1-N4 evidence retained
+MILLING_CROSS_MACHINE,Multivariate time series data of milling processes with varying tool wear and machine tools,MTW-CM,Mendeley Data,data hosting platform; not the dataset name,third cross-machine dataset,03_MENDELEY_CROSS_MACHINE,3 machines; 9 tools; 6418 runs; T8 early truncation; legacy folder name retained for path stability

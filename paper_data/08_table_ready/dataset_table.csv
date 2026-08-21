@@ -1,4 +1,4 @@
-﻿dataset,task_or_condition,sensor,sequence_or_run,wear_label,transfer_protocol
-PHM2010,D1/D2/D3,multi-source milling signals,945 source runs; D1 test 304,VB and condition-relative stage,dual-source leave-one-condition-out
-NASA Milling,N1-N4 original split,case-dependent milling signals,small-sample cross-case,VB/stage,original cross-case tasks
-Mendeley cross-machine,D1-M/D2-M/D3-M,audited primary common channels,6418 HDF5 runs; 9 tools,VB (µm) and relative stage,"two machines train, third test"
+﻿dataset,formal_dataset_name,hosting_platform,task_or_condition,sensor,sequence_or_run,wear_label,transfer_protocol
+PHM2010,,,D1/D2/D3,multi-source milling signals,945 source runs; D1 test 304,VB and condition-relative stage,dual-source leave-one-condition-out
+NASA Milling,,,N1-N4 original split,case-dependent milling signals,small-sample cross-case,VB/stage,original cross-case tasks
+MTW-CM,Multivariate time series data of milling processes with varying tool wear and machine tools,Mendeley Data,D1-M/D2-M/D3-M,audited primary common channels,6418 HDF5 runs; 9 tools,VB (µm) and relative stage,"two machines train, third test"

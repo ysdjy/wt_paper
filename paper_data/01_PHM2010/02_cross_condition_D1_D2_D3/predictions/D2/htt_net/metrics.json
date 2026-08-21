@@ -2,7 +2,7 @@
   "Acc": 0.9276315789473685,
   "MacroF1": 0.9270847918460327,
   "E_F1": 0.8874172185430463,
-  "M_F1": 0.9230769230769231,
+  "M_F1": 0.923076923076923,
   "L_F1": 0.9707602339181286,
   "M_Precision": 0.8571428571428571,
   "M_Recall": 1.0,
@@ -10,5 +10,9 @@
   "M_to_L": 0.0,
   "Rev": 0,
   "Jump": 0,
-  "Smooth": 0.014122898690402508
+  "Smooth": 0.014122898306151814,
+  "n_test": 304,
+  "test_universe": "run_id_12_315_common_304",
+  "source_predictions": "paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/htt_net/predictions.csv",
+  "retrained": false
 }

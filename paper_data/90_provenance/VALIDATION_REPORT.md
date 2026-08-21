@@ -18,21 +18,577 @@
 - D1_multitask_tcn_gru_304runs.csv common universe is run_id 12..315
 - D1_rf_304runs.csv common universe is run_id 12..315
 - D1_tcn_gru_304runs.csv common universe is run_id 12..315
+- D1 protocol remains fixed official model + moving-block bootstrap 95% CI
+- methods.csv has exactly nine unique method IDs
+- methods.csv explicitly includes dp2net_adapted
+- methods.csv method_id set matches METHOD_METADATA registry
+- datasets.csv has a row for MILLING_CROSS_MACHINE
+- Third dataset formal name matches THIRD_DATASET_NAME
+- Third dataset short name is recorded separately
+- Third dataset hosting platform is recorded separately from its name
+- Third dataset formal name and hosting platform are not conflated
 - Cross-condition table has 9 methods × 3 tasks
 - Cross-condition task names are complete
 - Every cross-condition row records universe/protocol/source
+- Every D1/D2/D3 row uses the common 304-run universe
+- Every D1/D2/D3 row reports n_test=304
+- D2/rf predictions are exactly run_id 12..315 (304 rows)
+- D2/rf has a transfer_tasks_long.csv row
+- D2/rf recomputed Acc equals the frozen table value
+- D2/rf recomputed MacroF1 equals the frozen table value
+- D2/rf recomputed E_F1 equals the frozen table value
+- D2/rf recomputed M_F1 equals the frozen table value
+- D2/rf recomputed L_F1 equals the frozen table value
+- D2/rf recomputed M_Precision equals the frozen table value
+- D2/rf recomputed M_Recall equals the frozen table value
+- D2/rf recomputed M_to_E equals the frozen table value
+- D2/rf recomputed M_to_L equals the frozen table value
+- D2/rf recomputed Rev equals the frozen table value
+- D2/rf recomputed Jump equals the frozen table value
+- D2/rf recomputed Smooth equals the frozen table value
+- D2/rf metrics.json declares retrained=false
+- D2/rf metrics.json Acc equals recomputed value
+- D2/rf metrics.json MacroF1 equals recomputed value
+- D2/rf metrics.json E_F1 equals recomputed value
+- D2/rf metrics.json M_F1 equals recomputed value
+- D2/rf metrics.json L_F1 equals recomputed value
+- D2/rf metrics.json M_Precision equals recomputed value
+- D2/rf metrics.json M_Recall equals recomputed value
+- D2/rf metrics.json M_to_E equals recomputed value
+- D2/rf metrics.json M_to_L equals recomputed value
+- D2/rf metrics.json Rev equals recomputed value
+- D2/rf metrics.json Jump equals recomputed value
+- D2/rf metrics.json Smooth equals recomputed value
+- D2/tcn_gru predictions are exactly run_id 12..315 (304 rows)
+- D2/tcn_gru has a transfer_tasks_long.csv row
+- D2/tcn_gru recomputed Acc equals the frozen table value
+- D2/tcn_gru recomputed MacroF1 equals the frozen table value
+- D2/tcn_gru recomputed E_F1 equals the frozen table value
+- D2/tcn_gru recomputed M_F1 equals the frozen table value
+- D2/tcn_gru recomputed L_F1 equals the frozen table value
+- D2/tcn_gru recomputed M_Precision equals the frozen table value
+- D2/tcn_gru recomputed M_Recall equals the frozen table value
+- D2/tcn_gru recomputed M_to_E equals the frozen table value
+- D2/tcn_gru recomputed M_to_L equals the frozen table value
+- D2/tcn_gru recomputed Rev equals the frozen table value
+- D2/tcn_gru recomputed Jump equals the frozen table value
+- D2/tcn_gru recomputed Smooth equals the frozen table value
+- D2/tcn_gru metrics.json declares retrained=false
+- D2/tcn_gru metrics.json Acc equals recomputed value
+- D2/tcn_gru metrics.json MacroF1 equals recomputed value
+- D2/tcn_gru metrics.json E_F1 equals recomputed value
+- D2/tcn_gru metrics.json M_F1 equals recomputed value
+- D2/tcn_gru metrics.json L_F1 equals recomputed value
+- D2/tcn_gru metrics.json M_Precision equals recomputed value
+- D2/tcn_gru metrics.json M_Recall equals recomputed value
+- D2/tcn_gru metrics.json M_to_E equals recomputed value
+- D2/tcn_gru metrics.json M_to_L equals recomputed value
+- D2/tcn_gru metrics.json Rev equals recomputed value
+- D2/tcn_gru metrics.json Jump equals recomputed value
+- D2/tcn_gru metrics.json Smooth equals recomputed value
+- D2/multitask_tcn_gru predictions are exactly run_id 12..315 (304 rows)
+- D2/multitask_tcn_gru has a transfer_tasks_long.csv row
+- D2/multitask_tcn_gru recomputed Acc equals the frozen table value
+- D2/multitask_tcn_gru recomputed MacroF1 equals the frozen table value
+- D2/multitask_tcn_gru recomputed E_F1 equals the frozen table value
+- D2/multitask_tcn_gru recomputed M_F1 equals the frozen table value
+- D2/multitask_tcn_gru recomputed L_F1 equals the frozen table value
+- D2/multitask_tcn_gru recomputed M_Precision equals the frozen table value
+- D2/multitask_tcn_gru recomputed M_Recall equals the frozen table value
+- D2/multitask_tcn_gru recomputed M_to_E equals the frozen table value
+- D2/multitask_tcn_gru recomputed M_to_L equals the frozen table value
+- D2/multitask_tcn_gru recomputed Rev equals the frozen table value
+- D2/multitask_tcn_gru recomputed Jump equals the frozen table value
+- D2/multitask_tcn_gru recomputed Smooth equals the frozen table value
+- D2/multitask_tcn_gru metrics.json declares retrained=false
+- D2/multitask_tcn_gru metrics.json Acc equals recomputed value
+- D2/multitask_tcn_gru metrics.json MacroF1 equals recomputed value
+- D2/multitask_tcn_gru metrics.json E_F1 equals recomputed value
+- D2/multitask_tcn_gru metrics.json M_F1 equals recomputed value
+- D2/multitask_tcn_gru metrics.json L_F1 equals recomputed value
+- D2/multitask_tcn_gru metrics.json M_Precision equals recomputed value
+- D2/multitask_tcn_gru metrics.json M_Recall equals recomputed value
+- D2/multitask_tcn_gru metrics.json M_to_E equals recomputed value
+- D2/multitask_tcn_gru metrics.json M_to_L equals recomputed value
+- D2/multitask_tcn_gru metrics.json Rev equals recomputed value
+- D2/multitask_tcn_gru metrics.json Jump equals recomputed value
+- D2/multitask_tcn_gru metrics.json Smooth equals recomputed value
+- D2/dc_psr predictions are exactly run_id 12..315 (304 rows)
+- D2/dc_psr has a transfer_tasks_long.csv row
+- D2/dc_psr recomputed Acc equals the frozen table value
+- D2/dc_psr recomputed MacroF1 equals the frozen table value
+- D2/dc_psr recomputed E_F1 equals the frozen table value
+- D2/dc_psr recomputed M_F1 equals the frozen table value
+- D2/dc_psr recomputed L_F1 equals the frozen table value
+- D2/dc_psr recomputed M_Precision equals the frozen table value
+- D2/dc_psr recomputed M_Recall equals the frozen table value
+- D2/dc_psr recomputed M_to_E equals the frozen table value
+- D2/dc_psr recomputed M_to_L equals the frozen table value
+- D2/dc_psr recomputed Rev equals the frozen table value
+- D2/dc_psr recomputed Jump equals the frozen table value
+- D2/dc_psr recomputed Smooth equals the frozen table value
+- D2/dc_psr metrics.json declares retrained=false
+- D2/dc_psr metrics.json Acc equals recomputed value
+- D2/dc_psr metrics.json MacroF1 equals recomputed value
+- D2/dc_psr metrics.json E_F1 equals recomputed value
+- D2/dc_psr metrics.json M_F1 equals recomputed value
+- D2/dc_psr metrics.json L_F1 equals recomputed value
+- D2/dc_psr metrics.json M_Precision equals recomputed value
+- D2/dc_psr metrics.json M_Recall equals recomputed value
+- D2/dc_psr metrics.json M_to_E equals recomputed value
+- D2/dc_psr metrics.json M_to_L equals recomputed value
+- D2/dc_psr metrics.json Rev equals recomputed value
+- D2/dc_psr metrics.json Jump equals recomputed value
+- D2/dc_psr metrics.json Smooth equals recomputed value
+- D2/htt_net predictions are exactly run_id 12..315 (304 rows)
+- D2/htt_net has a transfer_tasks_long.csv row
+- D2/htt_net recomputed Acc equals the frozen table value
+- D2/htt_net recomputed MacroF1 equals the frozen table value
+- D2/htt_net recomputed E_F1 equals the frozen table value
+- D2/htt_net recomputed M_F1 equals the frozen table value
+- D2/htt_net recomputed L_F1 equals the frozen table value
+- D2/htt_net recomputed M_Precision equals the frozen table value
+- D2/htt_net recomputed M_Recall equals the frozen table value
+- D2/htt_net recomputed M_to_E equals the frozen table value
+- D2/htt_net recomputed M_to_L equals the frozen table value
+- D2/htt_net recomputed Rev equals the frozen table value
+- D2/htt_net recomputed Jump equals the frozen table value
+- D2/htt_net recomputed Smooth equals the frozen table value
+- D2/htt_net metrics.json declares retrained=false
+- D2/htt_net metrics.json Acc equals recomputed value
+- D2/htt_net metrics.json MacroF1 equals recomputed value
+- D2/htt_net metrics.json E_F1 equals recomputed value
+- D2/htt_net metrics.json M_F1 equals recomputed value
+- D2/htt_net metrics.json L_F1 equals recomputed value
+- D2/htt_net metrics.json M_Precision equals recomputed value
+- D2/htt_net metrics.json M_Recall equals recomputed value
+- D2/htt_net metrics.json M_to_E equals recomputed value
+- D2/htt_net metrics.json M_to_L equals recomputed value
+- D2/htt_net metrics.json Rev equals recomputed value
+- D2/htt_net metrics.json Jump equals recomputed value
+- D2/htt_net metrics.json Smooth equals recomputed value
+- D2/multi_source_attention predictions are exactly run_id 12..315 (304 rows)
+- D2/multi_source_attention has a transfer_tasks_long.csv row
+- D2/multi_source_attention recomputed Acc equals the frozen table value
+- D2/multi_source_attention recomputed MacroF1 equals the frozen table value
+- D2/multi_source_attention recomputed E_F1 equals the frozen table value
+- D2/multi_source_attention recomputed M_F1 equals the frozen table value
+- D2/multi_source_attention recomputed L_F1 equals the frozen table value
+- D2/multi_source_attention recomputed M_Precision equals the frozen table value
+- D2/multi_source_attention recomputed M_Recall equals the frozen table value
+- D2/multi_source_attention recomputed M_to_E equals the frozen table value
+- D2/multi_source_attention recomputed M_to_L equals the frozen table value
+- D2/multi_source_attention recomputed Rev equals the frozen table value
+- D2/multi_source_attention recomputed Jump equals the frozen table value
+- D2/multi_source_attention recomputed Smooth equals the frozen table value
+- D2/multi_source_attention metrics.json declares retrained=false
+- D2/multi_source_attention metrics.json Acc equals recomputed value
+- D2/multi_source_attention metrics.json MacroF1 equals recomputed value
+- D2/multi_source_attention metrics.json E_F1 equals recomputed value
+- D2/multi_source_attention metrics.json M_F1 equals recomputed value
+- D2/multi_source_attention metrics.json L_F1 equals recomputed value
+- D2/multi_source_attention metrics.json M_Precision equals recomputed value
+- D2/multi_source_attention metrics.json M_Recall equals recomputed value
+- D2/multi_source_attention metrics.json M_to_E equals recomputed value
+- D2/multi_source_attention metrics.json M_to_L equals recomputed value
+- D2/multi_source_attention metrics.json Rev equals recomputed value
+- D2/multi_source_attention metrics.json Jump equals recomputed value
+- D2/multi_source_attention metrics.json Smooth equals recomputed value
+- D2/mtf_avitk predictions are exactly run_id 12..315 (304 rows)
+- D2/mtf_avitk has a transfer_tasks_long.csv row
+- D2/mtf_avitk recomputed Acc equals the frozen table value
+- D2/mtf_avitk recomputed MacroF1 equals the frozen table value
+- D2/mtf_avitk recomputed E_F1 equals the frozen table value
+- D2/mtf_avitk recomputed M_F1 equals the frozen table value
+- D2/mtf_avitk recomputed L_F1 equals the frozen table value
+- D2/mtf_avitk recomputed M_Precision equals the frozen table value
+- D2/mtf_avitk recomputed M_Recall equals the frozen table value
+- D2/mtf_avitk recomputed M_to_E equals the frozen table value
+- D2/mtf_avitk recomputed M_to_L equals the frozen table value
+- D2/mtf_avitk recomputed Rev equals the frozen table value
+- D2/mtf_avitk recomputed Jump equals the frozen table value
+- D2/mtf_avitk recomputed Smooth equals the frozen table value
+- D2/mtf_avitk metrics.json declares retrained=false
+- D2/mtf_avitk metrics.json Acc equals recomputed value
+- D2/mtf_avitk metrics.json MacroF1 equals recomputed value
+- D2/mtf_avitk metrics.json E_F1 equals recomputed value
+- D2/mtf_avitk metrics.json M_F1 equals recomputed value
+- D2/mtf_avitk metrics.json L_F1 equals recomputed value
+- D2/mtf_avitk metrics.json M_Precision equals recomputed value
+- D2/mtf_avitk metrics.json M_Recall equals recomputed value
+- D2/mtf_avitk metrics.json M_to_E equals recomputed value
+- D2/mtf_avitk metrics.json M_to_L equals recomputed value
+- D2/mtf_avitk metrics.json Rev equals recomputed value
+- D2/mtf_avitk metrics.json Jump equals recomputed value
+- D2/mtf_avitk metrics.json Smooth equals recomputed value
+- D2/dynamic_gin_tgp predictions are exactly run_id 12..315 (304 rows)
+- D2/dynamic_gin_tgp has a transfer_tasks_long.csv row
+- D2/dynamic_gin_tgp recomputed Acc equals the frozen table value
+- D2/dynamic_gin_tgp recomputed MacroF1 equals the frozen table value
+- D2/dynamic_gin_tgp recomputed E_F1 equals the frozen table value
+- D2/dynamic_gin_tgp recomputed M_F1 equals the frozen table value
+- D2/dynamic_gin_tgp recomputed L_F1 equals the frozen table value
+- D2/dynamic_gin_tgp recomputed M_Precision equals the frozen table value
+- D2/dynamic_gin_tgp recomputed M_Recall equals the frozen table value
+- D2/dynamic_gin_tgp recomputed M_to_E equals the frozen table value
+- D2/dynamic_gin_tgp recomputed M_to_L equals the frozen table value
+- D2/dynamic_gin_tgp recomputed Rev equals the frozen table value
+- D2/dynamic_gin_tgp recomputed Jump equals the frozen table value
+- D2/dynamic_gin_tgp recomputed Smooth equals the frozen table value
+- D2/dynamic_gin_tgp metrics.json declares retrained=false
+- D2/dynamic_gin_tgp metrics.json Acc equals recomputed value
+- D2/dynamic_gin_tgp metrics.json MacroF1 equals recomputed value
+- D2/dynamic_gin_tgp metrics.json E_F1 equals recomputed value
+- D2/dynamic_gin_tgp metrics.json M_F1 equals recomputed value
+- D2/dynamic_gin_tgp metrics.json L_F1 equals recomputed value
+- D2/dynamic_gin_tgp metrics.json M_Precision equals recomputed value
+- D2/dynamic_gin_tgp metrics.json M_Recall equals recomputed value
+- D2/dynamic_gin_tgp metrics.json M_to_E equals recomputed value
+- D2/dynamic_gin_tgp metrics.json M_to_L equals recomputed value
+- D2/dynamic_gin_tgp metrics.json Rev equals recomputed value
+- D2/dynamic_gin_tgp metrics.json Jump equals recomputed value
+- D2/dynamic_gin_tgp metrics.json Smooth equals recomputed value
+- D2/dp2net_adapted predictions are exactly run_id 12..315 (304 rows)
+- D2/dp2net_adapted has a transfer_tasks_long.csv row
+- D2/dp2net_adapted recomputed Acc equals the frozen table value
+- D2/dp2net_adapted recomputed MacroF1 equals the frozen table value
+- D2/dp2net_adapted recomputed E_F1 equals the frozen table value
+- D2/dp2net_adapted recomputed M_F1 equals the frozen table value
+- D2/dp2net_adapted recomputed L_F1 equals the frozen table value
+- D2/dp2net_adapted recomputed M_Precision equals the frozen table value
+- D2/dp2net_adapted recomputed M_Recall equals the frozen table value
+- D2/dp2net_adapted recomputed M_to_E equals the frozen table value
+- D2/dp2net_adapted recomputed M_to_L equals the frozen table value
+- D2/dp2net_adapted recomputed Rev equals the frozen table value
+- D2/dp2net_adapted recomputed Jump equals the frozen table value
+- D2/dp2net_adapted recomputed Smooth equals the frozen table value
+- D2/dp2net_adapted metrics.json declares retrained=false
+- D2/dp2net_adapted metrics.json Acc equals recomputed value
+- D2/dp2net_adapted metrics.json MacroF1 equals recomputed value
+- D2/dp2net_adapted metrics.json E_F1 equals recomputed value
+- D2/dp2net_adapted metrics.json M_F1 equals recomputed value
+- D2/dp2net_adapted metrics.json L_F1 equals recomputed value
+- D2/dp2net_adapted metrics.json M_Precision equals recomputed value
+- D2/dp2net_adapted metrics.json M_Recall equals recomputed value
+- D2/dp2net_adapted metrics.json M_to_E equals recomputed value
+- D2/dp2net_adapted metrics.json M_to_L equals recomputed value
+- D2/dp2net_adapted metrics.json Rev equals recomputed value
+- D2/dp2net_adapted metrics.json Jump equals recomputed value
+- D2/dp2net_adapted metrics.json Smooth equals recomputed value
+- D3/rf predictions are exactly run_id 12..315 (304 rows)
+- D3/rf has a transfer_tasks_long.csv row
+- D3/rf recomputed Acc equals the frozen table value
+- D3/rf recomputed MacroF1 equals the frozen table value
+- D3/rf recomputed E_F1 equals the frozen table value
+- D3/rf recomputed M_F1 equals the frozen table value
+- D3/rf recomputed L_F1 equals the frozen table value
+- D3/rf recomputed M_Precision equals the frozen table value
+- D3/rf recomputed M_Recall equals the frozen table value
+- D3/rf recomputed M_to_E equals the frozen table value
+- D3/rf recomputed M_to_L equals the frozen table value
+- D3/rf recomputed Rev equals the frozen table value
+- D3/rf recomputed Jump equals the frozen table value
+- D3/rf recomputed Smooth equals the frozen table value
+- D3/rf metrics.json declares retrained=false
+- D3/rf metrics.json Acc equals recomputed value
+- D3/rf metrics.json MacroF1 equals recomputed value
+- D3/rf metrics.json E_F1 equals recomputed value
+- D3/rf metrics.json M_F1 equals recomputed value
+- D3/rf metrics.json L_F1 equals recomputed value
+- D3/rf metrics.json M_Precision equals recomputed value
+- D3/rf metrics.json M_Recall equals recomputed value
+- D3/rf metrics.json M_to_E equals recomputed value
+- D3/rf metrics.json M_to_L equals recomputed value
+- D3/rf metrics.json Rev equals recomputed value
+- D3/rf metrics.json Jump equals recomputed value
+- D3/rf metrics.json Smooth equals recomputed value
+- D3/tcn_gru predictions are exactly run_id 12..315 (304 rows)
+- D3/tcn_gru has a transfer_tasks_long.csv row
+- D3/tcn_gru recomputed Acc equals the frozen table value
+- D3/tcn_gru recomputed MacroF1 equals the frozen table value
+- D3/tcn_gru recomputed E_F1 equals the frozen table value
+- D3/tcn_gru recomputed M_F1 equals the frozen table value
+- D3/tcn_gru recomputed L_F1 equals the frozen table value
+- D3/tcn_gru recomputed M_Precision equals the frozen table value
+- D3/tcn_gru recomputed M_Recall equals the frozen table value
+- D3/tcn_gru recomputed M_to_E equals the frozen table value
+- D3/tcn_gru recomputed M_to_L equals the frozen table value
+- D3/tcn_gru recomputed Rev equals the frozen table value
+- D3/tcn_gru recomputed Jump equals the frozen table value
+- D3/tcn_gru recomputed Smooth equals the frozen table value
+- D3/tcn_gru metrics.json declares retrained=false
+- D3/tcn_gru metrics.json Acc equals recomputed value
+- D3/tcn_gru metrics.json MacroF1 equals recomputed value
+- D3/tcn_gru metrics.json E_F1 equals recomputed value
+- D3/tcn_gru metrics.json M_F1 equals recomputed value
+- D3/tcn_gru metrics.json L_F1 equals recomputed value
+- D3/tcn_gru metrics.json M_Precision equals recomputed value
+- D3/tcn_gru metrics.json M_Recall equals recomputed value
+- D3/tcn_gru metrics.json M_to_E equals recomputed value
+- D3/tcn_gru metrics.json M_to_L equals recomputed value
+- D3/tcn_gru metrics.json Rev equals recomputed value
+- D3/tcn_gru metrics.json Jump equals recomputed value
+- D3/tcn_gru metrics.json Smooth equals recomputed value
+- D3/multitask_tcn_gru predictions are exactly run_id 12..315 (304 rows)
+- D3/multitask_tcn_gru has a transfer_tasks_long.csv row
+- D3/multitask_tcn_gru recomputed Acc equals the frozen table value
+- D3/multitask_tcn_gru recomputed MacroF1 equals the frozen table value
+- D3/multitask_tcn_gru recomputed E_F1 equals the frozen table value
+- D3/multitask_tcn_gru recomputed M_F1 equals the frozen table value
+- D3/multitask_tcn_gru recomputed L_F1 equals the frozen table value
+- D3/multitask_tcn_gru recomputed M_Precision equals the frozen table value
+- D3/multitask_tcn_gru recomputed M_Recall equals the frozen table value
+- D3/multitask_tcn_gru recomputed M_to_E equals the frozen table value
+- D3/multitask_tcn_gru recomputed M_to_L equals the frozen table value
+- D3/multitask_tcn_gru recomputed Rev equals the frozen table value
+- D3/multitask_tcn_gru recomputed Jump equals the frozen table value
+- D3/multitask_tcn_gru recomputed Smooth equals the frozen table value
+- D3/multitask_tcn_gru metrics.json declares retrained=false
+- D3/multitask_tcn_gru metrics.json Acc equals recomputed value
+- D3/multitask_tcn_gru metrics.json MacroF1 equals recomputed value
+- D3/multitask_tcn_gru metrics.json E_F1 equals recomputed value
+- D3/multitask_tcn_gru metrics.json M_F1 equals recomputed value
+- D3/multitask_tcn_gru metrics.json L_F1 equals recomputed value
+- D3/multitask_tcn_gru metrics.json M_Precision equals recomputed value
+- D3/multitask_tcn_gru metrics.json M_Recall equals recomputed value
+- D3/multitask_tcn_gru metrics.json M_to_E equals recomputed value
+- D3/multitask_tcn_gru metrics.json M_to_L equals recomputed value
+- D3/multitask_tcn_gru metrics.json Rev equals recomputed value
+- D3/multitask_tcn_gru metrics.json Jump equals recomputed value
+- D3/multitask_tcn_gru metrics.json Smooth equals recomputed value
+- D3/dc_psr predictions are exactly run_id 12..315 (304 rows)
+- D3/dc_psr has a transfer_tasks_long.csv row
+- D3/dc_psr recomputed Acc equals the frozen table value
+- D3/dc_psr recomputed MacroF1 equals the frozen table value
+- D3/dc_psr recomputed E_F1 equals the frozen table value
+- D3/dc_psr recomputed M_F1 equals the frozen table value
+- D3/dc_psr recomputed L_F1 equals the frozen table value
+- D3/dc_psr recomputed M_Precision equals the frozen table value
+- D3/dc_psr recomputed M_Recall equals the frozen table value
+- D3/dc_psr recomputed M_to_E equals the frozen table value
+- D3/dc_psr recomputed M_to_L equals the frozen table value
+- D3/dc_psr recomputed Rev equals the frozen table value
+- D3/dc_psr recomputed Jump equals the frozen table value
+- D3/dc_psr recomputed Smooth equals the frozen table value
+- D3/dc_psr metrics.json declares retrained=false
+- D3/dc_psr metrics.json Acc equals recomputed value
+- D3/dc_psr metrics.json MacroF1 equals recomputed value
+- D3/dc_psr metrics.json E_F1 equals recomputed value
+- D3/dc_psr metrics.json M_F1 equals recomputed value
+- D3/dc_psr metrics.json L_F1 equals recomputed value
+- D3/dc_psr metrics.json M_Precision equals recomputed value
+- D3/dc_psr metrics.json M_Recall equals recomputed value
+- D3/dc_psr metrics.json M_to_E equals recomputed value
+- D3/dc_psr metrics.json M_to_L equals recomputed value
+- D3/dc_psr metrics.json Rev equals recomputed value
+- D3/dc_psr metrics.json Jump equals recomputed value
+- D3/dc_psr metrics.json Smooth equals recomputed value
+- D3/htt_net predictions are exactly run_id 12..315 (304 rows)
+- D3/htt_net has a transfer_tasks_long.csv row
+- D3/htt_net recomputed Acc equals the frozen table value
+- D3/htt_net recomputed MacroF1 equals the frozen table value
+- D3/htt_net recomputed E_F1 equals the frozen table value
+- D3/htt_net recomputed M_F1 equals the frozen table value
+- D3/htt_net recomputed L_F1 equals the frozen table value
+- D3/htt_net recomputed M_Precision equals the frozen table value
+- D3/htt_net recomputed M_Recall equals the frozen table value
+- D3/htt_net recomputed M_to_E equals the frozen table value
+- D3/htt_net recomputed M_to_L equals the frozen table value
+- D3/htt_net recomputed Rev equals the frozen table value
+- D3/htt_net recomputed Jump equals the frozen table value
+- D3/htt_net recomputed Smooth equals the frozen table value
+- D3/htt_net metrics.json declares retrained=false
+- D3/htt_net metrics.json Acc equals recomputed value
+- D3/htt_net metrics.json MacroF1 equals recomputed value
+- D3/htt_net metrics.json E_F1 equals recomputed value
+- D3/htt_net metrics.json M_F1 equals recomputed value
+- D3/htt_net metrics.json L_F1 equals recomputed value
+- D3/htt_net metrics.json M_Precision equals recomputed value
+- D3/htt_net metrics.json M_Recall equals recomputed value
+- D3/htt_net metrics.json M_to_E equals recomputed value
+- D3/htt_net metrics.json M_to_L equals recomputed value
+- D3/htt_net metrics.json Rev equals recomputed value
+- D3/htt_net metrics.json Jump equals recomputed value
+- D3/htt_net metrics.json Smooth equals recomputed value
+- D3/multi_source_attention predictions are exactly run_id 12..315 (304 rows)
+- D3/multi_source_attention has a transfer_tasks_long.csv row
+- D3/multi_source_attention recomputed Acc equals the frozen table value
+- D3/multi_source_attention recomputed MacroF1 equals the frozen table value
+- D3/multi_source_attention recomputed E_F1 equals the frozen table value
+- D3/multi_source_attention recomputed M_F1 equals the frozen table value
+- D3/multi_source_attention recomputed L_F1 equals the frozen table value
+- D3/multi_source_attention recomputed M_Precision equals the frozen table value
+- D3/multi_source_attention recomputed M_Recall equals the frozen table value
+- D3/multi_source_attention recomputed M_to_E equals the frozen table value
+- D3/multi_source_attention recomputed M_to_L equals the frozen table value
+- D3/multi_source_attention recomputed Rev equals the frozen table value
+- D3/multi_source_attention recomputed Jump equals the frozen table value
+- D3/multi_source_attention recomputed Smooth equals the frozen table value
+- D3/multi_source_attention metrics.json declares retrained=false
+- D3/multi_source_attention metrics.json Acc equals recomputed value
+- D3/multi_source_attention metrics.json MacroF1 equals recomputed value
+- D3/multi_source_attention metrics.json E_F1 equals recomputed value
+- D3/multi_source_attention metrics.json M_F1 equals recomputed value
+- D3/multi_source_attention metrics.json L_F1 equals recomputed value
+- D3/multi_source_attention metrics.json M_Precision equals recomputed value
+- D3/multi_source_attention metrics.json M_Recall equals recomputed value
+- D3/multi_source_attention metrics.json M_to_E equals recomputed value
+- D3/multi_source_attention metrics.json M_to_L equals recomputed value
+- D3/multi_source_attention metrics.json Rev equals recomputed value
+- D3/multi_source_attention metrics.json Jump equals recomputed value
+- D3/multi_source_attention metrics.json Smooth equals recomputed value
+- D3/mtf_avitk predictions are exactly run_id 12..315 (304 rows)
+- D3/mtf_avitk has a transfer_tasks_long.csv row
+- D3/mtf_avitk recomputed Acc equals the frozen table value
+- D3/mtf_avitk recomputed MacroF1 equals the frozen table value
+- D3/mtf_avitk recomputed E_F1 equals the frozen table value
+- D3/mtf_avitk recomputed M_F1 equals the frozen table value
+- D3/mtf_avitk recomputed L_F1 equals the frozen table value
+- D3/mtf_avitk recomputed M_Precision equals the frozen table value
+- D3/mtf_avitk recomputed M_Recall equals the frozen table value
+- D3/mtf_avitk recomputed M_to_E equals the frozen table value
+- D3/mtf_avitk recomputed M_to_L equals the frozen table value
+- D3/mtf_avitk recomputed Rev equals the frozen table value
+- D3/mtf_avitk recomputed Jump equals the frozen table value
+- D3/mtf_avitk recomputed Smooth equals the frozen table value
+- D3/mtf_avitk metrics.json declares retrained=false
+- D3/mtf_avitk metrics.json Acc equals recomputed value
+- D3/mtf_avitk metrics.json MacroF1 equals recomputed value
+- D3/mtf_avitk metrics.json E_F1 equals recomputed value
+- D3/mtf_avitk metrics.json M_F1 equals recomputed value
+- D3/mtf_avitk metrics.json L_F1 equals recomputed value
+- D3/mtf_avitk metrics.json M_Precision equals recomputed value
+- D3/mtf_avitk metrics.json M_Recall equals recomputed value
+- D3/mtf_avitk metrics.json M_to_E equals recomputed value
+- D3/mtf_avitk metrics.json M_to_L equals recomputed value
+- D3/mtf_avitk metrics.json Rev equals recomputed value
+- D3/mtf_avitk metrics.json Jump equals recomputed value
+- D3/mtf_avitk metrics.json Smooth equals recomputed value
+- D3/dynamic_gin_tgp predictions are exactly run_id 12..315 (304 rows)
+- D3/dynamic_gin_tgp has a transfer_tasks_long.csv row
+- D3/dynamic_gin_tgp recomputed Acc equals the frozen table value
+- D3/dynamic_gin_tgp recomputed MacroF1 equals the frozen table value
+- D3/dynamic_gin_tgp recomputed E_F1 equals the frozen table value
+- D3/dynamic_gin_tgp recomputed M_F1 equals the frozen table value
+- D3/dynamic_gin_tgp recomputed L_F1 equals the frozen table value
+- D3/dynamic_gin_tgp recomputed M_Precision equals the frozen table value
+- D3/dynamic_gin_tgp recomputed M_Recall equals the frozen table value
+- D3/dynamic_gin_tgp recomputed M_to_E equals the frozen table value
+- D3/dynamic_gin_tgp recomputed M_to_L equals the frozen table value
+- D3/dynamic_gin_tgp recomputed Rev equals the frozen table value
+- D3/dynamic_gin_tgp recomputed Jump equals the frozen table value
+- D3/dynamic_gin_tgp recomputed Smooth equals the frozen table value
+- D3/dynamic_gin_tgp metrics.json declares retrained=false
+- D3/dynamic_gin_tgp metrics.json Acc equals recomputed value
+- D3/dynamic_gin_tgp metrics.json MacroF1 equals recomputed value
+- D3/dynamic_gin_tgp metrics.json E_F1 equals recomputed value
+- D3/dynamic_gin_tgp metrics.json M_F1 equals recomputed value
+- D3/dynamic_gin_tgp metrics.json L_F1 equals recomputed value
+- D3/dynamic_gin_tgp metrics.json M_Precision equals recomputed value
+- D3/dynamic_gin_tgp metrics.json M_Recall equals recomputed value
+- D3/dynamic_gin_tgp metrics.json M_to_E equals recomputed value
+- D3/dynamic_gin_tgp metrics.json M_to_L equals recomputed value
+- D3/dynamic_gin_tgp metrics.json Rev equals recomputed value
+- D3/dynamic_gin_tgp metrics.json Jump equals recomputed value
+- D3/dynamic_gin_tgp metrics.json Smooth equals recomputed value
+- D3/dp2net_adapted predictions are exactly run_id 12..315 (304 rows)
+- D3/dp2net_adapted has a transfer_tasks_long.csv row
+- D3/dp2net_adapted recomputed Acc equals the frozen table value
+- D3/dp2net_adapted recomputed MacroF1 equals the frozen table value
+- D3/dp2net_adapted recomputed E_F1 equals the frozen table value
+- D3/dp2net_adapted recomputed M_F1 equals the frozen table value
+- D3/dp2net_adapted recomputed L_F1 equals the frozen table value
+- D3/dp2net_adapted recomputed M_Precision equals the frozen table value
+- D3/dp2net_adapted recomputed M_Recall equals the frozen table value
+- D3/dp2net_adapted recomputed M_to_E equals the frozen table value
+- D3/dp2net_adapted recomputed M_to_L equals the frozen table value
+- D3/dp2net_adapted recomputed Rev equals the frozen table value
+- D3/dp2net_adapted recomputed Jump equals the frozen table value
+- D3/dp2net_adapted recomputed Smooth equals the frozen table value
+- D3/dp2net_adapted metrics.json declares retrained=false
+- D3/dp2net_adapted metrics.json Acc equals recomputed value
+- D3/dp2net_adapted metrics.json MacroF1 equals recomputed value
+- D3/dp2net_adapted metrics.json E_F1 equals recomputed value
+- D3/dp2net_adapted metrics.json M_F1 equals recomputed value
+- D3/dp2net_adapted metrics.json L_F1 equals recomputed value
+- D3/dp2net_adapted metrics.json M_Precision equals recomputed value
+- D3/dp2net_adapted metrics.json M_Recall equals recomputed value
+- D3/dp2net_adapted metrics.json M_to_E equals recomputed value
+- D3/dp2net_adapted metrics.json M_to_L equals recomputed value
+- D3/dp2net_adapted metrics.json Rev equals recomputed value
+- D3/dp2net_adapted metrics.json Jump equals recomputed value
+- D3/dp2net_adapted metrics.json Smooth equals recomputed value
+- Fig.2 absolute table is rebuilt from the common-304 cross-condition table (27 rows)
+- Fig.2 absolute rows carry the common-304 test universe
+- Fig.2 rank/normalized tables are non-empty
 - Ablation has exactly ordered A1-A6
 - A1 Acc is authoritative
 - A6 Acc is authoritative
 - A1-A4 hard classification metrics are identical
 - A1-A4 Smooth values are not all identical
 - Old FINAL_ablation_outputs.csv is absent from canonical sources
+- Fig.4 absolute table has exactly six A1-A6 configurations
+- Fig.4 run-level file has 1,824 audited rows (6 configs × 304 runs): A1_A6_probability_trajectories.csv
+- Fig.4 run-level file has 1,824 audited rows (6 configs × 304 runs): A1_A6_lifecycle_variation.csv
+- Fig.4 run-level file has 1,824 audited rows (6 configs × 304 runs): A1_A6_cumulative_variation.csv
+- No formal Fig.4 script references the retired FINAL_ablation_outputs.csv
 - Lifecycle semantics contains 304 runs
 - Hidden representation is exactly 304 test_C6 rows
 - q statistic R2 recomputes to audited value
 - q statistic Spearman_rho recomputes to audited value
 - q statistic MAE recomputes to audited value
 - q statistic stage_agreement recomputes to audited value
+- Frozen q-definition document exists
+- q_agreement.csv excludes q_pred_norm from reported agreement statistics
+- q_agreement.csv retains raw q_true/q_pred pair
+- q_pred_norm display file is cataloged AUDIT_SUPPORTING, not a main-table input
+- 07_figure_ready contains CSV files to validate
+- 07_figure_ready/fig1/B11_B12_controlled_comparison.csv has every required figure-ready metadata field
+- 07_figure_ready/fig1/B11_B12_controlled_comparison.csv has non-empty values for every required metadata field
+- 07_figure_ready/fig1/D1_main_metrics.csv has every required figure-ready metadata field
+- 07_figure_ready/fig1/D1_main_metrics.csv has non-empty values for every required metadata field
+- 07_figure_ready/fig1/accuracy_consistency_points.csv has every required figure-ready metadata field
+- 07_figure_ready/fig1/accuracy_consistency_points.csv has non-empty values for every required metadata field
+- 07_figure_ready/fig2/taskwise_absolute.csv has every required figure-ready metadata field
+- 07_figure_ready/fig2/taskwise_absolute.csv has non-empty values for every required metadata field
+- 07_figure_ready/fig2/taskwise_normalized.csv has every required figure-ready metadata field
+- 07_figure_ready/fig2/taskwise_normalized.csv has non-empty values for every required metadata field
+- 07_figure_ready/fig2/taskwise_rank.csv has every required figure-ready metadata field
+- 07_figure_ready/fig2/taskwise_rank.csv has non-empty values for every required metadata field
+- 07_figure_ready/fig3/D2M_failure_distribution.csv has every required figure-ready metadata field
+- 07_figure_ready/fig3/D2M_failure_distribution.csv has non-empty values for every required metadata field
+- 07_figure_ready/fig3/cross_dataset_absolute.csv has every required figure-ready metadata field
+- 07_figure_ready/fig3/cross_dataset_absolute.csv has non-empty values for every required metadata field
+- 07_figure_ready/fig3/cross_dataset_deltas.csv has every required figure-ready metadata field
+- 07_figure_ready/fig3/cross_dataset_deltas.csv has non-empty values for every required metadata field
+- 07_figure_ready/fig3/cross_machine_task_deltas.csv has every required figure-ready metadata field
+- 07_figure_ready/fig3/cross_machine_task_deltas.csv has non-empty values for every required metadata field
+- 07_figure_ready/fig4/A1_A6_absolute.csv has every required figure-ready metadata field
+- 07_figure_ready/fig4/A1_A6_absolute.csv has non-empty values for every required metadata field
+- 07_figure_ready/fig4/A1_A6_cumulative_variation.csv has every required figure-ready metadata field
+- 07_figure_ready/fig4/A1_A6_cumulative_variation.csv has non-empty values for every required metadata field
+- 07_figure_ready/fig4/A1_A6_delta_vs_A1.csv has every required figure-ready metadata field
+- 07_figure_ready/fig4/A1_A6_delta_vs_A1.csv has non-empty values for every required metadata field
+- 07_figure_ready/fig4/A1_A6_lifecycle_variation.csv has every required figure-ready metadata field
+- 07_figure_ready/fig4/A1_A6_lifecycle_variation.csv has non-empty values for every required metadata field
+- 07_figure_ready/fig4/A1_A6_probability_trajectories.csv has every required figure-ready metadata field
+- 07_figure_ready/fig4/A1_A6_probability_trajectories.csv has non-empty values for every required metadata field
+- 07_figure_ready/fig5/hidden_representation.csv has every required figure-ready metadata field
+- 07_figure_ready/fig5/hidden_representation.csv has non-empty values for every required metadata field
+- 07_figure_ready/fig5/lifecycle_semantics.csv has every required figure-ready metadata field
+- 07_figure_ready/fig5/lifecycle_semantics.csv has non-empty values for every required metadata field
+- 07_figure_ready/fig5/q_agreement.csv has every required figure-ready metadata field
+- 07_figure_ready/fig5/q_agreement.csv has non-empty values for every required metadata field
+- 07_figure_ready/fig5/q_pred_normalized_display.csv has every required figure-ready metadata field
+- 07_figure_ready/fig5/q_pred_normalized_display.csv has non-empty values for every required metadata field
+- 07_figure_ready/fig5/simplex_trajectory.csv has every required figure-ready metadata field
+- 07_figure_ready/fig5/simplex_trajectory.csv has non-empty values for every required metadata field
+- 07_figure_ready/fig5/wear_by_predicted_stage.csv has every required figure-ready metadata field
+- 07_figure_ready/fig5/wear_by_predicted_stage.csv has non-empty values for every required metadata field
+- Both training-seed sensitivity suites were archived
+- Every training-seed sensitivity file is cataloged AUDIT_SUPPORTING
+- Training-seed sensitivity evidence never feeds a figure/table-ready file
+- D1 main table is present independent of seed-sensitivity archives
 - NASA summary retains only real B9-B12 methods
 - NASA original split has 4 methods × 4 task rows
 - NASA retains 16 original-split prediction files
@@ -80,66 +636,37 @@
 - Copy hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/tcn_gru/bootstrap_config.json
 - Copy hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/tcn_gru/bootstrap_summary.csv
 - Copy hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/tcn_gru/bootstrap_samples.csv
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/transfer_tasks_mean_std.csv
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dc_psr/metrics.json
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dc_psr/predictions.csv
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dc_psr/config.yaml
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dp2net_adapted/metrics.json
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dp2net_adapted/predictions.csv
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dp2net_adapted/config.yaml
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dynamic_gin_tgp/metrics.json
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dynamic_gin_tgp/predictions.csv
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dynamic_gin_tgp/config.yaml
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/htt_net/metrics.json
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/htt_net/predictions.csv
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/htt_net/config.yaml
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/mtf_avitk/metrics.json
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/mtf_avitk/predictions.csv
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/mtf_avitk/config.yaml
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multi_source_attention/metrics.json
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multi_source_attention/predictions.csv
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multi_source_attention/config.yaml
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multitask_tcn_gru/metrics.json
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multitask_tcn_gru/predictions.csv
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multitask_tcn_gru/config.yaml
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/rf/metrics.json
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/rf/predictions.csv
 - Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/rf/config.yaml
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/tcn_gru/metrics.json
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/tcn_gru/predictions.csv
 - Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/tcn_gru/config.yaml
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dc_psr/metrics.json
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dc_psr/predictions.csv
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dc_psr/config.yaml
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dp2net_adapted/metrics.json
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dp2net_adapted/predictions.csv
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dp2net_adapted/config.yaml
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dynamic_gin_tgp/metrics.json
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dynamic_gin_tgp/predictions.csv
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dynamic_gin_tgp/config.yaml
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/htt_net/metrics.json
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/htt_net/predictions.csv
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/htt_net/config.yaml
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/mtf_avitk/metrics.json
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/mtf_avitk/predictions.csv
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/mtf_avitk/config.yaml
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multi_source_attention/metrics.json
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multi_source_attention/predictions.csv
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multi_source_attention/config.yaml
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multitask_tcn_gru/metrics.json
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multitask_tcn_gru/predictions.csv
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multitask_tcn_gru/config.yaml
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/rf/metrics.json
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/rf/predictions.csv
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multitask_tcn_gru/config.yaml
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dc_psr/config.yaml
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/htt_net/config.yaml
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multi_source_attention/config.yaml
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/mtf_avitk/config.yaml
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dynamic_gin_tgp/config.yaml
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dp2net_adapted/config.yaml
 - Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/rf/config.yaml
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/tcn_gru/metrics.json
-- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/tcn_gru/predictions.csv
 - Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/tcn_gru/config.yaml
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multitask_tcn_gru/config.yaml
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dc_psr/config.yaml
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/htt_net/config.yaml
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multi_source_attention/config.yaml
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/mtf_avitk/config.yaml
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dynamic_gin_tgp/config.yaml
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dp2net_adapted/config.yaml
 - Copy hash verified: paper_data/01_PHM2010/03_ablation/A1_A6_AUTHORITATIVE.csv
 - Copy hash verified: paper_data/01_PHM2010/03_ablation/A1_A6_RECOMPUTED_AUDIT.csv
 - Copy hash verified: paper_data/01_PHM2010/03_ablation/ABLATION_DATA_AUDIT.md
 - Copy hash verified: paper_data/01_PHM2010/03_ablation/data_manifest.json
 - Copy hash verified: paper_data/01_PHM2010/04_semantics/C6_lifecycle_probability_wear.csv
+- Copy hash verified: paper_data/01_PHM2010/05_training_seed_sensitivity/original_5seed_seed_level.csv
+- Copy hash verified: paper_data/01_PHM2010/05_training_seed_sensitivity/original_5seed_summary.csv
+- Copy hash verified: paper_data/01_PHM2010/05_training_seed_sensitivity/ORIGINAL_5SEED_AUDIT.md
+- Copy hash verified: paper_data/01_PHM2010/05_training_seed_sensitivity/fixed_preprocessing_seed_level.csv
+- Copy hash verified: paper_data/01_PHM2010/05_training_seed_sensitivity/fixed_preprocessing_summary.csv
+- Copy hash verified: paper_data/01_PHM2010/05_training_seed_sensitivity/old_vs_fixed_preprocessing.csv
+- Copy hash verified: paper_data/01_PHM2010/05_training_seed_sensitivity/FIXED_PREPROCESS_PROTOCOL.md
+- Copy hash verified: paper_data/01_PHM2010/05_training_seed_sensitivity/FIXED_PREPROCESS_DIAGNOSTIC_REPORT.md
 - Copy hash verified: paper_data/02_NASA/original_split_mean_std.csv
 - Copy hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N1_B10_seed2026.csv
 - Copy hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N1_B11_seed2026.csv
@@ -352,7 +879,9 @@
 - Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/q_metrics/q_metrics_summary.csv
 - Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/stage_semantics/stage_semantics_by_seed.csv
 - Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/stage_semantics/stage_semantics_summary.csv
+- VALIDATION_REPORT.md is excluded from DATA_CATALOG.csv (post-validation runtime artifact)
 - Catalog hash verified: paper_data/00_metadata/DATA_DICTIONARY.md
+- Catalog hash verified: paper_data/00_metadata/Q_DEFINITIONS.md
 - Catalog hash verified: paper_data/00_metadata/datasets.csv
 - Catalog hash verified: paper_data/00_metadata/experiment_protocols.csv
 - Catalog hash verified: paper_data/00_metadata/methods.csv
@@ -439,114 +968,131 @@
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dc_psr/config.yaml
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dc_psr/metrics.json
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dc_psr/metrics.json
+- Derived lineage recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dc_psr/metrics.json
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dc_psr/predictions.csv
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dc_psr/predictions.csv
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dp2net_adapted/config.yaml
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dp2net_adapted/config.yaml
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dp2net_adapted/metrics.json
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dp2net_adapted/metrics.json
+- Derived lineage recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dp2net_adapted/metrics.json
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dp2net_adapted/predictions.csv
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dp2net_adapted/predictions.csv
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dynamic_gin_tgp/config.yaml
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dynamic_gin_tgp/config.yaml
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dynamic_gin_tgp/metrics.json
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dynamic_gin_tgp/metrics.json
+- Derived lineage recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dynamic_gin_tgp/metrics.json
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dynamic_gin_tgp/predictions.csv
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dynamic_gin_tgp/predictions.csv
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/htt_net/config.yaml
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/htt_net/config.yaml
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/htt_net/metrics.json
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/htt_net/metrics.json
+- Derived lineage recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/htt_net/metrics.json
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/htt_net/predictions.csv
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/htt_net/predictions.csv
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/mtf_avitk/config.yaml
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/mtf_avitk/config.yaml
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/mtf_avitk/metrics.json
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/mtf_avitk/metrics.json
+- Derived lineage recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/mtf_avitk/metrics.json
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/mtf_avitk/predictions.csv
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/mtf_avitk/predictions.csv
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multi_source_attention/config.yaml
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multi_source_attention/config.yaml
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multi_source_attention/metrics.json
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multi_source_attention/metrics.json
+- Derived lineage recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multi_source_attention/metrics.json
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multi_source_attention/predictions.csv
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multi_source_attention/predictions.csv
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multitask_tcn_gru/config.yaml
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multitask_tcn_gru/config.yaml
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multitask_tcn_gru/metrics.json
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multitask_tcn_gru/metrics.json
+- Derived lineage recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multitask_tcn_gru/metrics.json
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multitask_tcn_gru/predictions.csv
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multitask_tcn_gru/predictions.csv
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/rf/config.yaml
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/rf/config.yaml
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/rf/metrics.json
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/rf/metrics.json
+- Derived lineage recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/rf/metrics.json
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/rf/predictions.csv
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/rf/predictions.csv
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/tcn_gru/config.yaml
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/tcn_gru/config.yaml
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/tcn_gru/metrics.json
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/tcn_gru/metrics.json
+- Derived lineage recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/tcn_gru/metrics.json
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/tcn_gru/predictions.csv
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/tcn_gru/predictions.csv
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dc_psr/config.yaml
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dc_psr/config.yaml
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dc_psr/metrics.json
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dc_psr/metrics.json
+- Derived lineage recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dc_psr/metrics.json
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dc_psr/predictions.csv
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dc_psr/predictions.csv
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dp2net_adapted/config.yaml
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dp2net_adapted/config.yaml
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dp2net_adapted/metrics.json
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dp2net_adapted/metrics.json
+- Derived lineage recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dp2net_adapted/metrics.json
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dp2net_adapted/predictions.csv
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dp2net_adapted/predictions.csv
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dynamic_gin_tgp/config.yaml
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dynamic_gin_tgp/config.yaml
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dynamic_gin_tgp/metrics.json
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dynamic_gin_tgp/metrics.json
+- Derived lineage recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dynamic_gin_tgp/metrics.json
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dynamic_gin_tgp/predictions.csv
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dynamic_gin_tgp/predictions.csv
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/htt_net/config.yaml
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/htt_net/config.yaml
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/htt_net/metrics.json
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/htt_net/metrics.json
+- Derived lineage recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/htt_net/metrics.json
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/htt_net/predictions.csv
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/htt_net/predictions.csv
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/mtf_avitk/config.yaml
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/mtf_avitk/config.yaml
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/mtf_avitk/metrics.json
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/mtf_avitk/metrics.json
+- Derived lineage recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/mtf_avitk/metrics.json
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/mtf_avitk/predictions.csv
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/mtf_avitk/predictions.csv
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multi_source_attention/config.yaml
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multi_source_attention/config.yaml
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multi_source_attention/metrics.json
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multi_source_attention/metrics.json
+- Derived lineage recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multi_source_attention/metrics.json
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multi_source_attention/predictions.csv
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multi_source_attention/predictions.csv
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multitask_tcn_gru/config.yaml
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multitask_tcn_gru/config.yaml
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multitask_tcn_gru/metrics.json
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multitask_tcn_gru/metrics.json
+- Derived lineage recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multitask_tcn_gru/metrics.json
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multitask_tcn_gru/predictions.csv
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multitask_tcn_gru/predictions.csv
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/rf/config.yaml
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/rf/config.yaml
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/rf/metrics.json
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/rf/metrics.json
+- Derived lineage recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/rf/metrics.json
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/rf/predictions.csv
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/rf/predictions.csv
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/tcn_gru/config.yaml
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/tcn_gru/config.yaml
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/tcn_gru/metrics.json
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/tcn_gru/metrics.json
+- Derived lineage recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/tcn_gru/metrics.json
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/tcn_gru/predictions.csv
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/tcn_gru/predictions.csv
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/transfer_tasks_long.csv
 - Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/transfer_tasks_long.csv
 - Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/transfer_tasks_mean_std.csv
-- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/transfer_tasks_mean_std.csv
 - Catalog hash verified: paper_data/01_PHM2010/03_ablation/A1_A6_AUTHORITATIVE.csv
 - Canonical source hash recorded: paper_data/01_PHM2010/03_ablation/A1_A6_AUTHORITATIVE.csv
 - Catalog hash verified: paper_data/01_PHM2010/03_ablation/A1_A6_RECOMPUTED_AUDIT.csv
@@ -559,6 +1105,15 @@
 - Canonical source hash recorded: paper_data/01_PHM2010/04_semantics/C6_lifecycle_probability_wear.csv
 - Catalog hash verified: paper_data/01_PHM2010/04_semantics/README.md
 - Catalog hash verified: paper_data/01_PHM2010/04_semantics/q_statistics.csv
+- Catalog hash verified: paper_data/01_PHM2010/05_training_seed_sensitivity/FIXED_PREPROCESS_DIAGNOSTIC_REPORT.md
+- Catalog hash verified: paper_data/01_PHM2010/05_training_seed_sensitivity/FIXED_PREPROCESS_PROTOCOL.md
+- Catalog hash verified: paper_data/01_PHM2010/05_training_seed_sensitivity/ORIGINAL_5SEED_AUDIT.md
+- Catalog hash verified: paper_data/01_PHM2010/05_training_seed_sensitivity/README.md
+- Catalog hash verified: paper_data/01_PHM2010/05_training_seed_sensitivity/fixed_preprocessing_seed_level.csv
+- Catalog hash verified: paper_data/01_PHM2010/05_training_seed_sensitivity/fixed_preprocessing_summary.csv
+- Catalog hash verified: paper_data/01_PHM2010/05_training_seed_sensitivity/old_vs_fixed_preprocessing.csv
+- Catalog hash verified: paper_data/01_PHM2010/05_training_seed_sensitivity/original_5seed_seed_level.csv
+- Catalog hash verified: paper_data/01_PHM2010/05_training_seed_sensitivity/original_5seed_summary.csv
 - Catalog hash verified: paper_data/02_NASA/README.md
 - Catalog hash verified: paper_data/02_NASA/original_split_mean_std.csv
 - Canonical source hash recorded: paper_data/02_NASA/original_split_mean_std.csv
@@ -1031,14 +1586,22 @@
 - Derived lineage recorded: paper_data/07_figure_ready/fig3/cross_machine_task_deltas.csv
 - Catalog hash verified: paper_data/07_figure_ready/fig4/A1_A6_absolute.csv
 - Derived lineage recorded: paper_data/07_figure_ready/fig4/A1_A6_absolute.csv
+- Catalog hash verified: paper_data/07_figure_ready/fig4/A1_A6_cumulative_variation.csv
+- Derived lineage recorded: paper_data/07_figure_ready/fig4/A1_A6_cumulative_variation.csv
 - Catalog hash verified: paper_data/07_figure_ready/fig4/A1_A6_delta_vs_A1.csv
 - Derived lineage recorded: paper_data/07_figure_ready/fig4/A1_A6_delta_vs_A1.csv
+- Catalog hash verified: paper_data/07_figure_ready/fig4/A1_A6_lifecycle_variation.csv
+- Derived lineage recorded: paper_data/07_figure_ready/fig4/A1_A6_lifecycle_variation.csv
+- Catalog hash verified: paper_data/07_figure_ready/fig4/A1_A6_probability_trajectories.csv
+- Derived lineage recorded: paper_data/07_figure_ready/fig4/A1_A6_probability_trajectories.csv
 - Catalog hash verified: paper_data/07_figure_ready/fig5/hidden_representation.csv
 - Derived lineage recorded: paper_data/07_figure_ready/fig5/hidden_representation.csv
 - Catalog hash verified: paper_data/07_figure_ready/fig5/lifecycle_semantics.csv
 - Derived lineage recorded: paper_data/07_figure_ready/fig5/lifecycle_semantics.csv
 - Catalog hash verified: paper_data/07_figure_ready/fig5/q_agreement.csv
 - Derived lineage recorded: paper_data/07_figure_ready/fig5/q_agreement.csv
+- Catalog hash verified: paper_data/07_figure_ready/fig5/q_pred_normalized_display.csv
+- Derived lineage recorded: paper_data/07_figure_ready/fig5/q_pred_normalized_display.csv
 - Catalog hash verified: paper_data/07_figure_ready/fig5/simplex_trajectory.csv
 - Derived lineage recorded: paper_data/07_figure_ready/fig5/simplex_trajectory.csv
 - Catalog hash verified: paper_data/07_figure_ready/fig5/wear_by_predicted_stage.csv
@@ -1054,25 +1617,30 @@
 - Derived lineage recorded: paper_data/08_table_ready/main_comparison_table.csv
 - Catalog hash verified: paper_data/90_provenance/COPY_MANIFEST.csv
 - Catalog hash verified: paper_data/90_provenance/KNOWN_BAD_AND_SUPERSEDED.md
+- Catalog hash verified: paper_data/90_provenance/MANUSCRIPT_SYNC_STATUS.csv
 - Catalog hash verified: paper_data/90_provenance/REPOSITORY_STATE.md
 - Catalog hash verified: paper_data/90_provenance/SOURCE_INVENTORY.csv
 - Catalog hash verified: paper_data/90_provenance/SOURCE_PRIORITY.md
 - Catalog hash verified: paper_data/90_provenance/TRANSFORMATIONS.md
 - Catalog hash verified: paper_data/90_provenance/UNRESOLVED_ITEMS.csv
-- Catalog hash verified: paper_data/90_provenance/VALIDATION_REPORT.md
 - Catalog hash verified: paper_data/99_scripts/README.md
 - Catalog hash verified: paper_data/99_scripts/build_canonical_tables.py
 - Catalog hash verified: paper_data/99_scripts/build_paper_data.py
 - Catalog hash verified: paper_data/99_scripts/validate_paper_data.py
+- Catalog hash verified: paper_data/FINAL_FREEZE_CLEANUP_HANDOFF.md
 - Catalog hash verified: paper_data/MANUSCRIPT_DATA_MAP.md
 - Catalog hash verified: paper_data/QUICK_USE.md
 - Catalog hash verified: paper_data/README.md
+- VALIDATION_REPORT.md is excluded from CHECKSUMS.csv (prevents a self-invalidating build/validate cycle)
 - Checksum verified: paper_data/00_metadata/DATA_DICTIONARY.md
+- Checksum verified: paper_data/00_metadata/Q_DEFINITIONS.md
 - Checksum verified: paper_data/00_metadata/datasets.csv
 - Checksum verified: paper_data/00_metadata/experiment_protocols.csv
 - Checksum verified: paper_data/00_metadata/methods.csv
 - Checksum verified: paper_data/00_metadata/metrics.csv
 - Checksum verified: paper_data/00_metadata/tasks.csv
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/D1_9methods_bootstrap_CI.csv
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/D1_common_universe_manifest.csv
 - Checksum verified: paper_data/01_PHM2010/01_main_D1/bootstrap/dc_psr/bootstrap_config.json
 - Checksum verified: paper_data/01_PHM2010/01_main_D1/bootstrap/dc_psr/bootstrap_samples.csv
 - Checksum verified: paper_data/01_PHM2010/01_main_D1/bootstrap/dc_psr/bootstrap_summary.csv
@@ -1100,8 +1668,6 @@
 - Checksum verified: paper_data/01_PHM2010/01_main_D1/bootstrap/tcn_gru/bootstrap_config.json
 - Checksum verified: paper_data/01_PHM2010/01_main_D1/bootstrap/tcn_gru/bootstrap_samples.csv
 - Checksum verified: paper_data/01_PHM2010/01_main_D1/bootstrap/tcn_gru/bootstrap_summary.csv
-- Checksum verified: paper_data/01_PHM2010/01_main_D1/D1_9methods_bootstrap_CI.csv
-- Checksum verified: paper_data/01_PHM2010/01_main_D1/D1_common_universe_manifest.csv
 - Checksum verified: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_dc_psr_304runs.csv
 - Checksum verified: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_dp2net_adapted_304runs.csv
 - Checksum verified: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_dynamic_gin_tgp_304runs.csv
@@ -1111,6 +1677,7 @@
 - Checksum verified: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_multitask_tcn_gru_304runs.csv
 - Checksum verified: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_rf_304runs.csv
 - Checksum verified: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_tcn_gru_304runs.csv
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/README.md
 - Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dc_psr/config.yaml
 - Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dc_psr/metrics.json
 - Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dc_psr/predictions.csv
@@ -1165,18 +1732,27 @@
 - Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/tcn_gru/config.yaml
 - Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/tcn_gru/metrics.json
 - Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/tcn_gru/predictions.csv
-- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/README.md
 - Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/transfer_tasks_long.csv
 - Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/transfer_tasks_mean_std.csv
 - Checksum verified: paper_data/01_PHM2010/03_ablation/A1_A6_AUTHORITATIVE.csv
 - Checksum verified: paper_data/01_PHM2010/03_ablation/A1_A6_RECOMPUTED_AUDIT.csv
 - Checksum verified: paper_data/01_PHM2010/03_ablation/ABLATION_DATA_AUDIT.md
-- Checksum verified: paper_data/01_PHM2010/03_ablation/data_manifest.json
 - Checksum verified: paper_data/01_PHM2010/03_ablation/README.md
+- Checksum verified: paper_data/01_PHM2010/03_ablation/data_manifest.json
 - Checksum verified: paper_data/01_PHM2010/04_semantics/C6_hidden_representation.csv
 - Checksum verified: paper_data/01_PHM2010/04_semantics/C6_lifecycle_probability_wear.csv
-- Checksum verified: paper_data/01_PHM2010/04_semantics/q_statistics.csv
 - Checksum verified: paper_data/01_PHM2010/04_semantics/README.md
+- Checksum verified: paper_data/01_PHM2010/04_semantics/q_statistics.csv
+- Checksum verified: paper_data/01_PHM2010/05_training_seed_sensitivity/FIXED_PREPROCESS_DIAGNOSTIC_REPORT.md
+- Checksum verified: paper_data/01_PHM2010/05_training_seed_sensitivity/FIXED_PREPROCESS_PROTOCOL.md
+- Checksum verified: paper_data/01_PHM2010/05_training_seed_sensitivity/ORIGINAL_5SEED_AUDIT.md
+- Checksum verified: paper_data/01_PHM2010/05_training_seed_sensitivity/README.md
+- Checksum verified: paper_data/01_PHM2010/05_training_seed_sensitivity/fixed_preprocessing_seed_level.csv
+- Checksum verified: paper_data/01_PHM2010/05_training_seed_sensitivity/fixed_preprocessing_summary.csv
+- Checksum verified: paper_data/01_PHM2010/05_training_seed_sensitivity/old_vs_fixed_preprocessing.csv
+- Checksum verified: paper_data/01_PHM2010/05_training_seed_sensitivity/original_5seed_seed_level.csv
+- Checksum verified: paper_data/01_PHM2010/05_training_seed_sensitivity/original_5seed_summary.csv
+- Checksum verified: paper_data/02_NASA/README.md
 - Checksum verified: paper_data/02_NASA/original_split_mean_std.csv
 - Checksum verified: paper_data/02_NASA/predictions/Pred_NASA_original_N1_B10_seed2026.csv
 - Checksum verified: paper_data/02_NASA/predictions/Pred_NASA_original_N1_B11_seed2026.csv
@@ -1194,8 +1770,8 @@
 - Checksum verified: paper_data/02_NASA/predictions/Pred_NASA_original_N4_B11_seed2026.csv
 - Checksum verified: paper_data/02_NASA/predictions/Pred_NASA_original_N4_B12_seed2026.csv
 - Checksum verified: paper_data/02_NASA/predictions/Pred_NASA_original_N4_B9_seed2026.csv
-- Checksum verified: paper_data/02_NASA/README.md
 - Checksum verified: paper_data/02_NASA/task_level_results.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/README.md
 - Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/ablation/by_seed/ablation_metrics_by_seed.csv
 - Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/ablation/summary/ablation_complete_table.csv
 - Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/ablation/summary/ablation_mean_std.csv
@@ -1372,7 +1948,6 @@
 - Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/summary/generalization_cross_task_summary.csv
 - Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/overall_by_seed.csv
 - Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/overall_by_task_mean_std.csv
-- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/README.md
 - Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/embeddings/representation_embeddings.parquet
 - Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D1-M_seed42_predictions_test_B11B12.csv
 - Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D1-M_seed52_predictions_test_B11B12.csv
@@ -1394,64 +1969,72 @@
 - Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/stage_semantics/stage_semantics_by_seed.csv
 - Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/stage_semantics/stage_semantics_summary.csv
 - Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/task_definitions.csv
+- Checksum verified: paper_data/04_cross_dataset/D2M_failure_distribution.csv
+- Checksum verified: paper_data/04_cross_dataset/README.md
 - Checksum verified: paper_data/04_cross_dataset/backbone_vs_dcpsr_absolute.csv
 - Checksum verified: paper_data/04_cross_dataset/backbone_vs_dcpsr_deltas.csv
 - Checksum verified: paper_data/04_cross_dataset/cross_machine_task_deltas.csv
-- Checksum verified: paper_data/04_cross_dataset/D2M_failure_distribution.csv
-- Checksum verified: paper_data/04_cross_dataset/README.md
+- Checksum verified: paper_data/05_baseline_metadata/README.md
 - Checksum verified: paper_data/05_baseline_metadata/baseline_literature.csv
 - Checksum verified: paper_data/05_baseline_metadata/baseline_model_complexity.csv
-- Checksum verified: paper_data/05_baseline_metadata/README.md
+- Checksum verified: paper_data/06_canonical_tables/README.md
 - Checksum verified: paper_data/06_canonical_tables/all_metrics_long.csv
 - Checksum verified: paper_data/06_canonical_tables/all_metrics_wide.csv
 - Checksum verified: paper_data/06_canonical_tables/manuscript_table_index.csv
-- Checksum verified: paper_data/06_canonical_tables/README.md
-- Checksum verified: paper_data/07_figure_ready/fig1/accuracy_consistency_points.csv
 - Checksum verified: paper_data/07_figure_ready/fig1/B11_B12_controlled_comparison.csv
 - Checksum verified: paper_data/07_figure_ready/fig1/D1_main_metrics.csv
+- Checksum verified: paper_data/07_figure_ready/fig1/accuracy_consistency_points.csv
 - Checksum verified: paper_data/07_figure_ready/fig2/taskwise_absolute.csv
 - Checksum verified: paper_data/07_figure_ready/fig2/taskwise_normalized.csv
 - Checksum verified: paper_data/07_figure_ready/fig2/taskwise_rank.csv
+- Checksum verified: paper_data/07_figure_ready/fig3/D2M_failure_distribution.csv
 - Checksum verified: paper_data/07_figure_ready/fig3/cross_dataset_absolute.csv
 - Checksum verified: paper_data/07_figure_ready/fig3/cross_dataset_deltas.csv
 - Checksum verified: paper_data/07_figure_ready/fig3/cross_machine_task_deltas.csv
-- Checksum verified: paper_data/07_figure_ready/fig3/D2M_failure_distribution.csv
 - Checksum verified: paper_data/07_figure_ready/fig4/A1_A6_absolute.csv
+- Checksum verified: paper_data/07_figure_ready/fig4/A1_A6_cumulative_variation.csv
 - Checksum verified: paper_data/07_figure_ready/fig4/A1_A6_delta_vs_A1.csv
+- Checksum verified: paper_data/07_figure_ready/fig4/A1_A6_lifecycle_variation.csv
+- Checksum verified: paper_data/07_figure_ready/fig4/A1_A6_probability_trajectories.csv
 - Checksum verified: paper_data/07_figure_ready/fig5/hidden_representation.csv
 - Checksum verified: paper_data/07_figure_ready/fig5/lifecycle_semantics.csv
 - Checksum verified: paper_data/07_figure_ready/fig5/q_agreement.csv
+- Checksum verified: paper_data/07_figure_ready/fig5/q_pred_normalized_display.csv
 - Checksum verified: paper_data/07_figure_ready/fig5/simplex_trajectory.csv
 - Checksum verified: paper_data/07_figure_ready/fig5/wear_by_predicted_stage.csv
+- Checksum verified: paper_data/08_table_ready/README.md
 - Checksum verified: paper_data/08_table_ready/ablation_table.csv
 - Checksum verified: paper_data/08_table_ready/cross_condition_table.csv
 - Checksum verified: paper_data/08_table_ready/dataset_table.csv
 - Checksum verified: paper_data/08_table_ready/main_comparison_table.csv
-- Checksum verified: paper_data/08_table_ready/README.md
 - Checksum verified: paper_data/90_provenance/COPY_MANIFEST.csv
 - Checksum verified: paper_data/90_provenance/KNOWN_BAD_AND_SUPERSEDED.md
+- Checksum verified: paper_data/90_provenance/MANUSCRIPT_SYNC_STATUS.csv
 - Checksum verified: paper_data/90_provenance/REPOSITORY_STATE.md
 - Checksum verified: paper_data/90_provenance/SOURCE_INVENTORY.csv
 - Checksum verified: paper_data/90_provenance/SOURCE_PRIORITY.md
 - Checksum verified: paper_data/90_provenance/TRANSFORMATIONS.md
 - Checksum verified: paper_data/90_provenance/UNRESOLVED_ITEMS.csv
-- Checksum verified: paper_data/90_provenance/VALIDATION_REPORT.md
+- Checksum verified: paper_data/99_scripts/README.md
 - Checksum verified: paper_data/99_scripts/build_canonical_tables.py
 - Checksum verified: paper_data/99_scripts/build_paper_data.py
-- Checksum verified: paper_data/99_scripts/README.md
 - Checksum verified: paper_data/99_scripts/validate_paper_data.py
 - Checksum verified: paper_data/DATA_CATALOG.csv
+- Checksum verified: paper_data/FINAL_FREEZE_CLEANUP_HANDOFF.md
 - Checksum verified: paper_data/MANUSCRIPT_DATA_MAP.md
 - Checksum verified: paper_data/QUICK_USE.md
 - Checksum verified: paper_data/README.md
 - No semantic key points to conflicting authoritative values
+- Manuscript-only sync items are not mixed into UNRESOLVED_ITEMS.csv
+- MANUSCRIPT_SYNC_STATUS.csv exists as a separate manuscript-sync artifact
+- Every manuscript-sync item is explicitly marked PENDING
 
 ## Warnings
 
 - NASA authoritative package contains B9-B12 only; a nine-method NASA table is intentionally not fabricated.
 - 213 canonical copies originate from real local but Git-untracked/ignored source files; paths and hashes are recorded.
-- 5 manuscript/script issues remain explicitly unresolved; see UNRESOLVED_ITEMS.csv.
-- FIG4_SCRIPT_REQUIRES_SOURCE_UPDATE: nature_figures/scripts/fig4_ablation.py, nature_figures/scripts/generate_docs.py
+- 1 data-integrity/script issues remain explicitly unresolved; see UNRESOLVED_ITEMS.csv.
+- 3 manuscript-only synchronization item(s) pending human review (see MANUSCRIPT_SYNC_STATUS.csv); this is a manuscript-text concern, not a paper_data numerical-integrity failure.
 
 ## Failures
 

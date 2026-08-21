@@ -1,3 +1,3 @@
 # Usage
 
-D1 is a 304-run common universe. D2/D3 retain method-native universes; window-based and raw-signal methods may have different n_test. Never pool runs or assume equal n across methods. Across-task std is not across-seed std.
+D1, D2, and D3 all use the same common universe: run_id 12..315 (304 runs), for all nine methods. D1 values are the fixed official model's point estimates from the moving-block bootstrap table; D2/D3 values are recomputed by filtering each method's existing frozen predictions to run_id 12..315 and recomputing metrics deterministically, with no retraining. Do not use any older method-native/window-based-vs-raw-signal universe distinction; it has been retired. Across-task std (in transfer_tasks_mean_std.csv) is a descriptive spread across the three task point estimates, not across-seed uncertainty.

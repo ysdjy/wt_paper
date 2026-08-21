@@ -10,5 +10,9 @@
   "M_to_L": 0.0,
   "Rev": 2,
   "Jump": 0,
-  "Smooth": 0.07158415841584158
+  "Smooth": 0.07158415841584159,
+  "n_test": 304,
+  "test_universe": "run_id_12_315_common_304",
+  "source_predictions": "paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/rf/predictions.csv",
+  "retrained": false
 }
