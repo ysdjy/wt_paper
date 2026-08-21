@@ -1,0 +1,10 @@
+﻿method_id,display_name,parameters,FLOPs_per_sample,training_time_s,inference_ms_per_sample,source_path,notes
+rf,RF,NA,NA,NA,NA,baselines/rf/FINAL_REPORT.md,400-tree ensemble; neural parameter count not comparable
+tcn_gru,TCN-GRU,83619,NA,NA,NA,baselines/tcn_gru/FINAL_REPORT.md,state_dict tensor count
+multitask_tcn_gru,Multi-task TCN-GRU,84009,NA,NA,NA,baselines/multitask_tcn_gru/FINAL_REPORT.md,state_dict tensor count
+dc_psr,DC-PSR,84009,NA,NA,NA,final_statistical_evidence/FINAL_STATISTICAL_REPORT.md,shares frozen B11 backbone; deterministic B12 post-processing adds no learned parameters
+htt_net,HTT-Net (adapted),882067,NA,36.0,NA,baselines/htt_net/README.md,single seed-42 adapted run
+multi_source_attention,Multi-source Attention,12939050,1043862528,147.3,1.81,baselines/multi_source_attention/FINAL_REPORT.md,RTX 3070 Ti Laptop; Protocol B/full early-stopped run
+mtf_avitk,MTF-AViTK,309371072,91463323008,2439.1,21.3,baselines/mtf_avitk/FINAL_REPORT.md,sub-window inference; Protocol A 50 epochs
+dynamic_gin_tgp,Dynamic GIN + TGP,321950,NA,2108.5,7.76,baselines/dynamic_gin_tgp/FINAL_REPORT.md,Protocol A; inference batch=4 GPU
+dp2net_adapted,DP2Net-adapted,60956,NA,NA,0.04,baselines/dp2net/FINAL_REPORT.md,60031 parameters used at inference; training time varies by seed

@@ -1,0 +1,2 @@
+# paper_data is a byte-preserved research-data archive; checksums cover exact bytes.
+paper_data/** -text

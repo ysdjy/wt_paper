@@ -1,0 +1,4 @@
+﻿dataset_id,dataset_name,role,canonical_root,notes
+PHM2010,PHM2010 milling tool wear,main benchmark,01_PHM2010,D1 common universe has 304 runs
+NASA_MILLING,NASA Milling,external small-sample validation,02_NASA,only real B9-B12 original N1-N4 evidence retained
+MENDELEY_CROSS_MACHINE,Multivariate time series data of milling processes with varying tool wear and machine tools,third cross-machine dataset,03_MENDELEY_CROSS_MACHINE,3 machines; 9 tools; 6418 runs; T8 early truncation

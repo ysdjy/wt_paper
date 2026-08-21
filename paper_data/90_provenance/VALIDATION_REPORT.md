@@ -1,0 +1,1462 @@
+# paper_data validation report
+
+**VALIDATION STATUS = PASS_WITH_WARNINGS**
+
+## Passed checks
+
+- PHM D1 has exactly the nine formal methods
+- DC-PSR D1 Acc matches frozen evidence
+- Multi-task TCN-GRU D1 Acc matches frozen evidence
+- RF D1 Acc matches frozen evidence
+- D1 has nine prediction-level files
+- D1_dc_psr_304runs.csv common universe is run_id 12..315
+- D1_dp2net_adapted_304runs.csv common universe is run_id 12..315
+- D1_dynamic_gin_tgp_304runs.csv common universe is run_id 12..315
+- D1_htt_net_304runs.csv common universe is run_id 12..315
+- D1_mtf_avitk_304runs.csv common universe is run_id 12..315
+- D1_multi_source_attention_304runs.csv common universe is run_id 12..315
+- D1_multitask_tcn_gru_304runs.csv common universe is run_id 12..315
+- D1_rf_304runs.csv common universe is run_id 12..315
+- D1_tcn_gru_304runs.csv common universe is run_id 12..315
+- Cross-condition table has 9 methods × 3 tasks
+- Cross-condition task names are complete
+- Every cross-condition row records universe/protocol/source
+- Ablation has exactly ordered A1-A6
+- A1 Acc is authoritative
+- A6 Acc is authoritative
+- A1-A4 hard classification metrics are identical
+- A1-A4 Smooth values are not all identical
+- Old FINAL_ablation_outputs.csv is absent from canonical sources
+- Lifecycle semantics contains 304 runs
+- Hidden representation is exactly 304 test_C6 rows
+- q statistic R2 recomputes to audited value
+- q statistic Spearman_rho recomputes to audited value
+- q statistic MAE recomputes to audited value
+- q statistic stage_agreement recomputes to audited value
+- NASA summary retains only real B9-B12 methods
+- NASA original split has 4 methods × 4 task rows
+- NASA retains 16 original-split prediction files
+- Mendeley audit supports three machines
+- Mendeley audit supports nine tools
+- Mendeley audit supports 6418 runs
+- Mendeley task definitions are D1-M/D2-M/D3-M
+- Mendeley five-seed final rows exist for all core tasks
+- Mendeley source has 3 tasks × 5 DONE flags
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/D1_9methods_bootstrap_CI.csv
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/D1_common_universe_manifest.csv
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_dc_psr_304runs.csv
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_dp2net_adapted_304runs.csv
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_dynamic_gin_tgp_304runs.csv
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_htt_net_304runs.csv
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_mtf_avitk_304runs.csv
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_multi_source_attention_304runs.csv
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_multitask_tcn_gru_304runs.csv
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_rf_304runs.csv
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_tcn_gru_304runs.csv
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/dc_psr/bootstrap_config.json
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/dc_psr/bootstrap_summary.csv
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/dc_psr/bootstrap_samples.csv
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/dp2net_adapted/bootstrap_config.json
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/dp2net_adapted/bootstrap_summary.csv
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/dp2net_adapted/bootstrap_samples.csv
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/dynamic_gin_tgp/bootstrap_config.json
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/dynamic_gin_tgp/bootstrap_summary.csv
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/dynamic_gin_tgp/bootstrap_samples.csv
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/htt_net/bootstrap_config.json
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/htt_net/bootstrap_summary.csv
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/htt_net/bootstrap_samples.csv
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/mtf_avitk/bootstrap_config.json
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/mtf_avitk/bootstrap_summary.csv
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/mtf_avitk/bootstrap_samples.csv
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/multi_source_attention/bootstrap_config.json
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/multi_source_attention/bootstrap_summary.csv
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/multi_source_attention/bootstrap_samples.csv
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/multitask_tcn_gru/bootstrap_config.json
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/multitask_tcn_gru/bootstrap_summary.csv
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/multitask_tcn_gru/bootstrap_samples.csv
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/rf/bootstrap_config.json
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/rf/bootstrap_summary.csv
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/rf/bootstrap_samples.csv
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/tcn_gru/bootstrap_config.json
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/tcn_gru/bootstrap_summary.csv
+- Copy hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/tcn_gru/bootstrap_samples.csv
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/transfer_tasks_mean_std.csv
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dc_psr/metrics.json
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dc_psr/predictions.csv
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dc_psr/config.yaml
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dp2net_adapted/metrics.json
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dp2net_adapted/predictions.csv
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dp2net_adapted/config.yaml
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dynamic_gin_tgp/metrics.json
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dynamic_gin_tgp/predictions.csv
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dynamic_gin_tgp/config.yaml
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/htt_net/metrics.json
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/htt_net/predictions.csv
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/htt_net/config.yaml
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/mtf_avitk/metrics.json
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/mtf_avitk/predictions.csv
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/mtf_avitk/config.yaml
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multi_source_attention/metrics.json
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multi_source_attention/predictions.csv
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multi_source_attention/config.yaml
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multitask_tcn_gru/metrics.json
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multitask_tcn_gru/predictions.csv
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multitask_tcn_gru/config.yaml
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/rf/metrics.json
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/rf/predictions.csv
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/rf/config.yaml
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/tcn_gru/metrics.json
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/tcn_gru/predictions.csv
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/tcn_gru/config.yaml
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dc_psr/metrics.json
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dc_psr/predictions.csv
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dc_psr/config.yaml
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dp2net_adapted/metrics.json
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dp2net_adapted/predictions.csv
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dp2net_adapted/config.yaml
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dynamic_gin_tgp/metrics.json
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dynamic_gin_tgp/predictions.csv
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dynamic_gin_tgp/config.yaml
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/htt_net/metrics.json
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/htt_net/predictions.csv
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/htt_net/config.yaml
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/mtf_avitk/metrics.json
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/mtf_avitk/predictions.csv
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/mtf_avitk/config.yaml
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multi_source_attention/metrics.json
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multi_source_attention/predictions.csv
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multi_source_attention/config.yaml
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multitask_tcn_gru/metrics.json
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multitask_tcn_gru/predictions.csv
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multitask_tcn_gru/config.yaml
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/rf/metrics.json
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/rf/predictions.csv
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/rf/config.yaml
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/tcn_gru/metrics.json
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/tcn_gru/predictions.csv
+- Copy hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/tcn_gru/config.yaml
+- Copy hash verified: paper_data/01_PHM2010/03_ablation/A1_A6_AUTHORITATIVE.csv
+- Copy hash verified: paper_data/01_PHM2010/03_ablation/A1_A6_RECOMPUTED_AUDIT.csv
+- Copy hash verified: paper_data/01_PHM2010/03_ablation/ABLATION_DATA_AUDIT.md
+- Copy hash verified: paper_data/01_PHM2010/03_ablation/data_manifest.json
+- Copy hash verified: paper_data/01_PHM2010/04_semantics/C6_lifecycle_probability_wear.csv
+- Copy hash verified: paper_data/02_NASA/original_split_mean_std.csv
+- Copy hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N1_B10_seed2026.csv
+- Copy hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N1_B11_seed2026.csv
+- Copy hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N1_B12_seed2026.csv
+- Copy hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N1_B9_seed2026.csv
+- Copy hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N2_B10_seed2026.csv
+- Copy hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N2_B11_seed2026.csv
+- Copy hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N2_B12_seed2026.csv
+- Copy hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N2_B9_seed2026.csv
+- Copy hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N3_B10_seed2026.csv
+- Copy hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N3_B11_seed2026.csv
+- Copy hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N3_B12_seed2026.csv
+- Copy hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N3_B9_seed2026.csv
+- Copy hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N4_B10_seed2026.csv
+- Copy hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N4_B11_seed2026.csv
+- Copy hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N4_B12_seed2026.csv
+- Copy hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N4_B9_seed2026.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/overall_by_task_mean_std.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/overall_by_seed.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B1.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B10.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B11B12.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B2.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B3.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B4.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B5.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B6.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B7.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B8.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B9.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B1.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B10.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B11B12.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B2.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B3.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B4.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B5.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B6.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B7.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B8.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B9.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B1.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B10.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B11B12.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B2.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B3.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B4.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B5.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B6.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B7.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B8.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B9.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B1.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B10.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B11B12.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B2.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B3.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B4.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B5.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B6.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B7.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B8.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B9.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B1.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B10.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B11B12.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B2.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B3.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B4.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B5.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B6.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B7.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B8.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B9.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B1.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B10.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B11B12.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B2.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B3.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B4.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B5.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B6.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B7.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B8.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B9.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B1.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B10.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B11B12.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B2.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B3.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B4.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B5.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B6.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B7.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B8.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B9.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B1.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B10.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B11B12.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B2.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B3.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B4.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B5.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B6.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B7.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B8.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B9.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B1.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B10.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B11B12.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B2.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B3.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B4.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B5.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B6.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B7.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B8.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B9.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B1.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B10.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B11B12.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B2.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B3.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B4.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B5.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B6.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B7.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B8.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B9.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B1.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B10.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B11B12.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B2.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B3.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B4.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B5.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B6.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B7.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B8.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B9.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B1.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B10.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B11B12.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B2.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B3.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B4.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B5.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B6.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B7.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B8.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B9.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B1.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B10.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B11B12.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B2.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B3.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B4.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B5.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B6.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B7.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B8.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B9.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B1.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B10.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B11B12.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B2.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B3.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B4.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B5.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B6.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B7.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B8.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B9.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B1.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B10.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B11B12.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B2.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B3.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B4.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B5.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B6.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B7.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B8.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B9.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/dual_source/dual_source_mean_std.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/generalization_mean_std_by_task.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/generalization_metrics_by_seed.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/single_source/single_source_mean_std.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/summary/generalization_cross_task_summary.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/ablation/by_seed/ablation_metrics_by_seed.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/ablation/summary/ablation_complete_table.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/ablation/summary/ablation_mean_std.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/embeddings/representation_embeddings.parquet
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D1-M_seed42_predictions_test_B11B12.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D1-M_seed52_predictions_test_B11B12.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D1-M_seed62_predictions_test_B11B12.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D1-M_seed72_predictions_test_B11B12.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D1-M_seed82_predictions_test_B11B12.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D2-M_seed42_predictions_test_B11B12.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D2-M_seed52_predictions_test_B11B12.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D2-M_seed62_predictions_test_B11B12.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D2-M_seed72_predictions_test_B11B12.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D2-M_seed82_predictions_test_B11B12.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D3-M_seed42_predictions_test_B11B12.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D3-M_seed52_predictions_test_B11B12.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D3-M_seed62_predictions_test_B11B12.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D3-M_seed72_predictions_test_B11B12.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D3-M_seed82_predictions_test_B11B12.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/q_metrics/q_metrics_by_seed.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/q_metrics/q_metrics_summary.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/stage_semantics/stage_semantics_by_seed.csv
+- Copy hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/stage_semantics/stage_semantics_summary.csv
+- Catalog hash verified: paper_data/00_metadata/DATA_DICTIONARY.md
+- Catalog hash verified: paper_data/00_metadata/datasets.csv
+- Catalog hash verified: paper_data/00_metadata/experiment_protocols.csv
+- Catalog hash verified: paper_data/00_metadata/methods.csv
+- Catalog hash verified: paper_data/00_metadata/metrics.csv
+- Catalog hash verified: paper_data/00_metadata/tasks.csv
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/D1_9methods_bootstrap_CI.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/D1_9methods_bootstrap_CI.csv
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/D1_common_universe_manifest.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/D1_common_universe_manifest.csv
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/dc_psr/bootstrap_config.json
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/bootstrap/dc_psr/bootstrap_config.json
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/dc_psr/bootstrap_samples.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/bootstrap/dc_psr/bootstrap_samples.csv
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/dc_psr/bootstrap_summary.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/bootstrap/dc_psr/bootstrap_summary.csv
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/dp2net_adapted/bootstrap_config.json
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/bootstrap/dp2net_adapted/bootstrap_config.json
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/dp2net_adapted/bootstrap_samples.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/bootstrap/dp2net_adapted/bootstrap_samples.csv
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/dp2net_adapted/bootstrap_summary.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/bootstrap/dp2net_adapted/bootstrap_summary.csv
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/dynamic_gin_tgp/bootstrap_config.json
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/bootstrap/dynamic_gin_tgp/bootstrap_config.json
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/dynamic_gin_tgp/bootstrap_samples.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/bootstrap/dynamic_gin_tgp/bootstrap_samples.csv
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/dynamic_gin_tgp/bootstrap_summary.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/bootstrap/dynamic_gin_tgp/bootstrap_summary.csv
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/htt_net/bootstrap_config.json
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/bootstrap/htt_net/bootstrap_config.json
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/htt_net/bootstrap_samples.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/bootstrap/htt_net/bootstrap_samples.csv
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/htt_net/bootstrap_summary.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/bootstrap/htt_net/bootstrap_summary.csv
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/mtf_avitk/bootstrap_config.json
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/bootstrap/mtf_avitk/bootstrap_config.json
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/mtf_avitk/bootstrap_samples.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/bootstrap/mtf_avitk/bootstrap_samples.csv
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/mtf_avitk/bootstrap_summary.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/bootstrap/mtf_avitk/bootstrap_summary.csv
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/multi_source_attention/bootstrap_config.json
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/bootstrap/multi_source_attention/bootstrap_config.json
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/multi_source_attention/bootstrap_samples.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/bootstrap/multi_source_attention/bootstrap_samples.csv
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/multi_source_attention/bootstrap_summary.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/bootstrap/multi_source_attention/bootstrap_summary.csv
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/multitask_tcn_gru/bootstrap_config.json
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/bootstrap/multitask_tcn_gru/bootstrap_config.json
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/multitask_tcn_gru/bootstrap_samples.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/bootstrap/multitask_tcn_gru/bootstrap_samples.csv
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/multitask_tcn_gru/bootstrap_summary.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/bootstrap/multitask_tcn_gru/bootstrap_summary.csv
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/rf/bootstrap_config.json
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/bootstrap/rf/bootstrap_config.json
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/rf/bootstrap_samples.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/bootstrap/rf/bootstrap_samples.csv
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/rf/bootstrap_summary.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/bootstrap/rf/bootstrap_summary.csv
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/tcn_gru/bootstrap_config.json
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/bootstrap/tcn_gru/bootstrap_config.json
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/tcn_gru/bootstrap_samples.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/bootstrap/tcn_gru/bootstrap_samples.csv
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/bootstrap/tcn_gru/bootstrap_summary.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/bootstrap/tcn_gru/bootstrap_summary.csv
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_dc_psr_304runs.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_dc_psr_304runs.csv
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_dp2net_adapted_304runs.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_dp2net_adapted_304runs.csv
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_dynamic_gin_tgp_304runs.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_dynamic_gin_tgp_304runs.csv
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_htt_net_304runs.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_htt_net_304runs.csv
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_mtf_avitk_304runs.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_mtf_avitk_304runs.csv
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_multi_source_attention_304runs.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_multi_source_attention_304runs.csv
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_multitask_tcn_gru_304runs.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_multitask_tcn_gru_304runs.csv
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_rf_304runs.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_rf_304runs.csv
+- Catalog hash verified: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_tcn_gru_304runs.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_tcn_gru_304runs.csv
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/README.md
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dc_psr/config.yaml
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dc_psr/config.yaml
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dc_psr/metrics.json
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dc_psr/metrics.json
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dc_psr/predictions.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dc_psr/predictions.csv
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dp2net_adapted/config.yaml
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dp2net_adapted/config.yaml
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dp2net_adapted/metrics.json
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dp2net_adapted/metrics.json
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dp2net_adapted/predictions.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dp2net_adapted/predictions.csv
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dynamic_gin_tgp/config.yaml
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dynamic_gin_tgp/config.yaml
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dynamic_gin_tgp/metrics.json
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dynamic_gin_tgp/metrics.json
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dynamic_gin_tgp/predictions.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dynamic_gin_tgp/predictions.csv
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/htt_net/config.yaml
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/htt_net/config.yaml
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/htt_net/metrics.json
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/htt_net/metrics.json
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/htt_net/predictions.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/htt_net/predictions.csv
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/mtf_avitk/config.yaml
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/mtf_avitk/config.yaml
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/mtf_avitk/metrics.json
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/mtf_avitk/metrics.json
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/mtf_avitk/predictions.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/mtf_avitk/predictions.csv
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multi_source_attention/config.yaml
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multi_source_attention/config.yaml
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multi_source_attention/metrics.json
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multi_source_attention/metrics.json
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multi_source_attention/predictions.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multi_source_attention/predictions.csv
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multitask_tcn_gru/config.yaml
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multitask_tcn_gru/config.yaml
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multitask_tcn_gru/metrics.json
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multitask_tcn_gru/metrics.json
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multitask_tcn_gru/predictions.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multitask_tcn_gru/predictions.csv
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/rf/config.yaml
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/rf/config.yaml
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/rf/metrics.json
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/rf/metrics.json
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/rf/predictions.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/rf/predictions.csv
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/tcn_gru/config.yaml
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/tcn_gru/config.yaml
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/tcn_gru/metrics.json
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/tcn_gru/metrics.json
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/tcn_gru/predictions.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/tcn_gru/predictions.csv
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dc_psr/config.yaml
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dc_psr/config.yaml
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dc_psr/metrics.json
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dc_psr/metrics.json
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dc_psr/predictions.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dc_psr/predictions.csv
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dp2net_adapted/config.yaml
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dp2net_adapted/config.yaml
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dp2net_adapted/metrics.json
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dp2net_adapted/metrics.json
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dp2net_adapted/predictions.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dp2net_adapted/predictions.csv
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dynamic_gin_tgp/config.yaml
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dynamic_gin_tgp/config.yaml
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dynamic_gin_tgp/metrics.json
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dynamic_gin_tgp/metrics.json
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dynamic_gin_tgp/predictions.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dynamic_gin_tgp/predictions.csv
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/htt_net/config.yaml
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/htt_net/config.yaml
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/htt_net/metrics.json
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/htt_net/metrics.json
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/htt_net/predictions.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/htt_net/predictions.csv
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/mtf_avitk/config.yaml
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/mtf_avitk/config.yaml
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/mtf_avitk/metrics.json
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/mtf_avitk/metrics.json
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/mtf_avitk/predictions.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/mtf_avitk/predictions.csv
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multi_source_attention/config.yaml
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multi_source_attention/config.yaml
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multi_source_attention/metrics.json
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multi_source_attention/metrics.json
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multi_source_attention/predictions.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multi_source_attention/predictions.csv
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multitask_tcn_gru/config.yaml
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multitask_tcn_gru/config.yaml
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multitask_tcn_gru/metrics.json
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multitask_tcn_gru/metrics.json
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multitask_tcn_gru/predictions.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multitask_tcn_gru/predictions.csv
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/rf/config.yaml
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/rf/config.yaml
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/rf/metrics.json
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/rf/metrics.json
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/rf/predictions.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/rf/predictions.csv
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/tcn_gru/config.yaml
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/tcn_gru/config.yaml
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/tcn_gru/metrics.json
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/tcn_gru/metrics.json
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/tcn_gru/predictions.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/tcn_gru/predictions.csv
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/transfer_tasks_long.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/transfer_tasks_long.csv
+- Catalog hash verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/transfer_tasks_mean_std.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/transfer_tasks_mean_std.csv
+- Catalog hash verified: paper_data/01_PHM2010/03_ablation/A1_A6_AUTHORITATIVE.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/03_ablation/A1_A6_AUTHORITATIVE.csv
+- Catalog hash verified: paper_data/01_PHM2010/03_ablation/A1_A6_RECOMPUTED_AUDIT.csv
+- Catalog hash verified: paper_data/01_PHM2010/03_ablation/ABLATION_DATA_AUDIT.md
+- Catalog hash verified: paper_data/01_PHM2010/03_ablation/README.md
+- Catalog hash verified: paper_data/01_PHM2010/03_ablation/data_manifest.json
+- Catalog hash verified: paper_data/01_PHM2010/04_semantics/C6_hidden_representation.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/04_semantics/C6_hidden_representation.csv
+- Catalog hash verified: paper_data/01_PHM2010/04_semantics/C6_lifecycle_probability_wear.csv
+- Canonical source hash recorded: paper_data/01_PHM2010/04_semantics/C6_lifecycle_probability_wear.csv
+- Catalog hash verified: paper_data/01_PHM2010/04_semantics/README.md
+- Catalog hash verified: paper_data/01_PHM2010/04_semantics/q_statistics.csv
+- Catalog hash verified: paper_data/02_NASA/README.md
+- Catalog hash verified: paper_data/02_NASA/original_split_mean_std.csv
+- Canonical source hash recorded: paper_data/02_NASA/original_split_mean_std.csv
+- Catalog hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N1_B10_seed2026.csv
+- Canonical source hash recorded: paper_data/02_NASA/predictions/Pred_NASA_original_N1_B10_seed2026.csv
+- Catalog hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N1_B11_seed2026.csv
+- Canonical source hash recorded: paper_data/02_NASA/predictions/Pred_NASA_original_N1_B11_seed2026.csv
+- Catalog hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N1_B12_seed2026.csv
+- Canonical source hash recorded: paper_data/02_NASA/predictions/Pred_NASA_original_N1_B12_seed2026.csv
+- Catalog hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N1_B9_seed2026.csv
+- Canonical source hash recorded: paper_data/02_NASA/predictions/Pred_NASA_original_N1_B9_seed2026.csv
+- Catalog hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N2_B10_seed2026.csv
+- Canonical source hash recorded: paper_data/02_NASA/predictions/Pred_NASA_original_N2_B10_seed2026.csv
+- Catalog hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N2_B11_seed2026.csv
+- Canonical source hash recorded: paper_data/02_NASA/predictions/Pred_NASA_original_N2_B11_seed2026.csv
+- Catalog hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N2_B12_seed2026.csv
+- Canonical source hash recorded: paper_data/02_NASA/predictions/Pred_NASA_original_N2_B12_seed2026.csv
+- Catalog hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N2_B9_seed2026.csv
+- Canonical source hash recorded: paper_data/02_NASA/predictions/Pred_NASA_original_N2_B9_seed2026.csv
+- Catalog hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N3_B10_seed2026.csv
+- Canonical source hash recorded: paper_data/02_NASA/predictions/Pred_NASA_original_N3_B10_seed2026.csv
+- Catalog hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N3_B11_seed2026.csv
+- Canonical source hash recorded: paper_data/02_NASA/predictions/Pred_NASA_original_N3_B11_seed2026.csv
+- Catalog hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N3_B12_seed2026.csv
+- Canonical source hash recorded: paper_data/02_NASA/predictions/Pred_NASA_original_N3_B12_seed2026.csv
+- Catalog hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N3_B9_seed2026.csv
+- Canonical source hash recorded: paper_data/02_NASA/predictions/Pred_NASA_original_N3_B9_seed2026.csv
+- Catalog hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N4_B10_seed2026.csv
+- Canonical source hash recorded: paper_data/02_NASA/predictions/Pred_NASA_original_N4_B10_seed2026.csv
+- Catalog hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N4_B11_seed2026.csv
+- Canonical source hash recorded: paper_data/02_NASA/predictions/Pred_NASA_original_N4_B11_seed2026.csv
+- Catalog hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N4_B12_seed2026.csv
+- Canonical source hash recorded: paper_data/02_NASA/predictions/Pred_NASA_original_N4_B12_seed2026.csv
+- Catalog hash verified: paper_data/02_NASA/predictions/Pred_NASA_original_N4_B9_seed2026.csv
+- Canonical source hash recorded: paper_data/02_NASA/predictions/Pred_NASA_original_N4_B9_seed2026.csv
+- Catalog hash verified: paper_data/02_NASA/task_level_results.csv
+- Canonical source hash recorded: paper_data/02_NASA/task_level_results.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/README.md
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/ablation/by_seed/ablation_metrics_by_seed.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/ablation/by_seed/ablation_metrics_by_seed.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/ablation/summary/ablation_complete_table.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/ablation/summary/ablation_complete_table.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/ablation/summary/ablation_mean_std.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/ablation/summary/ablation_mean_std.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/dataset_summary.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/dataset_summary.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/dual_source/dual_source_mean_std.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/dual_source/dual_source_mean_std.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/generalization_mean_std_by_task.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/generalization_mean_std_by_task.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/generalization_metrics_by_seed.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/generalization_metrics_by_seed.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B1.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B1.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B10.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B10.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B11B12.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B11B12.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B2.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B2.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B3.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B3.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B4.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B4.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B5.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B5.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B6.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B6.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B7.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B7.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B8.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B8.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B9.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B9.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B1.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B1.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B10.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B10.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B11B12.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B11B12.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B2.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B2.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B3.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B3.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B4.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B4.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B5.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B5.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B6.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B6.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B7.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B7.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B8.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B8.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B9.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B9.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B1.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B1.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B10.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B10.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B11B12.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B11B12.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B2.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B2.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B3.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B3.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B4.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B4.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B5.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B5.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B6.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B6.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B7.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B7.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B8.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B8.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B9.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B9.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B1.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B1.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B10.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B10.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B11B12.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B11B12.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B2.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B2.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B3.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B3.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B4.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B4.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B5.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B5.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B6.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B6.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B7.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B7.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B8.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B8.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B9.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B9.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B1.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B1.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B10.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B10.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B11B12.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B11B12.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B2.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B2.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B3.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B3.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B4.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B4.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B5.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B5.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B6.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B6.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B7.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B7.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B8.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B8.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B9.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B9.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B1.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B1.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B10.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B10.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B11B12.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B11B12.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B2.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B2.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B3.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B3.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B4.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B4.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B5.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B5.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B6.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B6.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B7.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B7.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B8.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B8.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B9.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B9.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B1.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B1.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B10.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B10.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B11B12.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B11B12.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B2.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B2.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B3.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B3.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B4.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B4.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B5.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B5.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B6.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B6.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B7.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B7.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B8.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B8.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B9.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B9.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B1.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B1.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B10.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B10.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B11B12.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B11B12.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B2.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B2.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B3.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B3.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B4.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B4.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B5.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B5.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B6.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B6.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B7.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B7.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B8.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B8.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B9.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B9.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B1.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B1.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B10.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B10.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B11B12.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B11B12.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B2.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B2.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B3.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B3.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B4.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B4.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B5.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B5.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B6.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B6.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B7.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B7.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B8.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B8.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B9.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B9.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B1.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B1.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B10.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B10.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B11B12.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B11B12.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B2.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B2.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B3.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B3.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B4.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B4.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B5.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B5.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B6.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B6.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B7.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B7.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B8.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B8.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B9.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B9.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B1.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B1.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B10.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B10.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B11B12.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B11B12.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B2.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B2.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B3.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B3.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B4.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B4.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B5.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B5.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B6.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B6.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B7.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B7.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B8.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B8.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B9.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B9.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B1.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B1.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B10.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B10.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B11B12.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B11B12.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B2.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B2.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B3.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B3.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B4.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B4.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B5.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B5.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B6.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B6.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B7.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B7.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B8.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B8.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B9.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B9.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B1.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B1.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B10.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B10.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B11B12.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B11B12.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B2.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B2.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B3.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B3.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B4.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B4.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B5.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B5.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B6.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B6.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B7.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B7.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B8.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B8.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B9.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B9.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B1.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B1.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B10.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B10.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B11B12.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B11B12.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B2.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B2.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B3.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B3.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B4.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B4.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B5.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B5.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B6.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B6.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B7.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B7.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B8.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B8.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B9.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B9.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B1.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B1.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B10.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B10.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B11B12.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B11B12.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B2.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B2.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B3.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B3.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B4.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B4.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B5.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B5.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B6.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B6.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B7.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B7.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B8.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B8.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B9.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B9.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/single_source/single_source_mean_std.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/summary/generalization_cross_task_summary.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/summary/generalization_cross_task_summary.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/overall_by_seed.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/overall_by_seed.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/overall_by_task_mean_std.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/overall_by_task_mean_std.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/embeddings/representation_embeddings.parquet
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/embeddings/representation_embeddings.parquet
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D1-M_seed42_predictions_test_B11B12.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D1-M_seed42_predictions_test_B11B12.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D1-M_seed52_predictions_test_B11B12.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D1-M_seed52_predictions_test_B11B12.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D1-M_seed62_predictions_test_B11B12.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D1-M_seed62_predictions_test_B11B12.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D1-M_seed72_predictions_test_B11B12.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D1-M_seed72_predictions_test_B11B12.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D1-M_seed82_predictions_test_B11B12.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D1-M_seed82_predictions_test_B11B12.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D2-M_seed42_predictions_test_B11B12.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D2-M_seed42_predictions_test_B11B12.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D2-M_seed52_predictions_test_B11B12.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D2-M_seed52_predictions_test_B11B12.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D2-M_seed62_predictions_test_B11B12.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D2-M_seed62_predictions_test_B11B12.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D2-M_seed72_predictions_test_B11B12.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D2-M_seed72_predictions_test_B11B12.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D2-M_seed82_predictions_test_B11B12.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D2-M_seed82_predictions_test_B11B12.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D3-M_seed42_predictions_test_B11B12.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D3-M_seed42_predictions_test_B11B12.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D3-M_seed52_predictions_test_B11B12.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D3-M_seed52_predictions_test_B11B12.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D3-M_seed62_predictions_test_B11B12.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D3-M_seed62_predictions_test_B11B12.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D3-M_seed72_predictions_test_B11B12.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D3-M_seed72_predictions_test_B11B12.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D3-M_seed82_predictions_test_B11B12.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D3-M_seed82_predictions_test_B11B12.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/q_metrics/q_metrics_by_seed.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/q_metrics/q_metrics_by_seed.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/q_metrics/q_metrics_summary.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/q_metrics/q_metrics_summary.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/stage_semantics/stage_semantics_by_seed.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/stage_semantics/stage_semantics_by_seed.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/stage_semantics/stage_semantics_summary.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/stage_semantics/stage_semantics_summary.csv
+- Catalog hash verified: paper_data/03_MENDELEY_CROSS_MACHINE/task_definitions.csv
+- Canonical source hash recorded: paper_data/03_MENDELEY_CROSS_MACHINE/task_definitions.csv
+- Catalog hash verified: paper_data/04_cross_dataset/D2M_failure_distribution.csv
+- Derived lineage recorded: paper_data/04_cross_dataset/D2M_failure_distribution.csv
+- Catalog hash verified: paper_data/04_cross_dataset/README.md
+- Catalog hash verified: paper_data/04_cross_dataset/backbone_vs_dcpsr_absolute.csv
+- Catalog hash verified: paper_data/04_cross_dataset/backbone_vs_dcpsr_deltas.csv
+- Derived lineage recorded: paper_data/04_cross_dataset/backbone_vs_dcpsr_deltas.csv
+- Catalog hash verified: paper_data/04_cross_dataset/cross_machine_task_deltas.csv
+- Derived lineage recorded: paper_data/04_cross_dataset/cross_machine_task_deltas.csv
+- Catalog hash verified: paper_data/05_baseline_metadata/README.md
+- Catalog hash verified: paper_data/05_baseline_metadata/baseline_literature.csv
+- Canonical source hash recorded: paper_data/05_baseline_metadata/baseline_literature.csv
+- Catalog hash verified: paper_data/05_baseline_metadata/baseline_model_complexity.csv
+- Canonical source hash recorded: paper_data/05_baseline_metadata/baseline_model_complexity.csv
+- Catalog hash verified: paper_data/06_canonical_tables/README.md
+- Catalog hash verified: paper_data/06_canonical_tables/all_metrics_long.csv
+- Canonical source hash recorded: paper_data/06_canonical_tables/all_metrics_long.csv
+- Catalog hash verified: paper_data/06_canonical_tables/all_metrics_wide.csv
+- Canonical source hash recorded: paper_data/06_canonical_tables/all_metrics_wide.csv
+- Catalog hash verified: paper_data/06_canonical_tables/manuscript_table_index.csv
+- Catalog hash verified: paper_data/07_figure_ready/fig1/B11_B12_controlled_comparison.csv
+- Derived lineage recorded: paper_data/07_figure_ready/fig1/B11_B12_controlled_comparison.csv
+- Catalog hash verified: paper_data/07_figure_ready/fig1/D1_main_metrics.csv
+- Derived lineage recorded: paper_data/07_figure_ready/fig1/D1_main_metrics.csv
+- Catalog hash verified: paper_data/07_figure_ready/fig1/accuracy_consistency_points.csv
+- Derived lineage recorded: paper_data/07_figure_ready/fig1/accuracy_consistency_points.csv
+- Catalog hash verified: paper_data/07_figure_ready/fig2/taskwise_absolute.csv
+- Derived lineage recorded: paper_data/07_figure_ready/fig2/taskwise_absolute.csv
+- Catalog hash verified: paper_data/07_figure_ready/fig2/taskwise_normalized.csv
+- Derived lineage recorded: paper_data/07_figure_ready/fig2/taskwise_normalized.csv
+- Catalog hash verified: paper_data/07_figure_ready/fig2/taskwise_rank.csv
+- Derived lineage recorded: paper_data/07_figure_ready/fig2/taskwise_rank.csv
+- Catalog hash verified: paper_data/07_figure_ready/fig3/D2M_failure_distribution.csv
+- Derived lineage recorded: paper_data/07_figure_ready/fig3/D2M_failure_distribution.csv
+- Catalog hash verified: paper_data/07_figure_ready/fig3/cross_dataset_absolute.csv
+- Derived lineage recorded: paper_data/07_figure_ready/fig3/cross_dataset_absolute.csv
+- Catalog hash verified: paper_data/07_figure_ready/fig3/cross_dataset_deltas.csv
+- Derived lineage recorded: paper_data/07_figure_ready/fig3/cross_dataset_deltas.csv
+- Catalog hash verified: paper_data/07_figure_ready/fig3/cross_machine_task_deltas.csv
+- Derived lineage recorded: paper_data/07_figure_ready/fig3/cross_machine_task_deltas.csv
+- Catalog hash verified: paper_data/07_figure_ready/fig4/A1_A6_absolute.csv
+- Derived lineage recorded: paper_data/07_figure_ready/fig4/A1_A6_absolute.csv
+- Catalog hash verified: paper_data/07_figure_ready/fig4/A1_A6_delta_vs_A1.csv
+- Derived lineage recorded: paper_data/07_figure_ready/fig4/A1_A6_delta_vs_A1.csv
+- Catalog hash verified: paper_data/07_figure_ready/fig5/hidden_representation.csv
+- Derived lineage recorded: paper_data/07_figure_ready/fig5/hidden_representation.csv
+- Catalog hash verified: paper_data/07_figure_ready/fig5/lifecycle_semantics.csv
+- Derived lineage recorded: paper_data/07_figure_ready/fig5/lifecycle_semantics.csv
+- Catalog hash verified: paper_data/07_figure_ready/fig5/q_agreement.csv
+- Derived lineage recorded: paper_data/07_figure_ready/fig5/q_agreement.csv
+- Catalog hash verified: paper_data/07_figure_ready/fig5/simplex_trajectory.csv
+- Derived lineage recorded: paper_data/07_figure_ready/fig5/simplex_trajectory.csv
+- Catalog hash verified: paper_data/07_figure_ready/fig5/wear_by_predicted_stage.csv
+- Derived lineage recorded: paper_data/07_figure_ready/fig5/wear_by_predicted_stage.csv
+- Catalog hash verified: paper_data/08_table_ready/README.md
+- Catalog hash verified: paper_data/08_table_ready/ablation_table.csv
+- Derived lineage recorded: paper_data/08_table_ready/ablation_table.csv
+- Catalog hash verified: paper_data/08_table_ready/cross_condition_table.csv
+- Derived lineage recorded: paper_data/08_table_ready/cross_condition_table.csv
+- Catalog hash verified: paper_data/08_table_ready/dataset_table.csv
+- Derived lineage recorded: paper_data/08_table_ready/dataset_table.csv
+- Catalog hash verified: paper_data/08_table_ready/main_comparison_table.csv
+- Derived lineage recorded: paper_data/08_table_ready/main_comparison_table.csv
+- Catalog hash verified: paper_data/90_provenance/COPY_MANIFEST.csv
+- Catalog hash verified: paper_data/90_provenance/KNOWN_BAD_AND_SUPERSEDED.md
+- Catalog hash verified: paper_data/90_provenance/REPOSITORY_STATE.md
+- Catalog hash verified: paper_data/90_provenance/SOURCE_INVENTORY.csv
+- Catalog hash verified: paper_data/90_provenance/SOURCE_PRIORITY.md
+- Catalog hash verified: paper_data/90_provenance/TRANSFORMATIONS.md
+- Catalog hash verified: paper_data/90_provenance/UNRESOLVED_ITEMS.csv
+- Catalog hash verified: paper_data/90_provenance/VALIDATION_REPORT.md
+- Catalog hash verified: paper_data/99_scripts/README.md
+- Catalog hash verified: paper_data/99_scripts/build_canonical_tables.py
+- Catalog hash verified: paper_data/99_scripts/build_paper_data.py
+- Catalog hash verified: paper_data/99_scripts/validate_paper_data.py
+- Catalog hash verified: paper_data/MANUSCRIPT_DATA_MAP.md
+- Catalog hash verified: paper_data/QUICK_USE.md
+- Catalog hash verified: paper_data/README.md
+- Checksum verified: paper_data/00_metadata/DATA_DICTIONARY.md
+- Checksum verified: paper_data/00_metadata/datasets.csv
+- Checksum verified: paper_data/00_metadata/experiment_protocols.csv
+- Checksum verified: paper_data/00_metadata/methods.csv
+- Checksum verified: paper_data/00_metadata/metrics.csv
+- Checksum verified: paper_data/00_metadata/tasks.csv
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/bootstrap/dc_psr/bootstrap_config.json
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/bootstrap/dc_psr/bootstrap_samples.csv
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/bootstrap/dc_psr/bootstrap_summary.csv
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/bootstrap/dp2net_adapted/bootstrap_config.json
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/bootstrap/dp2net_adapted/bootstrap_samples.csv
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/bootstrap/dp2net_adapted/bootstrap_summary.csv
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/bootstrap/dynamic_gin_tgp/bootstrap_config.json
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/bootstrap/dynamic_gin_tgp/bootstrap_samples.csv
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/bootstrap/dynamic_gin_tgp/bootstrap_summary.csv
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/bootstrap/htt_net/bootstrap_config.json
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/bootstrap/htt_net/bootstrap_samples.csv
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/bootstrap/htt_net/bootstrap_summary.csv
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/bootstrap/mtf_avitk/bootstrap_config.json
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/bootstrap/mtf_avitk/bootstrap_samples.csv
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/bootstrap/mtf_avitk/bootstrap_summary.csv
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/bootstrap/multi_source_attention/bootstrap_config.json
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/bootstrap/multi_source_attention/bootstrap_samples.csv
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/bootstrap/multi_source_attention/bootstrap_summary.csv
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/bootstrap/multitask_tcn_gru/bootstrap_config.json
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/bootstrap/multitask_tcn_gru/bootstrap_samples.csv
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/bootstrap/multitask_tcn_gru/bootstrap_summary.csv
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/bootstrap/rf/bootstrap_config.json
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/bootstrap/rf/bootstrap_samples.csv
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/bootstrap/rf/bootstrap_summary.csv
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/bootstrap/tcn_gru/bootstrap_config.json
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/bootstrap/tcn_gru/bootstrap_samples.csv
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/bootstrap/tcn_gru/bootstrap_summary.csv
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/D1_9methods_bootstrap_CI.csv
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/D1_common_universe_manifest.csv
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_dc_psr_304runs.csv
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_dp2net_adapted_304runs.csv
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_dynamic_gin_tgp_304runs.csv
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_htt_net_304runs.csv
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_mtf_avitk_304runs.csv
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_multi_source_attention_304runs.csv
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_multitask_tcn_gru_304runs.csv
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_rf_304runs.csv
+- Checksum verified: paper_data/01_PHM2010/01_main_D1/predictions_common_universe/D1_tcn_gru_304runs.csv
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dc_psr/config.yaml
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dc_psr/metrics.json
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dc_psr/predictions.csv
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dp2net_adapted/config.yaml
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dp2net_adapted/metrics.json
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dp2net_adapted/predictions.csv
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dynamic_gin_tgp/config.yaml
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dynamic_gin_tgp/metrics.json
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/dynamic_gin_tgp/predictions.csv
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/htt_net/config.yaml
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/htt_net/metrics.json
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/htt_net/predictions.csv
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/mtf_avitk/config.yaml
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/mtf_avitk/metrics.json
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/mtf_avitk/predictions.csv
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multi_source_attention/config.yaml
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multi_source_attention/metrics.json
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multi_source_attention/predictions.csv
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multitask_tcn_gru/config.yaml
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multitask_tcn_gru/metrics.json
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/multitask_tcn_gru/predictions.csv
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/rf/config.yaml
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/rf/metrics.json
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/rf/predictions.csv
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/tcn_gru/config.yaml
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/tcn_gru/metrics.json
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D2/tcn_gru/predictions.csv
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dc_psr/config.yaml
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dc_psr/metrics.json
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dc_psr/predictions.csv
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dp2net_adapted/config.yaml
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dp2net_adapted/metrics.json
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dp2net_adapted/predictions.csv
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dynamic_gin_tgp/config.yaml
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dynamic_gin_tgp/metrics.json
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/dynamic_gin_tgp/predictions.csv
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/htt_net/config.yaml
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/htt_net/metrics.json
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/htt_net/predictions.csv
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/mtf_avitk/config.yaml
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/mtf_avitk/metrics.json
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/mtf_avitk/predictions.csv
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multi_source_attention/config.yaml
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multi_source_attention/metrics.json
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multi_source_attention/predictions.csv
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multitask_tcn_gru/config.yaml
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multitask_tcn_gru/metrics.json
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/multitask_tcn_gru/predictions.csv
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/rf/config.yaml
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/rf/metrics.json
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/rf/predictions.csv
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/tcn_gru/config.yaml
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/tcn_gru/metrics.json
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/predictions/D3/tcn_gru/predictions.csv
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/README.md
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/transfer_tasks_long.csv
+- Checksum verified: paper_data/01_PHM2010/02_cross_condition_D1_D2_D3/transfer_tasks_mean_std.csv
+- Checksum verified: paper_data/01_PHM2010/03_ablation/A1_A6_AUTHORITATIVE.csv
+- Checksum verified: paper_data/01_PHM2010/03_ablation/A1_A6_RECOMPUTED_AUDIT.csv
+- Checksum verified: paper_data/01_PHM2010/03_ablation/ABLATION_DATA_AUDIT.md
+- Checksum verified: paper_data/01_PHM2010/03_ablation/data_manifest.json
+- Checksum verified: paper_data/01_PHM2010/03_ablation/README.md
+- Checksum verified: paper_data/01_PHM2010/04_semantics/C6_hidden_representation.csv
+- Checksum verified: paper_data/01_PHM2010/04_semantics/C6_lifecycle_probability_wear.csv
+- Checksum verified: paper_data/01_PHM2010/04_semantics/q_statistics.csv
+- Checksum verified: paper_data/01_PHM2010/04_semantics/README.md
+- Checksum verified: paper_data/02_NASA/original_split_mean_std.csv
+- Checksum verified: paper_data/02_NASA/predictions/Pred_NASA_original_N1_B10_seed2026.csv
+- Checksum verified: paper_data/02_NASA/predictions/Pred_NASA_original_N1_B11_seed2026.csv
+- Checksum verified: paper_data/02_NASA/predictions/Pred_NASA_original_N1_B12_seed2026.csv
+- Checksum verified: paper_data/02_NASA/predictions/Pred_NASA_original_N1_B9_seed2026.csv
+- Checksum verified: paper_data/02_NASA/predictions/Pred_NASA_original_N2_B10_seed2026.csv
+- Checksum verified: paper_data/02_NASA/predictions/Pred_NASA_original_N2_B11_seed2026.csv
+- Checksum verified: paper_data/02_NASA/predictions/Pred_NASA_original_N2_B12_seed2026.csv
+- Checksum verified: paper_data/02_NASA/predictions/Pred_NASA_original_N2_B9_seed2026.csv
+- Checksum verified: paper_data/02_NASA/predictions/Pred_NASA_original_N3_B10_seed2026.csv
+- Checksum verified: paper_data/02_NASA/predictions/Pred_NASA_original_N3_B11_seed2026.csv
+- Checksum verified: paper_data/02_NASA/predictions/Pred_NASA_original_N3_B12_seed2026.csv
+- Checksum verified: paper_data/02_NASA/predictions/Pred_NASA_original_N3_B9_seed2026.csv
+- Checksum verified: paper_data/02_NASA/predictions/Pred_NASA_original_N4_B10_seed2026.csv
+- Checksum verified: paper_data/02_NASA/predictions/Pred_NASA_original_N4_B11_seed2026.csv
+- Checksum verified: paper_data/02_NASA/predictions/Pred_NASA_original_N4_B12_seed2026.csv
+- Checksum verified: paper_data/02_NASA/predictions/Pred_NASA_original_N4_B9_seed2026.csv
+- Checksum verified: paper_data/02_NASA/README.md
+- Checksum verified: paper_data/02_NASA/task_level_results.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/ablation/by_seed/ablation_metrics_by_seed.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/ablation/summary/ablation_complete_table.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/ablation/summary/ablation_mean_std.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/dataset_summary.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/dual_source/dual_source_mean_std.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/generalization_mean_std_by_task.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/generalization_metrics_by_seed.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B1.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B10.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B11B12.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B2.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B3.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B4.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B5.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B6.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B7.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B8.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed42_predictions_test_B9.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B1.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B10.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B11B12.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B2.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B3.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B4.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B5.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B6.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B7.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B8.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed52_predictions_test_B9.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B1.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B10.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B11B12.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B2.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B3.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B4.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B5.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B6.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B7.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B8.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed62_predictions_test_B9.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B1.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B10.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B11B12.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B2.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B3.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B4.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B5.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B6.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B7.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B8.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed72_predictions_test_B9.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B1.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B10.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B11B12.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B2.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B3.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B4.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B5.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B6.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B7.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B8.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D1-M_seed82_predictions_test_B9.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B1.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B10.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B11B12.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B2.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B3.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B4.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B5.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B6.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B7.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B8.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed42_predictions_test_B9.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B1.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B10.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B11B12.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B2.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B3.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B4.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B5.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B6.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B7.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B8.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed52_predictions_test_B9.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B1.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B10.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B11B12.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B2.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B3.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B4.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B5.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B6.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B7.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B8.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed62_predictions_test_B9.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B1.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B10.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B11B12.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B2.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B3.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B4.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B5.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B6.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B7.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B8.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed72_predictions_test_B9.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B1.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B10.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B11B12.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B2.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B3.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B4.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B5.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B6.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B7.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B8.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D2-M_seed82_predictions_test_B9.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B1.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B10.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B11B12.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B2.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B3.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B4.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B5.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B6.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B7.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B8.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed42_predictions_test_B9.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B1.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B10.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B11B12.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B2.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B3.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B4.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B5.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B6.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B7.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B8.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed52_predictions_test_B9.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B1.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B10.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B11B12.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B2.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B3.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B4.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B5.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B6.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B7.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B8.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed62_predictions_test_B9.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B1.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B10.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B11B12.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B2.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B3.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B4.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B5.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B6.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B7.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B8.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed72_predictions_test_B9.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B1.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B10.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B11B12.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B2.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B3.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B4.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B5.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B6.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B7.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B8.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/predictions/D3-M_seed82_predictions_test_B9.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/single_source/single_source_mean_std.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/generalization/summary/generalization_cross_task_summary.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/overall_by_seed.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/overall_by_task_mean_std.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/README.md
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/embeddings/representation_embeddings.parquet
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D1-M_seed42_predictions_test_B11B12.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D1-M_seed52_predictions_test_B11B12.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D1-M_seed62_predictions_test_B11B12.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D1-M_seed72_predictions_test_B11B12.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D1-M_seed82_predictions_test_B11B12.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D2-M_seed42_predictions_test_B11B12.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D2-M_seed52_predictions_test_B11B12.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D2-M_seed62_predictions_test_B11B12.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D2-M_seed72_predictions_test_B11B12.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D2-M_seed82_predictions_test_B11B12.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D3-M_seed42_predictions_test_B11B12.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D3-M_seed52_predictions_test_B11B12.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D3-M_seed62_predictions_test_B11B12.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D3-M_seed72_predictions_test_B11B12.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/probability_evolution/D3-M_seed82_predictions_test_B11B12.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/q_metrics/q_metrics_by_seed.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/q_metrics/q_metrics_summary.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/stage_semantics/stage_semantics_by_seed.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/semantics/stage_semantics/stage_semantics_summary.csv
+- Checksum verified: paper_data/03_MENDELEY_CROSS_MACHINE/task_definitions.csv
+- Checksum verified: paper_data/04_cross_dataset/backbone_vs_dcpsr_absolute.csv
+- Checksum verified: paper_data/04_cross_dataset/backbone_vs_dcpsr_deltas.csv
+- Checksum verified: paper_data/04_cross_dataset/cross_machine_task_deltas.csv
+- Checksum verified: paper_data/04_cross_dataset/D2M_failure_distribution.csv
+- Checksum verified: paper_data/04_cross_dataset/README.md
+- Checksum verified: paper_data/05_baseline_metadata/baseline_literature.csv
+- Checksum verified: paper_data/05_baseline_metadata/baseline_model_complexity.csv
+- Checksum verified: paper_data/05_baseline_metadata/README.md
+- Checksum verified: paper_data/06_canonical_tables/all_metrics_long.csv
+- Checksum verified: paper_data/06_canonical_tables/all_metrics_wide.csv
+- Checksum verified: paper_data/06_canonical_tables/manuscript_table_index.csv
+- Checksum verified: paper_data/06_canonical_tables/README.md
+- Checksum verified: paper_data/07_figure_ready/fig1/accuracy_consistency_points.csv
+- Checksum verified: paper_data/07_figure_ready/fig1/B11_B12_controlled_comparison.csv
+- Checksum verified: paper_data/07_figure_ready/fig1/D1_main_metrics.csv
+- Checksum verified: paper_data/07_figure_ready/fig2/taskwise_absolute.csv
+- Checksum verified: paper_data/07_figure_ready/fig2/taskwise_normalized.csv
+- Checksum verified: paper_data/07_figure_ready/fig2/taskwise_rank.csv
+- Checksum verified: paper_data/07_figure_ready/fig3/cross_dataset_absolute.csv
+- Checksum verified: paper_data/07_figure_ready/fig3/cross_dataset_deltas.csv
+- Checksum verified: paper_data/07_figure_ready/fig3/cross_machine_task_deltas.csv
+- Checksum verified: paper_data/07_figure_ready/fig3/D2M_failure_distribution.csv
+- Checksum verified: paper_data/07_figure_ready/fig4/A1_A6_absolute.csv
+- Checksum verified: paper_data/07_figure_ready/fig4/A1_A6_delta_vs_A1.csv
+- Checksum verified: paper_data/07_figure_ready/fig5/hidden_representation.csv
+- Checksum verified: paper_data/07_figure_ready/fig5/lifecycle_semantics.csv
+- Checksum verified: paper_data/07_figure_ready/fig5/q_agreement.csv
+- Checksum verified: paper_data/07_figure_ready/fig5/simplex_trajectory.csv
+- Checksum verified: paper_data/07_figure_ready/fig5/wear_by_predicted_stage.csv
+- Checksum verified: paper_data/08_table_ready/ablation_table.csv
+- Checksum verified: paper_data/08_table_ready/cross_condition_table.csv
+- Checksum verified: paper_data/08_table_ready/dataset_table.csv
+- Checksum verified: paper_data/08_table_ready/main_comparison_table.csv
+- Checksum verified: paper_data/08_table_ready/README.md
+- Checksum verified: paper_data/90_provenance/COPY_MANIFEST.csv
+- Checksum verified: paper_data/90_provenance/KNOWN_BAD_AND_SUPERSEDED.md
+- Checksum verified: paper_data/90_provenance/REPOSITORY_STATE.md
+- Checksum verified: paper_data/90_provenance/SOURCE_INVENTORY.csv
+- Checksum verified: paper_data/90_provenance/SOURCE_PRIORITY.md
+- Checksum verified: paper_data/90_provenance/TRANSFORMATIONS.md
+- Checksum verified: paper_data/90_provenance/UNRESOLVED_ITEMS.csv
+- Checksum verified: paper_data/90_provenance/VALIDATION_REPORT.md
+- Checksum verified: paper_data/99_scripts/build_canonical_tables.py
+- Checksum verified: paper_data/99_scripts/build_paper_data.py
+- Checksum verified: paper_data/99_scripts/README.md
+- Checksum verified: paper_data/99_scripts/validate_paper_data.py
+- Checksum verified: paper_data/DATA_CATALOG.csv
+- Checksum verified: paper_data/MANUSCRIPT_DATA_MAP.md
+- Checksum verified: paper_data/QUICK_USE.md
+- Checksum verified: paper_data/README.md
+- No semantic key points to conflicting authoritative values
+
+## Warnings
+
+- NASA authoritative package contains B9-B12 only; a nine-method NASA table is intentionally not fabricated.
+- 213 canonical copies originate from real local but Git-untracked/ignored source files; paths and hashes are recorded.
+- 5 manuscript/script issues remain explicitly unresolved; see UNRESOLVED_ITEMS.csv.
+- FIG4_SCRIPT_REQUIRES_SOURCE_UPDATE: nature_figures/scripts/fig4_ablation.py, nature_figures/scripts/generate_docs.py
+
+## Failures
+
+- None
+
+## Interpretation
+
+PASS_WITH_WARNINGS means all numerical/integrity invariants passed, while declared manuscript updates, local untracked sources, or stale plotting scripts still require human-controlled follow-up. No warning licenses replacement of canonical values.

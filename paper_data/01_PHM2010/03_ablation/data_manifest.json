@@ -1,0 +1,153 @@
+{
+  "figure": "Fig.4 Ablation Study",
+  "audit_status": "PASS_WITH_CORRECTION",
+  "audit_scope": "PHM2010 D1: train C1+C4, test C6; authoritative A1-A6 provenance only; no plotting",
+  "authoritative_source": {
+    "dataset": "PHM2010",
+    "task": {
+      "name": "D1",
+      "train_conditions": ["C1", "C4"],
+      "test_condition": "C6"
+    },
+    "feature_file": {
+      "path": "baselines/htt_net/data/run_level_features_all.csv",
+      "sha256": "6e8affeb681d0b386e453421a0df7a66932138199eb236403d27b797c11eeb88",
+      "shape": [945, 345],
+      "condition_counts": {"C1": 315, "C4": 315, "C6": 315},
+      "provenance": "Recovered copy of the manuscript's original run-level feature table; reconstructed_v1_superseded is not used."
+    },
+    "formal_backbone_checkpoint": {
+      "path": "补充材料/小论文/4_comparison_experiment_recheck/3_models/B11_B12_multitask_tcn_gru.pth",
+      "sha256": "17299bbc71baa8148a0c3916084b034ec0efe4120a36b06f2b2cb8a6919ec69b",
+      "role": "Single frozen multi-task TCN-GRU backbone shared by formal B11 and B12 and by corrected A1-A6."
+    },
+    "probability_parameters": {
+      "eta": 0.75,
+      "fine_weight": 0.3,
+      "temperature": 1.2,
+      "mid_floor": 0.12,
+      "late_tau": 0.66,
+      "early_tau": 0.38,
+      "order_blend": 0.25
+    }
+  },
+  "code_definition_sources": [
+    {
+      "path": "代码/main_experiment_3_fgds_psi_optimized.py",
+      "sha256": "0696085eb69de26e003870f1464cfc54f4c030ceb12a162faeca2c45c1ef3f5f",
+      "lines": {
+        "architecture_and_L": "125-132",
+        "metric_evaluator": "254-345",
+        "stage_definition": "432-462",
+        "split": "465-490",
+        "feature_selection": "566-609",
+        "train_GMM": "612-624",
+        "multitask_backbone": "703-729",
+        "training_losses": "752-756",
+        "probability_inference": "825-896",
+        "A1_A6_mapping": "1146-1158"
+      }
+    },
+    {
+      "path": "代码/7.4对比实验.py",
+      "sha256": "052b6cc779195a0f456ac977573219e7f81bf94762d16d7e2a3eb57c2630e32c",
+      "lines": {
+        "frozen_B12_parameters": "60-68",
+        "formal_preprocessing": "278-311",
+        "B11_B12_checkpoint_and_outputs": "396-408"
+      }
+    },
+    {
+      "path": "代码/7.6消融实验.py",
+      "sha256": "d55f5e246f1e00ab03a47db91b1d152e17f6ebe21c8b4f7046b7ac3557332097",
+      "role": "Rejected candidate evidence: lines 577-581 retrain an independent checkpoint."
+    }
+  ],
+  "prediction_files": [
+    {
+      "path": "补充材料/小论文/4_comparison_experiment_recheck/1_results/FINAL_comparison_predictions.csv",
+      "sha256": "a434e94d431d1d1638f4c62285b66dda4d4cad1bfb09de752521c78864e591f7",
+      "rows": 304,
+      "role": "Formal rounded B11/A1 and B12/A6 prediction anchor."
+    },
+    {
+      "path": "final_statistical_evidence/predictions_common_universe/D1_dc_psr_304runs.csv",
+      "sha256": "eb22dd7488b3c9a745426b7874f50c340d41ebbe0d31a47bf3b804e7a9cc3bf3",
+      "rows": 304,
+      "role": "Frozen formal D1 DC-PSR common-universe derivative used to cross-check A6/B12."
+    },
+    {
+      "path": "补充材料/小论文/3_main_experiment_fgds_psi/4_predictions/test_C6_predictions_full_internal.csv",
+      "sha256": "92f02928b4f3116bd2641f2811c4c748453ad79a39952e2b21661940d63aade4",
+      "rows": 304,
+      "role": "Rejected as authoritative because its checkpoint differs from the formal B11/B12 checkpoint; retained for internal-summary verification."
+    },
+    {
+      "path": "补充材料/小论文/6_ablation_experiment/ablation_probabilities_test_C6.csv",
+      "sha256": "7e733a7f8f1b15152656a9d44e2462fbc39370328e83423a8ae7c4c92e4a31bd",
+      "rows": 304,
+      "role": "Rejected as authoritative because 7.6 retrains a third checkpoint; retained for internal-summary verification."
+    }
+  ],
+  "test_universe": {
+    "condition": "C6",
+    "window_length": 12,
+    "run_id_min": 12,
+    "run_id_max": 315,
+    "n": 304,
+    "ordering": ["condition", "cut_index"]
+  },
+  "metric_evaluator": {
+    "source": "代码/main_experiment_3_fgds_psi_optimized.py:254-345",
+    "metrics": ["Acc", "Macro-F1", "E-F1", "M-F1", "L-F1", "M-Precision", "M-Recall", "M→E", "M→L", "Rev", "Jump", "Smooth"],
+    "smooth_definition": "Mean L1 distance between adjacent stage-probability vectors in C6 run order.",
+    "metrics_recomputed": true
+  },
+  "recompute_runtime": {
+    "python": "3.11.15",
+    "numpy": "2.4.6",
+    "pandas": "3.0.5",
+    "scikit_learn": "1.9.0",
+    "torch": "2.7.1+cu118",
+    "device": "NVIDIA GeForce RTX 3070 Ti Laptop GPU",
+    "training_performed": false,
+    "plotting_performed": false
+  },
+  "audit_checks": {
+    "preprocessing_hashes_main_vs_formal_comparison_cache_all_equal": true,
+    "formal_A1_labels_equal_stored_B11_labels": true,
+    "formal_A6_labels_equal_stored_B12_labels": true,
+    "formal_A6_accuracy": 0.9868421052631579,
+    "stored_formal_B12_accuracy": 0.9868,
+    "protocol_mismatch": false,
+    "A1_A4_labels_all_equal": true,
+    "A1_A4_probability_matrices_all_distinct": true,
+    "A1_A4_pairwise_max_abs_probability_difference_range": [0.017271588653685388, 0.21523936896432982],
+    "main_prediction_vs_main_summary_max_abs_difference": 2.352982614306498e-09,
+    "separate_7_6_prediction_vs_summary_within_float_tolerance": true,
+    "formal_vs_old_main_checkpoints_tensor_equal": false,
+    "formal_vs_old_main_checkpoint_max_abs_tensor_difference": 0.007297869771718979
+  },
+  "correction": {
+    "old_fig4_source": "补充材料/小论文/3_main_experiment_fgds_psi/1_results/FINAL_ablation_outputs.csv",
+    "old_source_sha256": "67e09cc21de5fb67479c05ce329aa76746b3cc339f8f9d1357bf18b1ced4d593",
+    "reason": "The old source is internally valid but was produced by a different trained checkpoint from the formal frozen B11/B12 comparison checkpoint.",
+    "classification_metrics_changed": false,
+    "smooth_values_changed": true,
+    "authoritative_output": "figures/fig4_ablation/AUTHORITATIVE_A1_A6.csv",
+    "comparison_output": "figures/fig4_ablation/ABLATION_RECOMPUTED.csv"
+  },
+  "authoritative_key_values": {
+    "A1": {"Acc": 0.9901315789473685, "Macro-F1": 0.9902304781561747, "M-F1": 0.9882352941176471, "M-Rec": 0.9767441860465116, "M→E": 0.02325581395348819, "M→L": 0.0, "Rev": 0, "Jump": 0, "Smooth": 0.02359267461909713},
+    "A2": {"Acc": 0.9901315789473685, "Macro-F1": 0.9902304781561747, "M-F1": 0.9882352941176471, "M-Rec": 0.9767441860465116, "M→E": 0.02325581395348819, "M→L": 0.0, "Rev": 0, "Jump": 0, "Smooth": 0.019907228357515235},
+    "A3": {"Acc": 0.9901315789473685, "Macro-F1": 0.9902304781561747, "M-F1": 0.9882352941176471, "M-Rec": 0.9767441860465116, "M→E": 0.02325581395348819, "M→L": 0.0, "Rev": 0, "Jump": 0, "Smooth": 0.020855330400735835},
+    "A4": {"Acc": 0.9901315789473685, "Macro-F1": 0.9902304781561747, "M-F1": 0.9882352941176471, "M-Rec": 0.9767441860465116, "M→E": 0.02325581395348819, "M→L": 0.0, "Rev": 0, "Jump": 0, "Smooth": 0.020532626034720433},
+    "A5": {"Acc": 0.9769736842105263, "Macro-F1": 0.9775120581308953, "M-F1": 0.9725490196078431, "M-Rec": 0.9612403100775194, "M→E": 0.03875968992248032, "M→L": 0.0, "Rev": 0, "Jump": 0, "Smooth": 0.013594679587787121},
+    "A6": {"Acc": 0.9868421052631579, "Macro-F1": 0.9871020928241414, "M-F1": 0.984375, "M-Rec": 0.9767441860465116, "M→E": 0.02325581395348819, "M→L": 0.0, "Rev": 0, "Jump": 0, "Smooth": 0.01876092891182185}
+  },
+  "warnings": [
+    "The formal comparison CSV stores probabilities rounded to four decimals; full A2-A5 probabilities were regenerated from the frozen formal checkpoint and current code without retraining.",
+    "A1-A4 identical classification metrics reflect identical argmax labels despite materially different probability matrices.",
+    "Future Fig.4 code must read AUTHORITATIVE_A1_A6.csv, not the old main or independent 7.6 summaries."
+  ]
+}

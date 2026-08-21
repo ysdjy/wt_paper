@@ -1,0 +1,6 @@
+﻿item_id,location,claim,issue,required_action,status
+MS-001,投稿版20260709/main.tex Table 12; manuscript.pdf/docx,A1-A6 ablation values,stale values conflict with PASS_WITH_CORRECTION authoritative audit (e.g. A1 Acc 0.9705 vs 0.9901315789),replace manuscript table/text from paper_data authoritative ablation,UNRESOLVED
+MS-002,投稿版20260709/main.tex Table 13; manuscript.pdf/docx,PHM q metrics,uses a different q field/definition than audited full 304-run q_true-q_pred statistics,"decide manuscript definition; current Fig.5 canonical R2=0.7478018753, rho=0.9634587570, MAE=0.1132309945",UNRESOLVED
+MS-003,投稿版20260709/main.tex Tables 9-10,D1/D2/S1/S2 cross-condition values,legacy four-task protocol differs from final D1/D2/D3 9-method evidence,retain only if explicitly labeled legacy protocol or replace with canonical D1/D2/D3 table,UNRESOLVED
+FIG4-001,figures/fig4_ablation/plot_fig4.py; nature_figures/scripts/fig4_ablation.py; nature_figures/scripts/generate_docs.py,Fig.4 source,scripts still read old FINAL_ablation_outputs.csv,next drawing task must switch source to paper_data/01_PHM2010/03_ablation/A1_A6_AUTHORITATIVE.csv,UNRESOLVED
+NASA-001,paper_data/02_NASA,9-method NASA comparison,authoritative local package contains only B9-B12 for original N1-N4,do not fabricate missing methods,UNRESOLVED

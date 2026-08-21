@@ -1,0 +1,10 @@
+﻿metric_id,display_name,direction,definition
+Acc,Accuracy,higher,correct predictions / n
+MacroF1,Macro-F1,higher,unweighted class F1 mean
+M_F1,Middle-stage F1,higher,F1 for middle class
+M_Rec,Middle-stage recall,higher,recall for middle class
+M_to_E,M→E,lower,middle-to-early error rate
+M_to_L,M→L,lower,middle-to-late error rate
+Rev,Reverse transitions,lower,number of lifecycle reverse stage transitions
+Jump,Stage jumps,lower,number of non-adjacent stage jumps
+Smooth,Probability smoothness,lower,successive probability variation

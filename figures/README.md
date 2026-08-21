@@ -9,7 +9,7 @@
 | Fig.1 | D1 正式性能证据、bootstrap CI 与精度–连续性权衡 | `final_statistical_evidence/results/D1_MAIN_BOOTSTRAP_CI.csv` | `fig1_overall_performance/fig1_overall_performance.{pdf,png,svg}` |
 | Fig.2 | D1/D2/D3 条件内相对性能与 DC-PSR 排名轮廓 | `final_statistical_evidence/results/TRANSFER_TASKS_D1_D2_D3.csv` | `fig2_cross_condition/fig2_cross_condition.{pdf,png,svg}` |
 | Fig.3 | PHM2010、NASA 与跨机器任务的迁移视角及 D2-M 失效边界 | D1、NASA、cross-machine 汇总与 D2-M seed-42 预测文件 | `fig3_cross_dataset/fig3_cross_dataset.{pdf,png,svg}` |
-| Fig.4 | A1–A6 权威消融审计、增益分解与权衡轨迹 | `补充材料/小论文/3_main_experiment_fgds_psi/1_results/FINAL_ablation_outputs.csv` | `fig4_ablation/fig4_ablation.{pdf,png,svg}` |
+| Fig.4 | A1–A6 权威消融审计、增益分解与权衡轨迹 | `figures/fig4_ablation/AUTHORITATIVE_A1_A6.csv`（`PASS_WITH_CORRECTION`） | `fig4_ablation/fig4_ablation.{pdf,png,svg}` |
 | Fig.5 | 工具寿命中的阶段概率、q 一致性、隐藏表示与物理磨损语义 | A6 概率–磨损轨迹及保存的 HCT 隐藏表示 | `fig5_semantics/fig5_semantics.{pdf,png,svg}` |
 
 ## 三项强制数据审计摘要
@@ -41,4 +41,3 @@ C:\Users\banghai\miniconda3\python.exe figures\fig5_semantics\plot_fig5.py
 - 5/5 PDF 均可解析且为单页；5/5 SVG 均可解析并保留文本节点。
 - 5/5 PNG 均以 600 dpi 导出，宽度约 4157–4421 px。
 - 5/5 脚本已在指定 Python 环境中从真实源文件独立运行通过。
-

@@ -1,0 +1,4 @@
+﻿task_id,group,train_machines,test_machine,train_tools,test_tools,execution_status,seeds,notes
+D1-M,cross_machine_dual,M1+M2,M3,T1+T2+T3+T4+T5+T6,T7+T8+T9,DONE_5_SEEDS,42;52;62;72;82,dual-source cross-machine; single-source MS1-MS6 not claimed as completed
+D2-M,cross_machine_dual,M1+M3,M2,T1+T2+T3+T7+T8+T9,T4+T5+T6,DONE_5_SEEDS,42;52;62;72;82,dual-source cross-machine; single-source MS1-MS6 not claimed as completed
+D3-M,cross_machine_dual,M2+M3,M1,T4+T5+T6+T7+T8+T9,T1+T2+T3,DONE_5_SEEDS,42;52;62;72;82,dual-source cross-machine; single-source MS1-MS6 not claimed as completed

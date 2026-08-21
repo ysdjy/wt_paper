@@ -1,0 +1,5 @@
+﻿manuscript_item,canonical_file,status
+dataset table,paper_data/08_table_ready/dataset_table.csv,DERIVED
+main comparison,paper_data/08_table_ready/main_comparison_table.csv,DERIVED
+cross condition,paper_data/08_table_ready/cross_condition_table.csv,DERIVED
+ablation,paper_data/08_table_ready/ablation_table.csv,DERIVED

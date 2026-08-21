@@ -1,0 +1,11 @@
+﻿method_id,method_name,role,notes
+rf,RF,comparison,
+tcn_gru,TCN-GRU,comparison,
+multitask_tcn_gru,Multi-task TCN-GRU,comparison,
+dc_psr,DC-PSR,proposed,
+htt_net,HTT-Net (adapted),comparison,
+htt_net,HTT-Net,comparison,
+multi_source_attention,Multi-source Attention,comparison,
+multi_source_attention,Multi-source Channel-Spatial Attention,comparison,
+mtf_avitk,MTF-AViTK,comparison,
+dynamic_gin_tgp,Dynamic GIN + TGP,comparison,

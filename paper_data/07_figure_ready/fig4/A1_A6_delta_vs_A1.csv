@@ -1,0 +1,7 @@
+﻿ID,Configuration,delta_Acc,delta_Macro-F1,delta_M-F1,delta_M-Rec,delta_Smooth
+A1,Temperature-scaled raw stage head,0.0,0.0,0.0,0.0,0.0
+A2,Raw plus fine-state stage probability,0.0,0.0,0.0,0.0,-0.0036854462615818935
+A3,Raw plus q-hat degradation-position prior,0.0,0.0,0.0,0.0,-0.0027373442183612935
+A4,Raw plus weighted fine/prior mixture,0.0,0.0,0.0,0.0,-0.0030600485843766956
+A5,Causal ordered filter applied to A4 mix,-0.013157894736842146,-0.012718420025279453,-0.015686274509803977,-0.015503875968992165,-0.009997995031310008
+A6,Final blend of A4 mix and A5 ordered output,-0.00328947368421062,-0.003128385332033301,-0.0038602941176471006,0.0,-0.004831745707275278
