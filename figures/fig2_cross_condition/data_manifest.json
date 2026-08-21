@@ -1,0 +1,44 @@
+{
+  "figure": "Fig.2 Cross-condition Robustness",
+  "audit_status": "passed",
+  "sources": [
+    {
+      "path": "final_statistical_evidence/results/TRANSFER_TASKS_D1_D2_D3.csv",
+      "sha256": "786fd97e476e4a194635949d8480fa93776c80264cc3e7991bd2bb59ad1b64c0",
+      "table_or_rows": "27 rows = 9 methods × D1/D2/D3",
+      "columns": [
+        "Method",
+        "Task",
+        "Acc",
+        "M_F1",
+        "Smooth"
+      ],
+      "aggregation": "none beyond source task-level summaries",
+      "normalization": "within each task: high-is-good min-max for Acc/M-F1; inverted min-max for Smooth",
+      "bootstrap": "not used in this figure"
+    }
+  ],
+  "key_values": {
+    "dc_psr_rank_profile": {
+      "Accuracy": [
+        2,
+        6,
+        6
+      ],
+      "M-F1": [
+        2,
+        7,
+        6
+      ],
+      "Consistency": [
+        1,
+        2,
+        2
+      ]
+    },
+    "note": "Heatmap colors are task-wise min-max scores; cell labels are within-task ranks."
+  },
+  "warnings": [
+    "D1/D2/D3 use their formal native test universes; the figure therefore avoids pooled absolute means."
+  ]
+}

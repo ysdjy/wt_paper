@@ -1,0 +1,37 @@
+{
+  "figure": "Fig.1 Overall Performance",
+  "audit_status": "passed",
+  "sources": [
+    {
+      "path": "final_statistical_evidence/results/D1_MAIN_BOOTSTRAP_CI.csv",
+      "sha256": "28388ba9014dcc23d361752dfee3b4ed3b7f21c968b8ce390911e035ff7b622e",
+      "table_or_rows": "all 9 method rows; controlled panels use Multi-task TCN-GRU and DC-PSR",
+      "columns": [
+        "Method",
+        "Acc",
+        "Acc_CI_low",
+        "Acc_CI_high",
+        "M_F1",
+        "M_Rec",
+        "M_to_L",
+        "Smooth"
+      ],
+      "aggregation": "none; source contains 304-run common-universe summaries",
+      "normalization": "only panel d uses ratios relative to the shared backbone",
+      "bootstrap": "moving-block bootstrap CI read directly from source"
+    }
+  ],
+  "key_values": {
+    "dc_psr_accuracy": 0.986842105263158,
+    "dc_psr_accuracy_ci": [
+      0.9638157894736842,
+      1.0
+    ],
+    "backbone_accuracy": 0.9901315789473684,
+    "dc_psr_smooth": 0.018762706270627,
+    "backbone_smooth": 0.0235900990099009,
+    "classification_retention_percent": 99.75904969545958,
+    "smoothness_reduction_percent": 20.463639161700065
+  },
+  "warnings": []
+}

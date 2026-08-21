@@ -1,0 +1,116 @@
+{
+  "figure": "Fig.3 Cross-dataset Perspective",
+  "audit_status": "passed",
+  "sources": [
+    {
+      "path": "final_statistical_evidence/results/D1_MAIN_BOOTSTRAP_CI.csv",
+      "sha256": "28388ba9014dcc23d361752dfee3b4ed3b7f21c968b8ce390911e035ff7b622e",
+      "columns": [
+        "Method",
+        "Acc",
+        "M_F1",
+        "Smooth",
+        "Jump"
+      ],
+      "aggregation": "none; 304-run D1 common universe",
+      "normalization": "signed effect columns normalized only for color/bar scale",
+      "bootstrap": "not newly computed"
+    },
+    {
+      "path": "补充材料/小论文/nasa_dcpsr_results_stageaware_opt/Table_NASA_original_split_mean_std.csv",
+      "sha256": "8c2713395678398664488bd2661e6933e41d4099eb723abb0bae396b1bb3d247",
+      "columns": [
+        "Method",
+        "Acc_mean",
+        "M-F1_mean",
+        "Smooth_mean",
+        "Jump_mean"
+      ],
+      "aggregation": "B11/B12 means across original N1–N4 cases",
+      "normalization": "signed effect columns normalized only for color/bar scale",
+      "bootstrap": "not newly computed"
+    },
+    {
+      "path": "experiments_mendeley/04_overall_comparison/summary/overall_comparison_mean_std_by_task.csv",
+      "sha256": "7c36dbba4cca668496cc9b235cde0a44b424df83e203e3cc5f64278efbc8c4b2",
+      "columns": [
+        "task",
+        "Method",
+        "Acc_mean",
+        "M_F1_mean",
+        "Smooth_mean",
+        "Jump_mean"
+      ],
+      "aggregation": "B11/B12 five-seed summaries; panel b averages D1-M/D2-M/D3-M",
+      "normalization": "signed effect columns normalized only for color/bar scale",
+      "bootstrap": "not newly computed"
+    },
+    {
+      "path": "experiments_mendeley/07_semantic_consistency/probability_evolution/D2-M_seed42_predictions_test_B11B12.csv",
+      "sha256": "87c2a775d4b4d8b625f4f804c0aecb4f243a651533dbccff7597ec043c5c2fe9",
+      "columns": [
+        "stage_true",
+        "stage_pred_final_name"
+      ],
+      "aggregation": "class fractions over all 2,751 seed-42 D2-M test runs",
+      "normalization": "signed effect columns normalized only for color/bar scale",
+      "bootstrap": "not newly computed"
+    }
+  ],
+  "key_values": {
+    "dataset_effects": {
+      "PHM2010": {
+        "ΔAcc": -0.00328947,
+        "ΔM-F1": -0.00386029,
+        "Smooth benefit": 0.00482739,
+        "Jump benefit": 0.0
+      },
+      "NASA": {
+        "ΔAcc": -0.00735294,
+        "ΔM-F1": 0.05857257,
+        "Smooth benefit": 0.11959967,
+        "Jump benefit": 1.25
+      },
+      "Cross-machine": {
+        "ΔAcc": -0.0297801,
+        "ΔM-F1": 0.10043853,
+        "Smooth benefit": 0.00965354,
+        "Jump benefit": 12.86666667
+      }
+    },
+    "cross_machine_task_effects": {
+      "D1-M": {
+        "ΔAcc": 0.03346705,
+        "ΔM-F1": 0.09103951,
+        "Smooth benefit": 0.01267501,
+        "Jump benefit": 9.6
+      },
+      "D2-M": {
+        "ΔAcc": -0.11414031,
+        "ΔM-F1": 0.14048202,
+        "Smooth benefit": 0.00709447,
+        "Jump benefit": 0.8
+      },
+      "D3-M": {
+        "ΔAcc": -0.00866703,
+        "ΔM-F1": 0.06979406,
+        "Smooth benefit": 0.00919113,
+        "Jump benefit": 28.2
+      }
+    },
+    "D2M_true_stage_fraction": {
+      "early": 0.2958924,
+      "middle": 0.41148673,
+      "late": 0.29262087
+    },
+    "D2M_predicted_stage_fraction": {
+      "early": 0.2351872,
+      "middle": 0.7648128,
+      "late": 0.0
+    }
+  },
+  "warnings": [
+    "NASA uses original N1–N4 summary variability while the cross-machine source uses five-seed task summaries; no pooled significance claim is made.",
+    "Negative Accuracy deltas are retained without clipping or favorable-seed selection."
+  ]
+}
