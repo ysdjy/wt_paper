@@ -1,0 +1,5 @@
+PASS: lifecycle_semantics/simplex_trajectory/q_agreement each have 304 rows.
+PASS (v2, recomputed independently): R2=0.7478, rho=0.9635, MAE=0.1132, n=304.
+PASS (v2, recomputed independently): per-pred-stage VB_true mean/median match wear_by_predicted_stage.csv for all 3 stages.
+PASS: VB means Early=100.55, Middle=126.29, Late=205.46 um; Late/Early=2.043 (~2.04).
+Saved outputs: {'png': 'C:\\Users\\banghai\\Documents\\BaiduSyncdisk\\西工大\\王婷\\论文\\paper_data\\figure\\fig4\\outputs\\fig4_v2_reference_style.png', 'pdf': 'C:\\Users\\banghai\\Documents\\BaiduSyncdisk\\西工大\\王婷\\论文\\paper_data\\figure\\fig4\\outputs\\fig4_v2_reference_style.pdf', 'svg': 'C:\\Users\\banghai\\Documents\\BaiduSyncdisk\\西工大\\王婷\\论文\\paper_data\\figure\\fig4\\outputs\\fig4_v2_reference_style.svg'}

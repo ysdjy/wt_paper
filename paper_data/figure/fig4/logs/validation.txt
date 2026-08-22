@@ -1,0 +1,5 @@
+PASS: lifecycle_semantics/simplex_trajectory/q_agreement each have 304 rows (C6 common-universe test set).
+PASS: q agreement (raw q_pred vs q_true, n=304): R2=0.7478 (~0.748), Spearman rho=0.9635 (~0.963), MAE=0.1132 (~0.113).
+PASS: recomputed per-pred-stage VB_true mean/median from lifecycle_semantics.csv exactly match wear_by_predicted_stage.csv for all 3 stages.
+PASS: VB means Early=100.55, Middle=126.29, Late=205.46 um (~100.55/126.29/205.46); Late/Early ratio=2.043 (~2.04).
+Saved outputs: {'png': 'C:\\Users\\banghai\\Documents\\BaiduSyncdisk\\西工大\\王婷\\论文\\paper_data\\figure\\fig4\\outputs\\fig4_main.png', 'pdf': 'C:\\Users\\banghai\\Documents\\BaiduSyncdisk\\西工大\\王婷\\论文\\paper_data\\figure\\fig4\\outputs\\fig4_main.pdf', 'svg': 'C:\\Users\\banghai\\Documents\\BaiduSyncdisk\\西工大\\王婷\\论文\\paper_data\\figure\\fig4\\outputs\\fig4_main.svg'}

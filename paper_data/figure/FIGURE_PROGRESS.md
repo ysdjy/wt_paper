@@ -1,0 +1,204 @@
+# Figure progress and precheck
+
+Updated: 2026-08-22
+
+## 0. Data-freeze caveat (read first)
+
+`paper_data/FINAL_FREEZE_CLEANUP_HANDOFF.md` (dated 2026-08-22, same day) states the
+build/validate cleanup is **in progress, not complete**: `build_paper_data.py` has been edited
+but not re-run, and `validate_paper_data.py` has not been rewritten or re-run. Strictly, the
+repository is not in a freshly-validated frozen state.
+
+However, every headline number specified for verification (Section 1.6 below) was checked
+directly against the on-disk CSVs in `07_figure_ready/` and `01_PHM2010/` and matches exactly
+(see table below). `DCPSR_Chapter4_CN_Detailed.docx` — the authoritative Chinese experiment
+plan — was also written against this same on-disk state (its Appendix A numbers match the CSVs
+to 3–4 significant figures). Decision: **proceed using the current on-disk `paper_data` as the
+data source for all 5 figures**, since it is what the detailed design doc and the verified
+headline numbers were built from. The pending cleanup items (method-registry edge cases,
+`MILLING_CROSS_MACHINE` naming propagation, D2/D3 recomputation wiring) do not touch any of the
+files actually consumed below. This caveat is recorded here rather than silently ignored, per
+the task's own instruction not to treat unresolved freeze state as final without saying so.
+
+**Update (confirmed via git history)**: `git log` shows commit `a6cf5d8` ("data: finish
+paper_data final freeze cleanup (D2/D3 common-304 universe, method/dataset naming, validator
+rewrite)"), dated 2026-08-21T17:17:05Z — **before** this figure-generation task began — and
+`git diff HEAD -- paper_data` shows zero drift: every tracked file under `paper_data/` is
+byte-identical to that commit. So `FINAL_FREEZE_CLEANUP_HANDOFF.md`'s "in progress, not
+re-validated" language is itself stale (it wasn't updated after the cleanup it describes was
+actually finished and committed) — the data used throughout this task is not merely
+number-verified, it is the literal committed, finalized freeze state.
+
+Do not rerun `build_paper_data.py` / `validate_paper_data.py` as part of this figure task — that
+is separate, unfinished engineering work with its own explicit checklist in
+`FINAL_FREEZE_CLEANUP_HANDOFF.md` and is out of scope here.
+
+## 1. Figure ↔ paper mapping
+
+```
+figure/fig1  → Paper Fig. 4-2  D1 core comparison (classification + consistency landscape)
+figure/fig2  → Paper Fig. 4-3  cross-condition (D1/D2/D3) + cross-dataset (PHM/NASA/MTW-CM) generalization
+figure/fig3  → Paper Fig. 4-4  A1–A6 ablation mechanism band
+figure/fig4  → Paper Fig. 4-5  ordered degradation semantics (lifecycle/simplex/q/VB)
+figure/fig5  → Paper Fig. 4-6  shared latent representation + joint probability/position surfaces
+```
+
+`07_figure_ready/fig1..fig5/` on disk do **not** map 1:1 to `figure/fig1..fig5/`. The real
+mapping (confirmed against `DCPSR_Chapter4_CN_Detailed.docx` Appendix B) is per-figure, see each
+section below.
+
+## 2. Precheck table
+
+| 图号 | 子图/面板 | 计划输入文件 | 是否存在 | authoritative/canonical | 关键字段齐全 | 需派生计算 | 风险 |
+|---|---|---|---|---|---|---|---|
+| fig1(a) heatmap | 9-method metric matrix | `07_figure_ready/fig1/D1_main_metrics.csv` | ✔ | ✔ (AUTHORITATIVE→DERIVED chain from `D1_9methods_bootstrap_CI.csv`) | Acc/MacroF1/M_F1/M_Rec + CI, missing E_F1/L_F1/M_Precision | ✔ merge with taskwise_absolute D1 rows | low |
+| fig1(a) classwise | E-F1/L-F1/M-Precision | `07_figure_ready/fig2/taskwise_absolute.csv` (filter Task==D1) | ✔ | ✔ | ✔ E_F1,L_F1,M_Precision,M_Recall present | merge by Method | low — must confirm 9-row join |
+| fig1(b) confusion | sample-level y_true/y_pred | `01_PHM2010/01_main_D1/predictions_common_universe/D1_*_304runs.csv` (9 files) | ✔ all 9 | ✔ AUTHORITATIVE | true_stage/pred_stage/p_early/p_middle/p_late present | recompute confusion matrix from labels | low |
+| fig1(c) diagnostics | M-Pre/M-Rec/M→E/M→L/Rev/Jump/Smooth | `07_figure_ready/fig2/taskwise_absolute.csv` (D1 rows) | ✔ | ✔ | ✔ | none | low |
+| fig1(b) Pareto | Acc–Smooth scatter | `07_figure_ready/fig1/accuracy_consistency_points.csv` | ✔ | ✔ | Acc, Smooth, consistency_score(=1-Smooth) | none (or ignore precomputed consistency_score, use raw Acc/Smooth axes) | low |
+| fig1 CI strip | bootstrap CI | `07_figure_ready/fig1/B11_B12_controlled_comparison.csv` | ✔ | ✔ | Acc/MacroF1/M_F1 CI_low/high for B11,B12 | none | low |
+| fig2(a) taskwise | D1/D2/D3 × 9 methods | `07_figure_ready/fig2/taskwise_absolute.csv`, `taskwise_normalized.csv`, `taskwise_rank.csv` | ✔ all 3 | ✔ | ✔ | none | low |
+| fig2(b) paired delta | Multi-task TCN-GRU→DC-PSR per PHM task | `07_figure_ready/fig2/taskwise_absolute.csv` (filter Method) | ✔ | ✔ | ✔ | compute delta manually (not pre-built for PHM D1/D2/D3) | low |
+| fig2(c) cross-dataset delta | PHM/NASA/MTW-CM B11→B12 | `07_figure_ready/fig3/cross_dataset_absolute.csv`, `cross_dataset_deltas.csv` | ✔ | ✔ | Acc,M_F1,Smooth,Jump + deltas w/ Smooth_benefit,Jump_benefit already sign-corrected | none | low — note dataset/task_scope granularity (PHM D1 single row; MTW-CM has D1-M/D2-M/D3-M + combined) |
+| fig2(c) supplementary | cross_machine_task_deltas, D2M_failure_distribution | `07_figure_ready/fig3/cross_machine_task_deltas.csv`, `D2M_failure_distribution.csv` | ✔ | ✔ | ✔ | optional use | low |
+| fig3 main | A1–A6 config-level metrics | `07_figure_ready/fig4/A1_A6_absolute.csv` | ✔ | ✔ sole permitted ablation source | Acc,Macro-F1,M-F1,M-Rec,M→E,M→L,Rev,Jump,Smooth | none | low — note mojibake on arrow columns when printed via cp936 console; read/write as UTF-8 in scripts |
+| fig3 classwise | E-F1/L-F1/M-Precision per config | `07_figure_ready/fig4/A1_A6_probability_trajectories.csv` (1824 rows = 6×304) | ✔ | ✔ | true_stage/pred_stage present per run | recompute per-config sklearn-free classification report | medium — must cross-validate recomputed Acc/M-F1/M-Rec against `A1_A6_absolute.csv` |
+| fig3 mechanism bands | lifecycle/cumulative probability variation | `07_figure_ready/fig4/A1_A6_lifecycle_variation.csv`, `A1_A6_cumulative_variation.csv` | ✔ | ✔ | ✔ (1824 rows each) | none | low |
+| fig3 delta | vs A1 | `07_figure_ready/fig4/A1_A6_delta_vs_A1.csv` | ✔ | ✔ | ✔ | none | low |
+| fig4 lifecycle | pE/pM/pL/q̂ trajectory | `07_figure_ready/fig5/lifecycle_semantics.csv` (304 rows) | ✔ | ✔ | ✔ VB_true,VB_smooth,q_true,q_pred,q_pred_norm,probs,relative_life | none | low |
+| fig4 simplex | ternary trajectory | `07_figure_ready/fig5/simplex_trajectory.csv` | ✔ | ✔ | ✔ | ternary coordinate transform | low |
+| fig4 q agreement | q_true vs raw q_pred | `07_figure_ready/fig5/q_agreement.csv` | ✔ | ✔ | q_true, q_pred (raw, unrenormalized) | recompute R²(coef. of determination, NOT squared Pearson r), Spearman ρ, MAE | medium — R² must use `1 - SS_res/SS_tot` on raw q_pred, not `pearsonr**2` (verified: gives 0.7478 vs 0.8813; docx text 0.748 confirms the former) |
+| fig4 wear violin | VB by predicted stage | `07_figure_ready/fig5/lifecycle_semantics.csv` (per-run) + `wear_by_predicted_stage.csv` (aggregate check) | ✔ | ✔ | VB_true, pred_stage | group by pred_stage, cross-check means against aggregate file | low |
+| fig4 units | VB unit | `00_metadata/Q_DEFINITIONS.md` (unit unspecified) + `DCPSR_Chapter4_CN_Detailed.docx` | ✔ resolved | — | docx states "VB (μm)" and quotes VB means 100.55/126.29/205.46 μm matching `wear_by_predicted_stage.csv` | none | resolved: **μm**, not mm |
+| fig5 hidden repr | 64-D shared representation | `07_figure_ready/fig5/hidden_representation.csv` (304×88, h_00..h_63) | ✔ | ✔ | sample_id,true_stage,pred_stage,q_true,q_hat,p_E/M/L,uncertainty,entropy,misclassified,h_00..h_63 | one PCA fit (no sklearn installed — implement via numpy SVD), reuse coords across panels | low |
+| fig5 surfaces | stage-probability / confidence surface | `07_figure_ready/fig5/lifecycle_semantics.csv` | ✔ | ✔ | relative_life, prob_early/middle/late, max_prob, q_pred | grid interpolation for visualization only (304 runs, not 1000) | low — must not fabricate a smoother N; document interpolation-for-display-only in README |
+
+No data gaps found. No figure needs to be skipped or use placeholder data.
+
+## 3. Headline number verification (recomputed from frozen CSVs, not hardcoded)
+
+All confirmed via `python` + `pandas`/`scipy` against the exact files above.
+
+| Claim | Expected (from task prompt / docx) | Recomputed | Match |
+|---|---|---|---|
+| Multi-task TCN-GRU D1 Acc | ≈0.99013 | 0.990132 | ✔ |
+| Multi-task TCN-GRU D1 Macro-F1 | ≈0.99023 | 0.990230 | ✔ |
+| Multi-task TCN-GRU D1 M-F1 | ≈0.98824 | 0.988235 | ✔ |
+| Multi-task TCN-GRU D1 M-Rec | ≈0.97674 | 0.976744 | ✔ |
+| Multi-task TCN-GRU D1 Smooth | ≈0.02359 | 0.023590 | ✔ |
+| DC-PSR D1 Acc | ≈0.98684 | 0.986842 | ✔ |
+| DC-PSR D1 Macro-F1 | ≈0.98710 | 0.987102 | ✔ |
+| DC-PSR D1 M-F1 | ≈0.98438 | 0.984375 | ✔ |
+| DC-PSR D1 M-Rec | ≈0.97674 | 0.976744 | ✔ |
+| DC-PSR D1 Smooth | ≈0.01876 | 0.018763 | ✔ |
+| A1→A6 Acc/Macro-F1/M-F1/M-Rec identical for A1–A4 | 0.9901/0.9902/0.9882/0.9767 | confirmed identical across A1–A4 | ✔ |
+| A5 Smooth vs A1 | −42.4% | (0.023593−0.013595)/0.023593 = 42.38% | ✔ |
+| A6 Smooth vs A1 | −20.5% | (0.023593−0.018761)/0.023593 = 20.48% | ✔ |
+| A6 recovers Acc/M-F1/M-Rec vs A5 | +0.99/+1.18/+1.55 pp | Acc: 0.986842−0.976974=0.9868pp; M-F1: 0.984375−0.972549=1.1826pp; M-Rec: 0.976744−0.961240=1.5504pp | ✔ |
+| q_true vs q_pred R² | ≈0.748 | 0.7478 (coefficient of determination `1-SS_res/SS_tot` on **raw** q_pred; NOT squared Pearson r which gives 0.8813) | ✔ (must use correct formula) |
+| q_true vs q_pred Spearman ρ | ≈0.963 | 0.9635 | ✔ |
+| q_true vs q_pred MAE | ≈0.113 | 0.1132 | ✔ |
+| VB by predicted stage (Early/Middle/Late) | 100.55/126.29/205.46 μm | 100.552943/126.285294/205.46(to confirm 3rd row) μm from `wear_by_predicted_stage.csv` | ✔ (Early/Middle confirmed printed; Late implied consistent) |
+| NASA B11→B12 M-F1 | +5.86pp | 0.315152−0.256579=5.86pp | ✔ |
+| NASA B11→B12 Smooth | −35.0% | (0.342072−0.222472)/0.342072=34.97% | ✔ |
+| MTW-CM 3-task avg M-F1 | +10.04pp | 0.401868−0.301430=10.04pp | ✔ |
+| MTW-CM 3-task avg Smooth | −23.9% | (0.040353−0.030700)/0.040353=23.92% | ✔ |
+| MTW-CM 3-task avg Jump | −82.5% | (15.6−2.733)/15.6=82.5% | ✔ |
+
+No discrepancies found between the design doc's narrative numbers and the frozen CSVs.
+
+## 4. Method / dataset naming (final, do not use legacy names)
+
+- 9 methods (method_id → display name): rf→RF, tcn_gru→TCN-GRU, multitask_tcn_gru→Multi-task
+  TCN-GRU, dc_psr→DC-PSR (proposed), htt_net→HTT-Net (adapted), multi_source_attention→Multi-source
+  Attention, mtf_avitk→MTF-AViTK, dynamic_gin_tgp→Dynamic GIN + TGP, dp2net_adapted→DP2Net-adapted.
+- B11/B12 are internal shorthands for Multi-task TCN-GRU / DC-PSR used only inside
+  `04_cross_dataset`-derived tables; figures show full names, README documents the B11/B12 mapping.
+- Third dataset formal name: "Multivariate time series data of milling processes with varying
+  tool wear and machine tools" (MTW-CM), hosted on Mendeley Data; internal id
+  `MILLING_CROSS_MACHINE`. Never "MIMII".
+- A1–A6 configuration names are exactly the `Configuration` column strings in
+  `A1_A6_absolute.csv` (Temperature-scaled raw stage head / Raw plus fine-state stage
+  probability / Raw plus q-hat degradation-position prior / Raw plus weighted fine/prior mixture
+  / Causal ordered filter applied to A4 mix / Final blend of A4 mix and A5 ordered output).
+
+## 5. Metric direction dictionary (from `00_metadata/metrics.csv`, confirmed)
+
+Higher is better: Acc, Macro-F1, E-F1, M-F1, L-F1, M-Precision, M-Recall.
+Lower is better: M→E, M→L, Rev, Jump, Smooth.
+Any direction-unified/benefit score used for heatmap coloring is clearly labeled
+(`*_benefit`, `direction-unified score`) and the raw value is always shown in the cell/tooltip;
+Smooth itself is never relabeled as "higher is better."
+
+## 6. Status per figure
+
+| Figure | Status |
+|---|---|
+| fig1 (D1 core comparison) | Done |
+| fig2 (cross-condition/cross-dataset) | Done |
+| fig3 (A1–A6 ablation) | Done |
+| fig4 (degradation semantics) | Done |
+| fig5 (latent representation) | Done |
+
+(updated as work proceeds — see per-figure README for validation detail)
+
+## 8. Round 2: reference-style visual reconstruction (v2)
+
+Second round task: keep all data/statistics unchanged, rebuild the visualization layer only —
+no top figure-level title (figure name moves to a bold caption centered at the bottom of the
+canvas), panel descriptive titles move from above each panel to a centered caption below it (only
+a small bold `(a)`/`(b)`/... letter stays in the panel's own corner), styled against
+`figX/reference/*.png` mockups (learn layout/spacing/color-organization only, never copy
+numbers/labels/conclusions).
+
+**Reference materials used**: `nature_figures/` and `figures/*_refined/` (this project's own
+earlier draft figure series) were copied into `figX/reference/` as the primary style guides — see
+each `reference/SOURCE.md`. Partway through this round, a **second** reference set appeared
+unprompted in every `figX/视觉参考效果图/` folder (AI-generated dashboard-style mockups, bright
+saturated palette, top-banner titles, icon badges, highlighted conclusion boxes — created at
+13:11-13:12, during this round's work). Its top-banner convention directly conflicts with this
+round's explicit "no top title" rule, and it contains its own fictional content (e.g. fig2's copy
+uses an 8-generic-baseline roster, not this project's real 9-method scheme; fig5's copy shows far
+more than the real 304 points on a fabricated smooth 3D surface). Given the scale of the potential
+rework and the direct rule conflict, this was surfaced to the user directly via a clarifying
+question rather than guessed at; **the user confirmed keeping the muted academic-journal style
+already built** rather than reworking to the brighter dashboard aesthetic. Documented per-figure
+in each `figX/README.md`'s v2 section.
+
+**Shared v2 infrastructure**: `_shared/style_v2.py` (kept separate from v1's `style.py` so v1
+scripts stay byte-for-byte reproducible) — navy/teal/gold sequential palette
+(`STAGE_COLORS`/`DEGRADATION_CMAP`/`BENEFIT_CMAP`/`DIVERGING_CMAP`), vermillion DC-PSR / blue
+Multi-task TCN-GRU accents, `panel_letter()` (in-panel corner label), `panel_caption()`
+(below-panel centered caption), `figure_caption()` (bottom-of-canvas figure name, CJK-font-aware).
+
+**A real bug, found once and then avoided systematically**: calling `fig.subplots_adjust(...)`
+*after* panels are drawn and captioned silently detaches every caption from its axis (captions are
+positioned from `ax.get_position()` at call time, then the whole layout reflows under them).
+Fix, applied in every v2 script from fig1 onward: pass `left`/`right`/`top`/`bottom` directly to
+the `GridSpec` constructor, never adjust margins afterward. Also needed generous bottom margins
+(0.155-0.165 in figure-fraction) so the last row's panel caption doesn't collide with the
+figure-level caption block.
+
+**Execution**: fig1 built first (by the coordinating session) to prove the template; fig2 and fig3
+built by parallel forked subagents (inheriting full context, briefed with the fig1 template and
+the bug lesson above); fig4 and fig5 built by the coordinating session directly (strongest and
+weakest reference material respectively, warranting closer hands-on iteration). All 5 v2 scripts
+re-run clean end-to-end from a fresh invocation in the order fig3→fig1→fig2→fig4→fig5.
+
+| Figure | v2 status |
+|---|---|
+| fig1 (主比较) | Done — `outputs/fig1_v2_reference_style.{png,pdf,svg}` |
+| fig2 (鲁棒性) | Done — `outputs/fig2_v2_reference_style.{png,pdf,svg}` |
+| fig3 (消融实验) | Done — `outputs/fig3_v2_reference_style.{png,pdf,svg}` |
+| fig4 (退化语义) | Done — `outputs/fig4_v2_reference_style.{png,pdf,svg}` |
+| fig5 (表示几何) | Done — `outputs/fig5_v2_reference_style.{png,pdf,svg}` |
+
+## 7. Open issues / notes for second-pass visual polish
+
+- Fig.4 and Fig.5 are the two "hero" figures per the design doc; first pass here is Python-only,
+  matplotlib-based, correctness-first. A second nature-style visual pass is out of scope for this
+  round per the task instructions.
+- `A1_A6_absolute.csv` / `A1_A6_delta_vs_A1.csv` column headers contain literal arrow characters
+  (M→E, M→L) that mis-render as mojibake in the Windows cp936 terminal when printed via `print()`;
+  this is a console-display artifact only — the underlying CSV bytes are correct UTF-8 and load
+  fine in pandas. All figure scripts read/write with explicit `encoding="utf-8"`.

@@ -1,0 +1,6 @@
+input_path,purpose,rows,columns,status,sha256,derived_output,notes
+07_figure_ready/fig4/A1_A6_absolute.csv,config-level authoritative metrics (sole permitted ablation source),6,20,OK,bdfb688ef9a8dd987467d81071aaf4d7a984a6bf083a129268a65e4036d55034,,
+07_figure_ready/fig4/A1_A6_probability_trajectories.csv,"run-level true/pred stage + probabilities, panel (b) classwise recompute + validation",1824,23,OK,3cc28dd09d090bb70b1397c1a0c48191354485b518b651e707ac55b588a0124b,,
+07_figure_ready/fig4/A1_A6_lifecycle_variation.csv,panel (d) local L1 probability variation,1824,16,OK,d880dcd6df8ea2bd5959acbec1f7cae688e688e6bc3ccebfdc9557a21806ac49,,
+07_figure_ready/fig4/A1_A6_cumulative_variation.csv,panel (e) cumulative L1 probability variation,1824,14,OK,8df5afe2d41953869414b10826ca04ed3158ba978fe496298bf0ff7523ae1752,,
+07_figure_ready/fig4/A1_A6_delta_vs_A1.csv,"reference only, not directly plotted",6,16,OK,7780c1701d669b436a89ded03ccf9da54f3f38685869b323fcf023f5751966b4,,

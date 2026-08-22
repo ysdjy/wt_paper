@@ -1,0 +1,12 @@
+PASS: taskwise_absolute has 27 rows (3 PHM tasks x 9 methods); cross_dataset_absolute uses {PHM2010, NASA_MILLING, MILLING_CROSS_MACHINE} only, no legacy 'MIMII' label present.
+D1: best Acc = Multi-task TCN-GRU
+D2: best Acc = HTT-Net (adapted)
+D3: best Acc = Dynamic GIN + TGP
+PASS: 3 distinct methods top Acc across D1/D2/D3 (target-condition dependence, no single winner if >1).
+PASS: PHM D1 Multi-task TCN-GRU->DC-PSR: dAcc=-0.33pp, dM-F1=-0.39pp, dM-Rec=0.00pp, Smooth_benefit=20.46% (matches design-doc narrative).
+PASS: PHM D2 Multi-task TCN-GRU->DC-PSR: dAcc=-0.33pp, dM-F1=-0.61pp, dM-Rec=-0.76pp, Smooth_benefit=6.61% (matches design-doc narrative).
+PASS: PHM D3 Multi-task TCN-GRU->DC-PSR: dAcc=0.66pp, dM-F1=1.10pp, dM-Rec=1.80pp, Smooth_benefit=-5.72% (matches design-doc narrative).
+PASS: NASA B11->B12 M-F1 delta=5.86pp (~5.86), Smooth benefit=34.96% (~35.0).
+PASS: MTW-CM 3-task avg B11->B12 M-F1 delta=10.04pp (~10.04), Smooth benefit=23.92% (~23.9).
+PASS: MTW-CM 3-task avg Jump benefit=82.48% (~82.5).
+Saved outputs: {'png': 'C:\\Users\\banghai\\Documents\\BaiduSyncdisk\\西工大\\王婷\\论文\\paper_data\\figure\\fig2\\outputs\\fig2_main.png', 'pdf': 'C:\\Users\\banghai\\Documents\\BaiduSyncdisk\\西工大\\王婷\\论文\\paper_data\\figure\\fig2\\outputs\\fig2_main.pdf', 'svg': 'C:\\Users\\banghai\\Documents\\BaiduSyncdisk\\西工大\\王婷\\论文\\paper_data\\figure\\fig2\\outputs\\fig2_main.svg'}

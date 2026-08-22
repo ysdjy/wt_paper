@@ -1,0 +1,9 @@
+input_path,purpose,rows,columns,status,sha256,derived_output,notes
+07_figure_ready/fig1/D1_main_metrics.csv,"9-method authoritative metrics + bootstrap CI (core source, panel a/b/c)",9,27,OK,74b108210a3b3214962c89e010ab0cb01b9e07bf4e3fac2fbe653ca8acf3f6c8,,
+07_figure_ready/fig1/accuracy_consistency_points.csv,"Acc/Smooth pairs, panel (b)",9,14,OK,65a9f5b814dc738ddb764aac9685653167940f4c4a1bbe201e9c624d45e5b828,,
+07_figure_ready/fig1/B11_B12_controlled_comparison.csv,"paired B11/B12 CI, panel (c) fallback",2,27,OK,9e9673498c0bcebd47874b57f9acb95c7b0a5ab7a74686f277ca2631053ab7e7,,
+07_figure_ready/fig2/taskwise_absolute.csv,"classwise completion (E_F1/L_F1/M_Precision), filtered Task==D1",27,25,OK,5715575e6d7bebea1eb182462c035c1e84e6b534e6f3535e1c015e90784d21a7,,
+01_PHM2010/01_main_D1/predictions_common_universe/D1_rf_304runs.csv,"RF sample-level predictions, panel (d)",304,7,OK,34c1c1d05a9c1f20ade1964c788d25bcba5ae94b1bff1b9624163305ee19cc28,,
+01_PHM2010/01_main_D1/predictions_common_universe/D1_mtf_avitk_304runs.csv,"MTF-AViTK sample-level predictions, panel (d)",304,7,OK,55f98bc8de854d5ddce5fc0be5062d7e0dc812e182dcfff483bd2e3e65954c30,,
+01_PHM2010/01_main_D1/predictions_common_universe/D1_multitask_tcn_gru_304runs.csv,"Multi-task TCN-GRU sample-level predictions, panel (d)",304,7,OK,9b7dc1d79d11f9a94c36b37bf58d968ad80e4556e92a70377b991c3f4ee84700,,
+01_PHM2010/01_main_D1/predictions_common_universe/D1_dc_psr_304runs.csv,"DC-PSR sample-level predictions, panel (d)",304,7,OK,eb22dd7488b3c9a745426b7874f50c340d41ebbe0d31a47bf3b804e7a9cc3bf3,,

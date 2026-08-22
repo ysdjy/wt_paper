@@ -1,0 +1,3 @@
+input_path,purpose,rows,columns,status,sha256,derived_output,notes
+07_figure_ready/fig5/hidden_representation.csv,"304x88: 64-D shared hidden representation + stage/q/uncertainty/misclassified, panels a/b/c",304,88,OK,c86b4b4d7413b33c490bd8d2bf6eb1fc6cdf7fca73d423dce2be6ee1a7cca327,,
+07_figure_ready/fig5/lifecycle_semantics.csv,"run-level relative_life/prob_*/max_prob/q_pred, panels d/e",304,23,OK,568dede1818beaf8580d6755e378d3686f4ef51b87eedb1246eed90afc0f6b40,,

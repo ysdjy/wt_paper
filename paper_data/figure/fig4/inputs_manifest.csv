@@ -1,0 +1,5 @@
+input_path,purpose,rows,columns,status,sha256,derived_output,notes
+07_figure_ready/fig5/lifecycle_semantics.csv,panel (a)/(d) source: run-level VB/q/probability/relative_life,304,23,OK,568dede1818beaf8580d6755e378d3686f4ef51b87eedb1246eed90afc0f6b40,,
+07_figure_ready/fig5/simplex_trajectory.csv,panel (b) source: run-level p_E/p_M/p_L for ternary trajectory,304,16,OK,046fe7b06333c2c869dbf2667b82e3e52b6cd4c969636055bcfc216f91c90a29,,
+07_figure_ready/fig5/q_agreement.csv,"panel (c) source: q_true vs raw q_pred pairs, no renormalization",304,16,OK,d418202e2dd905a7c42e394c9547eee8f44784f921f554990cf5ce3c95fad817,,
+07_figure_ready/fig5/wear_by_predicted_stage.csv,panel (d) cross-check only: aggregate VB mean/median by predicted stage,3,15,OK,23cfa31cfed0e91a73f3fcdb16e2c021990609d687b53d654f8011e720a2ffc5,,

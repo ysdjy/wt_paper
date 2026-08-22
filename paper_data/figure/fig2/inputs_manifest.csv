@@ -1,0 +1,6 @@
+input_path,purpose,rows,columns,status,sha256,derived_output,notes
+07_figure_ready/fig2/taskwise_absolute.csv,"D1/D2/D3 x 9 methods absolute values, panels a/b",27,25,OK,5715575e6d7bebea1eb182462c035c1e84e6b534e6f3535e1c015e90784d21a7,,
+07_figure_ready/fig2/taskwise_normalized.csv,"within-task normalized (Acc/M_F1/Smooth), panel a heatmap color",81,15,OK,e569082c81a0dc48a5b894c6667afc7b59189220e1b74aa0dedce18fad69e9db,,
+07_figure_ready/fig2/taskwise_rank.csv,"within-task rank (not directly plotted, cross-check only)",81,14,OK,41fdf03b7f3ff0b1d39e396d278b546d20d0c1f40eb2b533814d4e68c2f285b6,,
+07_figure_ready/fig3/cross_dataset_absolute.csv,"PHM/NASA/MTW-CM B11 vs B12 absolute values, panel c",12,18,OK,37e447ef90a6f4e8bf0efd0d2c401288f3959f2d229c89fc45303a64ba9bf955,,
+07_figure_ready/fig3/cross_dataset_deltas.csv,"precomputed reference deltas, used to sanity-check our recomputation",6,16,OK,798f1093c0624af0aef6e026f0bbb7b201fe6fa54de899b1cc86b4e7467ed8c0,,

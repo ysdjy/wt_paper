@@ -1,0 +1,5 @@
+PASS: hidden_representation.csv and lifecycle_semantics.csv each have 304 rows (C6 common-universe test set).
+PASS: single PCA fit on 64-D hidden representation (n=304), reused for panels (a)/(b)/(c). Explained variance ratio PC1=0.607, PC2=0.380.
+PASS: 3 misclassified samples (of 304) outlined in panel (c) uncertainty view.
+PASS: panel (e) plots the 304 real (relative_life, q_pred, max_prob) observations directly as a 3D trajectory + scatter -- no grid interpolation used, so every plotted value traces back to one test run.
+Saved outputs: {'png': 'C:\\Users\\banghai\\Documents\\BaiduSyncdisk\\西工大\\王婷\\论文\\paper_data\\figure\\fig5\\outputs\\fig5_main.png', 'pdf': 'C:\\Users\\banghai\\Documents\\BaiduSyncdisk\\西工大\\王婷\\论文\\paper_data\\figure\\fig5\\outputs\\fig5_main.pdf', 'svg': 'C:\\Users\\banghai\\Documents\\BaiduSyncdisk\\西工大\\王婷\\论文\\paper_data\\figure\\fig5\\outputs\\fig5_main.svg'}

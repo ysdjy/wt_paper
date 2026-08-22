@@ -1,0 +1,6 @@
+PASS: recomputed Acc/M-F1/M-Rec from run-level predictions match A1_A6_absolute.csv exactly (atol=1e-6) for all 6 configs.
+PASS: A1-A4 argmax classification metrics identical (Acc, Macro-F1, M-F1, M-Rec).
+PASS: Smooth benefit vs A1 -- A5=42.38% (expected ~42.4%), A6=20.48% (expected ~20.5%).
+PASS: A6 recovery vs A5 -- dAcc=0.99pp (~0.99), dM-F1=1.18pp (~1.18), dM-Rec=1.55pp (~1.55).
+v2: reused v1 load()/recompute_classwise()/validate() unchanged -- see fig3/logs/validation.txt (v1) for the full numeric validation; this log only records v2-specific layout notes.
+Saved outputs: {'png': 'C:\\Users\\banghai\\Documents\\BaiduSyncdisk\\西工大\\王婷\\论文\\paper_data\\figure\\fig3\\outputs\\fig3_v2_reference_style.png', 'pdf': 'C:\\Users\\banghai\\Documents\\BaiduSyncdisk\\西工大\\王婷\\论文\\paper_data\\figure\\fig3\\outputs\\fig3_v2_reference_style.pdf', 'svg': 'C:\\Users\\banghai\\Documents\\BaiduSyncdisk\\西工大\\王婷\\论文\\paper_data\\figure\\fig3\\outputs\\fig3_v2_reference_style.svg'}
