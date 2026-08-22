@@ -114,6 +114,73 @@ approach instead, to avoid cluttering already-dense cells that already carry a r
 number/rank/heatmap value/dataset-name/conclusion visible in either mockup — both predate the
 current frozen 9-method / PHM2010+NASA+MTW-CM `paper_data`.
 
+## v3: dense 2×2 dashboard reconstruction (视觉参考效果图/ promoted to primary style reference)
+
+`plot_fig2_v3.py` produces `outputs/fig2_v3.{png,pdf,svg}` using the new `_shared/style_v3.py`
+module. **Statistics unchanged again** — v3 imports v1's `load()` verbatim and re-derives every
+panel's numbers with v1's exact formulas (all of v1's `np.isclose` checks re-run and pass).
+
+This round demoted `reference/` (the muted academic mockups from the v2 round) and promoted
+`视觉参考效果图/` (previously set aside per the user's v2-round decision) as the primary
+**layout-only** reference — panel proportions and 2×2 arrangement, never its numbers or its
+CNN/ResNet18/TCN/GRU/TCN-GRU/Transformer/DANN/MTL method roster (fictional — this project's real
+NASA/MTW-CM comparisons only ever cover Multi-task TCN-GRU vs DC-PSR, per `plot_fig2.py`'s own
+`B11`/`B12`-only cross-dataset data).
+
+**Layout, ground-up rebuilt as a strict 2×2 dashboard**, canvas 15.5×10.2in:
+- (a) top-left: PHM2010 D1/D2/D3 × 9-method robustness as 3 compact mini-heatmaps
+  (Acc/M-F1/Smooth, `BENEFIT_CMAP`), replacing v1's one wide 3-heatmap row.
+- (b) top-right: Multi-task TCN-GRU → DC-PSR paired gain across PHM D1/D2/D3 + NASA N1–N4 avg +
+  MTW-CM D1-M/D2-M/D3-M + 3-task avg (9 rows total) as a **lollipop/dot-range chart**
+  (ΔAcc/ΔM-F1 diamonds+circles, Smooth/Jump benefit squares+triangles), replacing v1's grouped-bar
+  panel (b) — direction-unified so "right of zero = improvement" for every marker.
+- (c) bottom-left: **new panel**, not in v1/v2 — 3 dataset-profile radar cards (PHM2010/NASA
+  Milling/MTW-CM), each comparing ONLY Multi-task TCN-GRU vs DC-PSR (never a fictional
+  9-method-per-dataset radar — NASA/MTW-CM were never evaluated with all 9 methods). Radar axes:
+  Acc↑, M-F1↑, Consistency↑ (`=1/(1+Smooth)`), Stability↑ (`=1/(1+Jump)`) — explicitly documented
+  as monotonic display transforms of the real metrics, not new statistics; raw Acc/M-F1/Smooth/Jump
+  stay independently visible in panels (a)/(b)/(d).
+- (d) bottom-right: **new panel**, not in v1/v2 — classification-consistency balance map with
+  exactly 6 real points (B11 and B12 × PHM2010/NASA Milling/MTW-CM 3-task-avg; asserted
+  `n_points == 6` in code), connected pairwise by a thin B11→B12 dashed line per dataset. No
+  invented cross-dataset method roster.
+- No figure-level title anywhere — not even v2's bottom "鲁棒性" caption. Every panel caption is
+  "(a)/(b)/(c)/(d) description" via `panel_container()`, below the panel, in the same nested-
+  GridSpec pattern as `plot_fig1_v3.py`.
+
+**Bugs found and fixed while building this:**
+1. An index bug in the paired-gain rows list (`rows[5]`/`rows[9]` instead of `rows[3]`/`rows[7]`
+   for the NASA/MTW-CM-avg validation checks) — caught immediately by the `assert` failing, fixed
+   by re-deriving the correct row order (PHM D1/D2/D3, then NASA avg, then MTW D1/D2/D3-M, then
+   MTW avg) before indexing.
+2. Long single-line panel captions for (a)-(d) visually overflowed past their own GridSpec column
+   into the neighboring panel's space at the default caption fontsize — `panel_container()`'s
+   text is correctly *centered* under its own column, but a too-long string still visually spills
+   sideways. Fixed by shortening each caption to two explicit lines (`\n`-wrapped) at a slightly
+   smaller fontsize (8.6pt) rather than one long line — a caption-length lesson `plot_fig1_v3.py`
+   didn't hit (its captions were short enough) but which fig3/4/5 should watch for with any wide,
+   information-dense caption text.
+3. `△` (U+25B3, used in panel (d)'s legend label text) is missing from the Arial font used
+   throughout — matplotlib printed a glyph-missing warning and silently dropped the character.
+   Fixed by describing marker shapes in plain words ("... (triangle)") in legend text instead of
+   embedding a Unicode shape glyph, and reserving actual triangle/square/circle shapes for the
+   marker artists themselves (which render as vector paths, not font glyphs, so they were never
+   affected).
+
+**Deliberately not copied from `视觉参考效果图/`:** its "任务级迁移鲁棒性热图" showing all 9
+methods on PHM/NASA/MTW-CM alike (real data only supports that breadth for PHM2010 — NASA/MTW-CM
+are B11-vs-B12-only); its 8-fictional-method legend (CNN/ResNet18/TCN/GRU/TCN-GRU/Transformer/
+DANN/MTL); its specific percentage numbers in panel (b); its "高平衡（理想区）" callout box text in
+panel (d) (kept the balance *map* idea, dropped the fabricated-conclusion callout box).
+
+## Open issues (v3)
+
+- Same font-size-at-print-scale caveat as fig1_v3: dense at native full-page-thesis size, would
+  need enlarging before a strict journal double-column submission.
+- Panel (c)'s `1/(1+x)` consistency/stability transform is a reasonable, monotonic, bounded-(0,1]
+  display choice but is not a metric used anywhere else in the paper — call out explicitly in any
+  caption/text that references panel (c) so readers don't mistake it for a new evaluation metric.
+
 **Note on a second, later-arriving reference set**: after this v2 build was finished, a folder
 `视觉参考效果图/` appeared in every `figX/` directory (AI-generated dashboard-style mockups, bright
 saturated palette, top banner title, icon badges, highlighted conclusion boxes). Its top-banner

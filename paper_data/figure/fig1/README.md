@@ -111,6 +111,65 @@ were positioned for one layout, then the whole figure reflowed under them). Fix:
 *before* any panel is drawn — documented as a comment in `plot_fig1_v2.py` and followed in every
 other v2 script.
 
+## v3: dense landscape reconstruction (style_v2 discarded as the visual reference)
+
+`plot_fig1_v3.py` produces `outputs/fig1_v3.{png,pdf,svg}` using the new
+`_shared/style_v3.py` module. **Statistics unchanged again** — v3 reuses v1's `load()`,
+`build_heatmap_table()`, `validate_headline()`, `load_predictions()` verbatim.
+
+This round explicitly demoted `reference/` (the `nature_figures`/`figures/*_refined` mockups) and
+promoted `视觉参考效果图/` (the AI-generated dashboard mockup previously set aside per the user's
+v2-round decision) as the primary **layout-only** style reference — proportions and panel
+arrangement, never its numbers/method-roster (which are fictional there).
+
+**Layout, ground-up rebuilt:**
+- Canvas: landscape 15.5×10.0in (was v2's portrait 13.8×15.5in).
+- Two-row dashboard: top row = (a) 9-method×metric heatmap (58% width) + (b) 2×2 representative
+  confusion matrices (42% width); bottom row = (c) one composite middle-stage/transition/
+  consistency diagnostics panel split into 3 internal blocks (M-Pre/M-Rec+M→E/M→L | Rev/Jump |
+  Smooth), all for the same 4 representative methods.
+- v2's Pareto scatter and bootstrap-CI-strip panels are **dropped from this composite** per the
+  task brief's explicit instruction not to let them consume a full row; not deleted from the
+  codebase (still available via v1/v2 for a future supplementary figure).
+- No figure-level title anywhere — not even v2's bottom-centered "主比较" caption. The Chinese
+  figure name now lives only in the folder name / README / output-filename semantics.
+- Every panel caption reads "(a)/(b)/(c) description" and sits **below** its panel via
+  `style_v3.panel_container()`, which nests the plot area and caption strip in the SAME GridSpec
+  cell via `subgridspec()` — geometrically exact by construction, not a `fig.text()` position
+  guess (v2's mechanism). No upper-left panel-letter is used anywhere in v3.
+
+**Bugs found and fixed while building this (all now documented as lessons for fig2-5):**
+1. Mixing the legacy `GridSpecFromSubplotSpec(rows, cols, subplot_spec=X, ...)` constructor with
+   the modern `X.subgridspec(rows, cols, ...)` method across nesting levels caused group captions
+   (panel b's 2×2 confusion-matrix group, panel c's 3-block group) to render at the wrong height —
+   floating mid-panel instead of below the whole group. Fixed by using `.subgridspec()`
+   consistently at every nesting level, everywhere.
+2. Matplotlib tick labels and axis labels render *outside* their Axes' nominal GridSpec box and
+   are not clipped to it — so increasing a caption strip's `caption_height` (the row-height
+   *ratio*) does **not** create clearance from overflowing tick labels; only `hspace` (an actual
+   gap between GridSpec rows) does. Both `panel_container()` and `sub_caption()` needed generous
+   `hspace`, not larger `caption_height`, to stop long/rotated tick labels from bleeding into the
+   caption strip below them.
+3. `plt.colorbar(im, ax=ax, ...)`'s automatic space-stealing from `ax` does not respect a caption
+   strip reserved by `panel_container()` in a nested GridSpec — panel (a)'s colorbar now gets its
+   own explicit GridSpec sub-row (`content_spec.subgridspec(2, 1, height_ratios=[0.86, 0.14])`)
+   instead, drawn via `plt.colorbar(im, cax=cbar_ax, ...)`.
+4. Panel (b)'s per-matrix `"Predicted"` x-axis label (row 2 only) collided with that row's
+   sub-caption (method name) below it for the same reason as (2). Fixed by dropping the
+   redundant per-matrix axis labels entirely and stating the row/column convention once in the
+   panel's own group caption instead ("rows=true, columns=predicted").
+
+## Open issues (v3)
+
+- At 6.0-6.9pt base font sizes, the dense 9×12 heatmap and 2×2 confusion matrices are sized for a
+  full-page thesis figure, not a journal double-column width — if this figure is ever scaled down
+  to a ~9cm journal column, text will be too small to read. Not addressed this round (this is a
+  doctoral thesis chapter, where full-page landscape figures are normal); flag before journal
+  submission if applicable.
+- Pareto/bootstrap-CI content from v2 is intentionally absent from v3's main composite per the
+  task brief; if reviewers want it back, it exists in `plot_fig2.py`'s panel and could become a
+  small supplementary figure rather than being force-fit back into Fig.1.
+
 **Note on a second, later-arriving reference set**: after this v2 build was finished, a folder
 `视觉参考效果图/` appeared in every `figX/` directory (AI-generated dashboard-style mockups, bright
 saturated palette, top banner title, icon badges, highlighted conclusion boxes). Its top-banner

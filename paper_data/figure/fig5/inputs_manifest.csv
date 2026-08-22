@@ -1,3 +1,6 @@
 input_path,purpose,rows,columns,status,sha256,derived_output,notes
 07_figure_ready/fig5/hidden_representation.csv,"304x88: 64-D shared hidden representation + stage/q/uncertainty/misclassified, panels a/b/c",304,88,OK,c86b4b4d7413b33c490bd8d2bf6eb1fc6cdf7fca73d423dce2be6ee1a7cca327,,
 07_figure_ready/fig5/lifecycle_semantics.csv,"run-level relative_life/prob_*/max_prob/q_pred, panels d/e",304,23,OK,568dede1818beaf8580d6755e378d3686f4ef51b87eedb1246eed90afc0f6b40,,
+figure/fig5/derived/pca_scores_v3.csv,"v3 MATLAB input: 304 real PCA scores + stage/q/uncertainty, panels a/b/c",304,10,OK,55eacdc989e9f953247f5e58de9a408ce9e00ef22c0612cd1671fa77ca942bab,prepare_fig5_v3.py,consumed by plot_fig5_v3.m
+figure/fig5/derived/stage_ridges_v3.csv,"v3 MATLAB input: 304 real stage-probability rows sorted by relative_life, panel d",304,5,OK,b242ef0e7ac0f73dac45556f7a4079e73530a23f1fb45b9bb121389526c453ea,prepare_fig5_v3.py,consumed by plot_fig5_v3.m
+figure/fig5/derived/confidence_trajectory_v3.csv,"v3 MATLAB input: 304 real (life,q_pred,max_prob) rows sorted by relative_life, panel e",304,5,OK,a009ee9ba1519e23f0852c7a89a2ea37b930886fb4c4bc4d5233bc0a19bde726,prepare_fig5_v3.py,consumed by plot_fig5_v3.m

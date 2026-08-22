@@ -193,6 +193,78 @@ re-run clean end-to-end from a fresh invocation in the order fig3→fig1→fig2�
 | fig4 (退化语义) | Done — `outputs/fig4_v2_reference_style.{png,pdf,svg}` |
 | fig5 (表示几何) | Done — `outputs/fig5_v2_reference_style.{png,pdf,svg}` |
 
+## 9. Round 3: dense-landscape reconstruction (v3), style_v2 discarded as primary reference
+
+Third round task: keep data/statistics unchanged again, but reject v2's approach wholesale —
+`视觉参考效果图/` (the AI-generated dashboard mockups the user asked to *keep away from* in round
+2's style decision) is promoted to the primary **layout-only** reference this round, and
+`reference/` (the round-2 style guides) is demoted. Two structural rules changed:
+1. **No figure-level caption anywhere** — v2's bottom-centered "主比较"/"鲁棒性"/etc. caption is
+   gone. The Chinese figure name now lives only in the folder name, the README, and output
+   filenames.
+2. **No upper-left panel letter** — every panel's full "(a) description" text moves to a caption
+   strip centered *below* that panel, geometrically locked via a nested `subgridspec` (not a
+   `fig.text()` position guess). Canvas orientation changed from v2's near-portrait to strict
+   landscape (15.5×10.0 to 15.5×10.5in across the 5 figures).
+
+**New shared module**: `_shared/style_v3.py` (kept separate from `style.py`/`style_v2.py` so v1/v2
+stay byte-for-byte reproducible). Re-exports v2's color constants unchanged; replaces the caption
+machinery with `panel_container()` (plot area + caption strip nested in one GridSpec cell) and
+`sub_caption()` (lighter-weight version for sub-panels inside an already-captioned group, e.g. each
+of fig1's 4 confusion matrices).
+
+**Real bugs found and fixed while building fig1_v3 (first figure, used to prove the template
+before proceeding, per the task's explicit "validate fig1 before batch-redrawing" instruction)**,
+now avoided systematically in fig2-5:
+1. Mixing the legacy `GridSpecFromSubplotSpec(rows, cols, subplot_spec=X, ...)` constructor with
+   the modern `X.subgridspec(rows, cols, ...)` method across nesting levels caused group captions
+   to render at the wrong height (floating mid-panel). Fixed by using `.subgridspec()` consistently
+   at every nesting level, everywhere, in every figure.
+2. Matplotlib tick/axis labels render *outside* their Axes' nominal GridSpec box and are not
+   clipped to it — increasing a caption strip's `caption_height` (a row-height *ratio*) does not
+   create clearance from overflowing tick labels; only `hspace` (an actual gap) does. This needed
+   different magnitudes per panel (dense heatmaps needed less; multi-line or rotated tick labels
+   needed more).
+3. `plt.colorbar(im, ax=ax, ...)`'s automatic space-stealing does not respect a `panel_container()`
+   caption strip — colorbars need their own explicit GridSpec sub-row, drawn via
+   `plt.colorbar(im, cax=cbar_ax, ...)`.
+4. Redundant per-subplot axis labels (e.g. "Predicted" under only some confusion matrices) can
+   collide with sub-captions below them for the same reason as (2) — drop them, state the
+   convention once in the parent panel's own caption instead.
+5. (fig2) Long single-line captions can overflow into a neighboring column — wrap with explicit
+   `\n`. Unicode shape glyphs (△) in legend text can hit missing-glyph font warnings — describe
+   shapes in words instead, reserve real matplotlib markers for the actual plotted points.
+
+**Execution** (sequential, not batched, per explicit instruction — each figure visually reviewed
+by the coordinating session before the next was started):
+1. **fig1** built directly by the coordinating session (established the template; needed ~5 rounds
+   of visual-collision fixes before matching the reference's spatial hierarchy).
+2. **fig2, fig3, fig4** each built by a separate forked subagent (inheriting full context + the
+   fig1 template + accumulating bug lessons from each prior figure's README), reviewed by the
+   coordinating session before starting the next. fig4 needed one additional fix after fork
+   completion (panel (d) legend overlapping its Early-stage point cluster — moved corner).
+3. **fig5** (表示几何, "the most visually demanding" per the brief) built by a forked subagent as a
+   **Python(data prep) + MATLAB(3D render) split** — `prepare_fig5_v3.py` exports 3 validated
+   derived CSVs (`derived/pca_scores_v3.csv`, `stage_ridges_v3.csv`, `confidence_trajectory_v3.csv`,
+   304 real rows each), `plot_fig5_v3.m` (MATLAB R2021a, `tiledlayout(2,6)`, real lighting/camera/
+   transparent panes) renders all 5 panels, with panels (d)/(e)'s ribbon/ridge extrusion widths
+   explicitly documented as visual-only (never a claimed quantitative dimension) both in-caption
+   and in the README, consistent with the brief's explicit requirement not to fabricate a measured
+   surface from 304 discrete observations.
+
+| Figure | v3 status |
+|---|---|
+| fig1 (主比较) | Done — `outputs/fig1_v3.{png,pdf,svg}` |
+| fig2 (鲁棒性) | Done — `outputs/fig2_v3.{png,pdf,svg}` |
+| fig3 (消融实验) | Done — `outputs/fig3_v3.{png,pdf,svg}` |
+| fig4 (退化语义) | Done — `outputs/fig4_v3.{png,pdf,svg}` |
+| fig5 (表示几何) | Done — `outputs/fig5_v3.{png,pdf,svg}` (Python+MATLAB) |
+
+All 5 v3 outputs independently visually reviewed by the coordinating session (not just "ran
+without error") against the brief's §18 checklist: landscape/dense, no figure-level title in
+either direction, every caption geometrically below its panel, no fabricated data/point density/
+method roster, consistent stage colors and metric-direction conventions across all 5 figures.
+
 ## 7. Open issues / notes for second-pass visual polish
 
 - Fig.4 and Fig.5 are the two "hero" figures per the design doc; first pass here is Python-only,

@@ -125,6 +125,59 @@ n=304 — another sign it is illustrative, not literal). Asked the user directly
 all 5 figures to match its brighter dashboard aesthetic; they confirmed keeping the current
 academic-journal style. No changes made as a result.
 
+## v3: dense landscape reconstruction (视觉参考效果图/ promoted to primary style reference)
+
+`plot_fig4_v3.py` produces `outputs/fig4_v3.{png,pdf,svg}` using the new `_shared/style_v3.py`
+module (same one fig1/fig2/fig3's v3 builds use). **Statistics unchanged again** — v3 imports
+v1's `load()` verbatim and reuses the same R²/Spearman/MAE formula (coefficient of determination
+on raw `q_pred`, never squared Pearson r or `q_pred_norm`).
+
+**Layout, ground-up rebuilt:**
+- Canvas: landscape 15.5×10.0in, top row ≈52% / bottom row ≈48% (was v2's near-square 14.2×12.8).
+- 5-panel arrangement: top row = (a) lifecycle probability + q strip, (b) probability simplex,
+  (c) q agreement; bottom row = (d) latent manifold, (e) physical wear — matching
+  `视觉参考效果图/`'s spatial proportions (layout only, see below for what was and wasn't taken
+  from it).
+- No figure-level title anywhere — not even v2's bottom-centered "退化语义" caption. Every panel
+  caption "(a)-(e) description" sits below its panel via `style_v3.panel_container()`'s nested
+  `subgridspec` (geometrically locked, no `fig.text()` position guessing). No upper-left panel
+  letters.
+- Panel (a): switched from v1/v2's semi-opaque stacked area to three real line curves with a
+  light semi-transparent fill under each — the actual (slightly noisy) trajectory is visible, not
+  smoothed into an idealized shape.
+- Panel (b): thicker trajectory line, larger points, explicit start (open circle)/end (filled
+  square) markers, one arrow marking the time direction, horizontal colorbar — same real 304
+  `(p_E,p_M,p_L)` triples as v1/v2, not reshaped.
+- Panel (c): added a real binned-median trend line (20 bins along `q_true`, median `q_pred` per
+  bin with ≥2 samples) alongside the hexbin — the visible saturation of `q_pred` at high
+  `q_true` (plateauing ~0.7 instead of reaching 1.0) is preserved exactly, not smoothed away.
+- **Panel (d) is new**: v1/v2 fig4 had no "latent manifold" panel (fig4's own input files carry no
+  hidden-representation data). v1's own README anticipated exactly this situation
+  ("Fig.4 若放 latent manifold, only保留一个简洁二维overview; 更系统的分析留给Fig.5"). v3 acts on
+  that: it loads the real 304×64 `hidden_representation.csv` (the same file fig5 uses) and fits a
+  **fresh, independent** PCA here via `data_utils.pca_2d` (numpy SVD, no sklearn) — not copied
+  from fig5's own PCA run. Deliberately kept to a single simple view (stage-marker-shaped,
+  q-colored points, a thin q-sorted dashed trajectory, one "increasing degradation →" arrow) so it
+  doesn't duplicate fig5's fuller stage/q/uncertainty treatment.
+- Panel (e): **VB axis is linear, ~70–240 μm** (real data range) — the reference mockup's own
+  panel (e) uses a log axis (10¹–10⁴), which does not match this project's real, modest-range wear
+  values and was not reproduced.
+
+**Deliberately not copied from `视觉参考效果图/`**: its own R²/MAE/Spearman numbers (recomputed
+live here and asserted to match, never read off the image); its lifecycle curve's exact shape;
+its panel (d)'s multi-hundred/thousand-point dense cloud with 4 fictional "domain" marker shapes
+(○/□/△/× for "域A/域B/域C/域D/未分类") — this project's real C6 test set is a single condition
+with exactly 304 runs, so panel (d) here uses exactly 304 points, no jitter-inflated density, no
+fabricated domain groups; its log-scale VB axis.
+
+**Bugs found and fixed**: layout/caption geometry ran clean and collision-free on the first
+attempt, having inherited every layout lesson from fig1_v3/fig2_v3/fig3_v3's READMEs (GridSpec
+margins at construction time, `hspace` vs `caption_height` for tick-label clearance, colorbars in
+their own explicit sub-row, `\n`-wrapped long captions). One content-placement issue was caught on
+independent review afterward: panel (d)'s `loc="upper right"` stage legend sat directly on top of
+the Early-stage point cluster in that corner. Fixed by moving it to `loc="lower right"` (with a
+translucent white background for safety), which is genuinely empty in this manifold's shape.
+
 ## Open issues
 
 - Panel (c)'s scatter shows visible compression of `q_pred` at high `q_true` (plateauing around

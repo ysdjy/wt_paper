@@ -117,6 +117,45 @@ happens to start near that corner) — moved to `loc="upper right"`; the A6 traj
 originally floated with no visible connection to its marker — tightened its offset to sit
 immediately beside the point.
 
+## v3: dense landscape reconstruction with mechanism flow-chain (视觉参考效果图/ as primary reference)
+
+`plot_fig3_v3.py` produces `outputs/fig3_v3.{png,pdf,svg}` using `_shared/style_v3.py`.
+**Statistics unchanged** — imports v1's `load()`, `recompute_classwise()`, `validate()` directly;
+the mechanism band additionally reads `A1_A6_delta_vs_A1.csv` (already loaded by v1 but never
+plotted there). This round demoted `reference/` and promoted `视觉参考效果图/` as the primary
+**layout-only** style guide (its own Smooth values, e.g. "0.0236"/"0.0136"/"0.0188", are
+structurally similar but not bit-identical to this project's real numbers — never copied, always
+recomputed).
+
+**Layout, ground-up rebuilt**, canvas 15.5×10.5in landscape, no top title, no figure-level bottom
+caption (v2's "消融实验" banner is gone):
+- 2×2 top block: (a) predictive performance (Acc/Macro-F1/M-F1), (b) state-wise F1 (E/M/L),
+  (c) middle-stage recognition (M-Rec bars) + transition consistency (M→E/M→L lines),
+  (d) trajectory stability (Rev/Jump bars) + **Smooth improvement vs A1 (%)** line.
+- Full-width mechanism band below: 6 connected node boxes (`FancyBboxPatch` + `FancyArrowPatch`)
+  using the real `Configuration` strings from `A1_A6_absolute.csv`, each annotated with its real
+  ΔAcc/ΔM-F1/Smooth-improvement vs A1 from `A1_A6_delta_vs_A1.csv` — new for v3 (that file was
+  loaded but never plotted in v1/v2).
+- Smooth is **never** plotted as a raw "higher=better" line: panel (d) plots
+  `(A1_Smooth − Ai_Smooth)/A1_Smooth × 100`, explicitly labeled "Smooth improvement vs A1 (%)" on
+  the axis, with the raw Smooth value annotated at each point for traceability.
+- A5 gets a light warm (`ABLATION_COLORS["A5"]` at 9% alpha) vertical shading band across all 4
+  top panels and the mechanism band — not a heavy red warning box.
+- Panel (d) also documents, in-panel, that `Rev = Jump = 0` for every A1–A6 configuration (real
+  data — the ablation never produces reversal/jump events) rather than leaving two flat invisible
+  bars unexplained.
+
+**Bugs found and fixed** (building on fig1_v3/fig2_v3's documented lessons):
+- Copy-pasted an early, unfixed `hspace=0.55` for the top-2×2 subgrid from an early fig1_v3 draft
+  — created a large dead gap between rows (a,b) and (c,d). Fixed to `hspace=0.20`.
+- `panel_container`'s default-adjacent `hspace=0.12` was not enough clearance for these shorter
+  panels' x-tick labels (fig3's 2×2 panels are shorter than fig1's, so the same absolute gap is a
+  smaller fraction of panel height) — increased to `hspace=0.28` for all 4 top panels.
+
+**Deliberately not copied from the reference mockup**: its specific Smooth/Acc numbers; its "A5
+出现最大性能下降" / "A6 明显恢复" callout-box wording (paraphrased into axis labels and the light
+A5 shading instead, per the "no fake conclusions" rule); its heavy blue corporate banner header.
+
 ## Open issues
 
 - `A1_A6_absolute.csv` column headers contain literal `→` characters that mis-render as mojibake

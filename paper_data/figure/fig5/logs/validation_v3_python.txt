@@ -1,0 +1,8 @@
+PASS: hidden_representation.csv=304 rows x 64 h_* cols; lifecycle_semantics.csv=304 rows.
+PASS: single PCA fit on 64-D hidden representation (n=304), reused for panels (a)/(b)/(c). Explained variance ratio PC1=0.607, PC2=0.380.
+PASS: wrote C:\Users\banghai\Documents\BaiduSyncdisk\西工大\王婷\论文\paper_data\figure\fig5\derived\pca_scores_v3.csv (304 rows, 10 cols, 0 NaN).
+PASS: wrote C:\Users\banghai\Documents\BaiduSyncdisk\西工大\王婷\论文\paper_data\figure\fig5\derived\stage_ridges_v3.csv (304 rows, sorted by relative_life, 0 NaN).
+PASS: wrote C:\Users\banghai\Documents\BaiduSyncdisk\西工大\王婷\论文\paper_data\figure\fig5\derived\confidence_trajectory_v3.csv (304 rows, sorted by relative_life, 0 NaN).
+PASS: read-back check pca_scores_v3.csv: shape=(304, 10)
+PASS: read-back check stage_ridges_v3.csv: shape=(304, 5)
+PASS: read-back check confidence_trajectory_v3.csv: shape=(304, 5)

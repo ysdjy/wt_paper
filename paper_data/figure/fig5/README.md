@@ -121,8 +121,74 @@ an interpolated surface for that reason, see above). Asked the user directly whe
 5 figures to match its brighter dashboard aesthetic; they confirmed keeping the current
 academic-journal style. No changes made as a result.
 
+## v3: dense landscape reconstruction, Python(data)+MATLAB(3D render) split
+
+Unlike fig1-4's pure-Python v3 builds, fig5 v3 is split across two files because the brief calls
+for stronger 3D visual quality than `mpl_toolkits.mplot3d` gives (see fig1-4's v3 READMEs for the
+shared layout rules/bugs this build also follows: GridSpec-equivalent margins set at construction,
+`hspace`-not-`caption_height` for tick-label clearance, captions below not above every panel, no
+figure-level title anywhere).
+
+- **`prepare_fig5_v3.py`** (Python): loads the exact same real data v1 uses — `load()` and
+  `fit_pca()` imported directly from `plot_fig5.py`, so it is the same 304×64
+  `hidden_representation.csv`, the same numpy-SVD PCA fit (confirmed identical explained variance
+  to v1/v2: PC1=0.607, PC2=0.380) — and exports three derived, fully real, non-fabricated CSVs for
+  MATLAB to read: `derived/pca_scores_v3.csv` (304 rows: PC1/PC2/true_stage/pred_stage/q_true/
+  q_hat/uncertainty/entropy/misclassified), `derived/stage_ridges_v3.csv` (304 rows, sorted by
+  `relative_life`: prob_early/middle/late from `lifecycle_semantics.csv`), and
+  `derived/confidence_trajectory_v3.csv` (304 rows, sorted by `relative_life`: q_pred/max_prob/
+  pred_stage). Validated row counts, column counts, and zero NaNs; log in
+  `logs/validation_v3_python.txt`.
+- **`plot_fig5_v3.m`** (MATLAB, run via
+  `"C:\Program Files\Polyspace\R2021a\bin\matlab.exe" -nosplash -nodesktop -batch "cd('<path>\paper_data\figure\fig5'); plot_fig5_v3"`):
+  reads the 3 derived CSVs only — never refits PCA, never regenerates or interpolates points.
+  `tiledlayout(2,6)`, landscape `15.5×10.2in`: (a) stage-colored PCA / (b) q-colored PCA /
+  (c) uncertainty-colored PCA share identical PC1/PC2 axis limits (computed once, applied to all
+  three, confirmed in `logs/validation_v3_matlab.txt`); (d) stage-probability 3D ridge ribbons /
+  (e) life×q_pred×confidence 3D ribbon span the bottom row. Stage colors are the exact same hex
+  values as `_shared/style_v2.py`'s `STAGE_COLORS` (`#1B3A5C`/`#2A8C7A`/`#D9A441`) for cross-figure
+  consistency. `set(gca,'Color','none')`, thin light-grey grid, hand-picked `view(-48,26)`,
+  `camlight('headlight')`, `lighting gouraud`, `material dull` — no default grey 3D panes.
+  Captions use `annotation('textbox', ...)` positioned from each axes' `.Position` (normalized
+  figure units) read only after `drawnow`, never `title()` (which MATLAB places above the axes).
+
+**Ribbon/ridge extrusion is visual-only, stated explicitly in-figure and here**: panels (d) and (e)
+give the real 1-D trajectories (stage probability vs. relative life; confidence vs. life vs.
+q_pred) a narrow perpendicular extrusion purely so they read as a surface at a glance — panel (d)'s
+stage-axis ribbon width and panel (e)'s q-direction ribbon width carry **no quantitative meaning**
+and must never be interpreted as a measured second dimension. Every z-value plotted is real; the
+extrusion direction is not.
+
+**Bugs found and fixed while building this:**
+1. MATLAB hex-literal color arrays (`[0x1B 0x3A 0x5C]`) default to `uint8`, which breaks
+   `linspace`'s internal division when building the custom colormap — fixed with explicit
+   `double([27 58 92])`.
+2. `clim(ax, ...)` does not exist in MATLAB R2021a (added in R2022a) — replaced with the
+   R2021a-compatible `caxis(ax, ...)`.
+3. Forcing `pbaspect(ax, [range(xl) range(yl) 1])` on panels (a)/(b)/(c) to match the data aspect
+   ratio shrinks the *rendered* plot box inside `ax.Position` without updating `.Position` itself
+   — since `add_caption_below()` reads `.Position` to place captions, this created a large dead
+   whitespace band between the shrunk plots and their (correctly-positioned-for-the-unshrunk-box)
+   captions. Fixed by dropping the aspect-ratio constraint entirely; identical `xlim`/`ylim` across
+   the three panels already gives visual comparability without this side effect — the same root
+   cause (decorations/constraints outside an axes' literal box are invisible to layout math) as
+   fig1-4's `hspace`-vs-`caption_height` bug, just MATLAB's version of it.
+
+**Deliberately not copied from `视觉参考效果图/fig5`'s mockup**: its thousands-of-points dense point
+cloud (real data is exactly 304 samples); its fictional multi-"domain" marker-shape legend (this
+project's C6 test set is a single condition, no domain groups exist); its fully-interpolated 3D
+surfaces for panels (d)/(e) (replaced with the real-trajectory-plus-visual-ribbon approach above,
+consistent with v1/v2's documented refusal to fabricate an interpolated measurement surface).
+
 ## Open issues
 
+- Panel (d)'s "Early" y-axis tick label sits close to (though does not clearly overlap) its
+  caption below — MATLAB 3D axes' tick/label decorations extend beyond `ax.Position`'s nominal box
+  in a way that is hard to fully predict, the same general class of issue as fig1-4's `hspace`
+  fix, just closer to the edge of acceptable here. Not iterated further this round given
+  diminishing returns per ~45s MATLAB round-trip; flagged for a future polish pass.
+- SVG export from MATLAB (`print(fig,...,'-dsvg')`) succeeded and is included, but MATLAB's SVG
+  backend is generally less mature than matplotlib's — prefer the PDF for print/vector use.
 - There is a large vertical gap between the top row (panels a/b/c) and the bottom row (panels
   d/e). This is a `mpl_toolkits.mplot3d` quirk, not a `GridSpec` spacing bug: `Axes3D` reserves a
   fixed internal margin around its 3D bounding box regardless of the GridSpec cell it's placed in,

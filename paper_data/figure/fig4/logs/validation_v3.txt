@@ -1,0 +1,5 @@
+PASS: lifecycle_semantics/simplex_trajectory/q_agreement each have 304 rows.
+PASS (v3): q agreement recomputed live: R2=0.7478 (~0.748), rho=0.9635 (~0.963), MAE=0.1132 (~0.113).
+PASS (v3): panel(d) fresh PCA fit on real 304x64 hidden_representation.csv (independent of fig5's own PCA run); PC1=0.607, PC2=0.380 var.
+PASS (v3): VB means Early=100.55, Middle=126.29, Late=205.46 um (linear axis); Late/Early=2.043 (~2.04).
+Saved outputs: {'png': 'C:\\Users\\banghai\\Documents\\BaiduSyncdisk\\西工大\\王婷\\论文\\paper_data\\figure\\fig4\\outputs\\fig4_v3.png', 'pdf': 'C:\\Users\\banghai\\Documents\\BaiduSyncdisk\\西工大\\王婷\\论文\\paper_data\\figure\\fig4\\outputs\\fig4_v3.pdf', 'svg': 'C:\\Users\\banghai\\Documents\\BaiduSyncdisk\\西工大\\王婷\\论文\\paper_data\\figure\\fig4\\outputs\\fig4_v3.svg'}
