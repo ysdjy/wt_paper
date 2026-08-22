@@ -265,6 +265,82 @@ without error") against the brief's §18 checklist: landscape/dense, no figure-l
 either direction, every caption geometrically below its panel, no fabricated data/point density/
 method roster, consistent stage colors and metric-direction conventions across all 5 figures.
 
+## 10. Round 4: publication-grade true-physical-size refinement (v4)
+
+Fourth round: keep data/statistics unchanged a third time, but this round's target is genuinely
+different from v2/v3 — not "reorganize the layout" but **author every figure at its real print
+size from the start** (178mm width, per-figure heights 120-132mm) and hold it to a publication bar
+(Times New Roman + STIX typography confirmed as the original paper's own convention by reading
+`代码/1.3.1可视化.py`/`代码/7.3主实验.py`; a new higher-contrast hex palette; every text element
+≥6.5pt; no dead space >8-10%; real statistical content restored where v3 had dropped it).
+
+**Pre-code deliverable** (per the brief's explicit instruction): `paper_data/figure/V4_DESIGN_AUDIT.md`,
+written before any V4 code, auditing each figure's V3 problems, what to recover from
+`视觉参考效果图/` (now the primary layout reference, `reference/` demoted further), what science
+must survive, and the exact V4 panel plan — including the round's two genuine structural (not
+cosmetic) content fixes: fig3 panel (d) stopped wasting a whole panel on all-zero Rev/Jump bars and
+now shows real `A1_A6_lifecycle_variation.csv`/`cumulative_variation.csv` content; fig4 panel (d)
+stopped fitting its own independent PCA and now reads a single shared coordinate file so Fig.4 and
+Fig.5 show geometrically identical latent geometry.
+
+**New infrastructure**:
+- `_shared/style_v4.py` — Times New Roman + STIX rcParams, the brief's exact new hex palette
+  (`STAGE_COLORS` Early `#2F6FB3`/Middle `#2E8B57`/Late `#E76F51`, `METHOD_COLORS`,
+  `BENEFIT_CMAP`/`DIVERGING_CMAP`/`CONFUSION_CMAP`), `master_figsize_in(fig_key)` for true physical
+  sizing (mm→inch, no post-hoc shrink), `save_all()` emitting `.pdf`/`.svg`/`_600dpi.png`/
+  `_paper_preview.png`. Re-exports v3's `panel_container()`/`sub_caption()` caption mechanism
+  unchanged — that mechanism itself was never the bug source this round, only how it was tuned.
+- `_shared/prepare_shared_pca_v4.py` → `_shared/derived/shared_pca_scores_v4.csv` — ONE PCA fit
+  (numpy SVD) on the real 304×64 `hidden_representation.csv`, PC1 sign fixed deterministically so
+  `corr(PC1, q_true) > 0` (verified 0.933), PC2 left as SVD produces it. fig4(d) and fig5(a)/(b)/(c)
+  both read this file directly; neither refits its own PCA. This is a display-convention fix (PCA
+  sign/rotation carries no statistical meaning), not a data change.
+
+**A real, recurring class of bug this round, found first on fig1 and then independently
+re-discovered (in different specific forms) on fig2/fig3**: the same *relative* GridSpec `hspace`
+fraction that worked fine on v3's large 15.5×10in canvas produces a much smaller *absolute* gap on
+v4's true 178mm-scale canvas (roughly 2.2× smaller), so captions/tick-labels/legends that had
+comfortable clearance in v3 can collide in v4 unless hspace is re-tuned per panel — never assumed
+transferable. The general fix pattern, refined across all 5 figures: (1) wrap/shorten caption text
+that overflows its column width horizontally; (2) increase `hspace` (an actual gap), not
+`caption_height` (a ratio), to clear overflowing tick/axis labels, but don't over-correct — too
+large an `hspace` on a small nested cell can squash the plotted content itself; (3) for a short
+single-line label tied to one specific axes, `ax.set_title(label, y=<negative>)` is sometimes more
+robust than another nested-GridSpec caption level, but check case-by-case (fig2 found the opposite:
+an existing `set_xlabel()` was already correct, and switching to `set_title(y<0)` by analogy broke
+it); (4) rotate tick labels 30-40° if they overlap at 0° in a narrow column; (5) a legend with too
+many columns in one row can be wider than its own axes (legends aren't clipped to their parent) and
+overflow into a neighboring subplot — reflow to more rows/fewer columns; (6) polar radial tick
+labels default to crowding the 0°-spoke — `ax.set_rlabel_position()` moves them; (7) audit every
+`fontsize=`/`labelsize=` for the ≥6.5pt floor explicitly at the end, don't assume.
+
+**Execution** (sequential, per explicit instruction not to batch): fig1 built directly by the
+coordinating session first (proving the template took ~4 rounds of real fixes before matching the
+178mm-scale bar); fig2/fig3/fig4 each built by a forked subagent (inheriting full context + all
+prior figures' bug lessons), each independently re-reviewed by the coordinating session before the
+next was started — 2 additional real bugs found and fixed post-handoff on fig2, 2 more on fig3,
+0 more needed on fig4. `_shared/prepare_shared_pca_v4.py` built directly by the coordinating
+session (a small, foundational, shared-dependency script) before fig4/fig5 could depend on it.
+fig5 (表示几何, the round's explicit centerpiece) built by a forked subagent as a Python(data
+prep)+MATLAB(3D render) split, substantially reworking v3's "too thin" ridge/ribbon geometry into
+broad multi-sample ridge curtains (panel d) and an uncertainty-proportional-width confidence ribbon
+(panel e, real per-run `uncertainty` joined 1:1 by `run_id`) — MATLAB R2021a rendering confirmed
+working end-to-end, 3 rounds of real fixes, 2 minor tight-but-legible caption spots left as
+disclosed open issues rather than iterated further.
+
+| Figure | v4 status |
+|---|---|
+| fig1 (主比较) | **DONE** — `outputs/fig1_v4.{pdf,svg}`, `fig1_v4_600dpi.png`, `fig1_v4_paper_preview.png` |
+| fig2 (鲁棒性) | **DONE** — `outputs/fig2_v4.*` (same 4 artifacts) |
+| fig3 (消融实验) | **DONE** — `outputs/fig3_v4.*` |
+| fig4 (退化语义) | **DONE** — `outputs/fig4_v4.*`, reads shared PCA |
+| fig5 (表示几何) | **DONE** — `outputs/fig5_v4.*`, MATLAB-rendered (d)/(e), reads shared PCA |
+
+Every figure's `VISUAL_QA_V4.md` scores Scientific faithfulness = 10/10 (required for DONE) and
+confirms every text element meets the ≥6.5pt floor (fig5's MATLAB text uses ≥7pt as an honest,
+documented stand-in for the same intent, since MATLAB doesn't expose the same per-artist point-size
+audit trail matplotlib does).
+
 ## 7. Open issues / notes for second-pass visual polish
 
 - Fig.4 and Fig.5 are the two "hero" figures per the design doc; first pass here is Python-only,

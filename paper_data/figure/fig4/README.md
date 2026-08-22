@@ -178,6 +178,47 @@ independent review afterward: panel (d)'s `loc="upper right"` stage legend sat d
 the Early-stage point cluster in that corner. Fixed by moving it to `loc="lower right"` (with a
 translucent white background for safety), which is genuinely empty in this manifold's shape.
 
+## v4: publication-grade true-physical-size refinement
+
+`plot_fig4_v4.py` produces `outputs/fig4_v4.{pdf,svg}`, `fig4_v4_600dpi.png`, and
+`fig4_v4_paper_preview.png`, using `_shared/style_v4.py`. **Statistics unchanged a third time**
+for panels (a)/(b)/(c)/(e) — v4 imports v1's `load()` and R²/Spearman/MAE formula verbatim. Full
+rationale: `paper_data/figure/V4_DESIGN_AUDIT.md`. Detailed scoring: `VISUAL_QA_V4.md` (status:
+**DONE**, scientific faithfulness 10/10, every text element ≥6.5pt).
+
+**Two real content changes this round** (not just restyling — see `VISUAL_QA_V4.md`'s "Content
+changes" section for full detail):
+1. **Panel (d) now reads `_shared/derived/shared_pca_scores_v4.csv`** instead of fitting its own
+   independent PCA. This closes a real cross-figure consistency gap: PCA sign/orientation is
+   mathematically arbitrary, so Fig.4(d) and Fig.5(a)-(c) fitting PCA independently could
+   legitimately come out mirrored relative to each other even though both are correct — which
+   would make the same shared representation look inconsistent to a reader across the two hero
+   figures. The shared file is built once by `_shared/prepare_shared_pca_v4.py`, with a
+   deterministic, documented sign convention (`corr(PC1, q_true) > 0`), and is now the single
+   source both figures read.
+2. **Panel (b)'s simplex vertex convention changed** to Early=bottom-left/Middle=bottom-right/
+   Late=top, matching `代码/7.3主实验.py::plot_probability_simplex`'s own established convention
+   (confirmed by reading that file this session, per the round-4 brief's explicit instruction to
+   consult the original pre-refactor plotting code before touching Fig.5-adjacent panels). v1-v3
+   used a different (Early=left/Late=right/Middle=top) convention; v4 aligns with the paper's own
+   prior visual language instead. Same real trajectory, only the corner labels changed.
+
+**True-physical-size bugs found and fixed** (2, both on independent review after the initial
+build — see `VISUAL_QA_V4.md`): panel (b)'s caption named its convention source directly in-figure
+including a Chinese filename, which both overflowed into panel (c)'s caption at 178mm width and
+triggered Times-New-Roman missing-glyph warnings (Times has no CJK coverage) — fixed by shortening
+the on-canvas caption and moving the citation to this README; panel (d)'s "increasing degradation
+→" annotation was visually swallowed by a dense point cluster at the manifold's vertex — fixed by
+repositioning to emptier space with a white backing box.
+
+**No significance annotation in panel (e)**: the brief requires any shown p-value to come from a
+real test run this session, never a placeholder. The real gap between Early/Middle/Late VB means
+(100.6/126.3/205.5 μm, non-overlapping IQRs) is visually self-evident without one, so none was
+added, per the brief's own explicit "better to omit than force it" guidance for this exact case.
+
+**Deliberately not copied from `视觉参考效果图/fig4`**: its idealized near-y=x q-agreement point
+cloud; its log-scale VB axis; any of its numbers.
+
 ## Open issues
 
 - Panel (c)'s scatter shows visible compression of `q_pred` at high `q_true` (plateauing around

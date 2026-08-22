@@ -156,6 +156,51 @@ caption (v2's "消融实验" banner is gone):
 出现最大性能下降" / "A6 明显恢复" callout-box wording (paraphrased into axis labels and the light
 A5 shading instead, per the "no fake conclusions" rule); its heavy blue corporate banner header.
 
+## v4: publication-grade true-physical-size refinement
+
+`plot_fig3_v4.py` produces `outputs/fig3_v4.{pdf,svg}`, `fig3_v4_600dpi.png`, and
+`fig3_v4_paper_preview.png`, using `_shared/style_v4.py`. **Statistics unchanged a third time** —
+imports v1's `load()`/`recompute_classwise()`/`validate()` verbatim. Full rationale:
+`paper_data/figure/V4_DESIGN_AUDIT.md`. Scoring: `VISUAL_QA_V4.md` (status: **DONE**, scientific
+faithfulness 10/10, every text element ≥6.5pt).
+
+**The structural change this round** (not just cosmetic): v3's panel (d) spent a full panel on
+Rev/Jump bars that are real zeros for all 6 configs — a low-information use of panel space. v4
+repurposes that panel to show the real `A1_A6_lifecycle_variation.csv` (local probability
+variation) and `A1_A6_cumulative_variation.csv` (cumulative variation) curves for all 6
+configurations side by side, with "Rev=Jump=0 for all A1–A6 (real)" reduced to a caption line.
+Layout ratio also shifted: top 2×2 block now ≈78% of the panel area (mechanism band ≈22%), versus
+v3's roughly even split — the mechanism band was visually oversized relative to its information
+content in v3.
+
+**True-physical-size bugs found and fixed** (4 rounds, on top of the general lessons already
+documented in fig1/fig2's v4 README sections):
+1. Panel (a)'s twin-axis (`ax2`) y-label ("Smooth improvement vs A1 (%)") was long enough to be
+   clipped at the top of the canvas and bleed into panel (b)'s column at default `wspace` — fixed
+   by shortening the label text and increasing `top2x2`'s `wspace` (0.30→0.50) and `hspace`
+   (0.62→0.80) together (both axes needed more room, not just one).
+2. Panels (b)/(c)'s in-plot text annotations ("A5: strongest filtering...", "classification
+   largely unchanged...") initially overlapped the plotted lines/bars themselves. Fixed two
+   different ways depending on the specific case: panel (b)'s annotations were repositioned with
+   a thin leader line into genuinely empty space above the data; panel (c)'s annotation was moved
+   out of the plot entirely and folded into the panel's own 2-line caption instead — simpler and
+   collision-proof once the caption itself was wrapped correctly.
+3. Panel (d) was the worst case in this whole round: its two side-by-side sub-plots' own x-axis
+   labels ("Relative tool life") collided severely with the panel's caption below, even after the
+   `hspace` correction that fixed the same class of problem elsewhere (0.42→0.75 was not enough
+   here). Required a much larger correction (→1.35) than any other panel in fig1/fig2/fig3 has
+   needed — the caption's own text was also shortened at the same time, and it isn't fully clear
+   which of the two changes did more of the work; recorded here as a reminder that this specific
+   bug class doesn't always respond to the same `hspace` magnitude, and must be re-verified per
+   panel on the actual paper-preview render, not assumed from a prior panel's fix.
+4. Panel (a)'s legend, at `loc="lower left"` inside a non-zero-based y-axis (bars fill nearly the
+   full visible range), overlapped its own bars. Moved above the axes via
+   `bbox_to_anchor=(0.5, 1.01)` instead of shrinking/relocating within the plot area.
+
+**Deliberately not copied from `视觉参考效果图/fig3`**: its specific Smooth/Acc/M-F1 numeric
+annotations (fictional/placeholder there); its bright dashboard chrome (icons, top banner,
+highlighted conclusion boxes), which conflicts with this round's own hard rules.
+
 ## Open issues
 
 - `A1_A6_absolute.csv` column headers contain literal `→` characters that mis-render as mojibake

@@ -1,0 +1,8 @@
+PASS: taskwise_absolute 27 rows; cross_dataset_absolute dataset set correct, no MIMII.
+v4: reused v1 load() unchanged.
+v4: master physical size 178x125mm, true-scale typography, no post-hoc shrink.
+PASS: 3 distinct methods top Acc across D1/D2/D3 (target-condition dependence).
+PASS: panel(b) PHM D1 dAcc/dM-F1 and NASA/MTW-CM-avg dM-F1 match design-doc headline numbers.
+PASS: panel(c) radar uses only real Multi-task TCN-GRU vs DC-PSR pairs on PHM2010/NASA/MTW-CM (Cons.=1/(1+Smooth), Stab.=1/(1+Jump) are monotonic display transforms of the raw metrics, not new statistics -- raw Acc/M-F1/Smooth/Jump remain in panels a/b/d; full transform names spelled out in README since panel space only fits the abbreviation).
+PASS: panel(d) balance map plots exactly 6 real points (B11/B12 x PHM2010/NASA/MTW-CM), no fabricated methods.
+Saved outputs: {'pdf': 'C:\\Users\\banghai\\Documents\\BaiduSyncdisk\\西工大\\王婷\\论文\\paper_data\\figure\\fig2\\outputs\\fig2_v4.pdf', 'svg': 'C:\\Users\\banghai\\Documents\\BaiduSyncdisk\\西工大\\王婷\\论文\\paper_data\\figure\\fig2\\outputs\\fig2_v4.svg', '600dpi_png': 'C:\\Users\\banghai\\Documents\\BaiduSyncdisk\\西工大\\王婷\\论文\\paper_data\\figure\\fig2\\outputs\\fig2_v4_600dpi.png', 'paper_preview_png': 'C:\\Users\\banghai\\Documents\\BaiduSyncdisk\\西工大\\王婷\\论文\\paper_data\\figure\\fig2\\outputs\\fig2_v4_paper_preview.png'}

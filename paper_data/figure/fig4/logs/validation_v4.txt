@@ -1,0 +1,6 @@
+PASS: all 4 input tables (3 fig4-native + 1 shared PCA) have 304 rows.
+PASS: q agreement recomputed live: R2=0.7478, rho=0.9635, MAE=0.1132, n=304.
+PASS: panel(d) reads shared PCA coordinates from C:\Users\banghai\Documents\BaiduSyncdisk\西工大\王婷\论文\paper_data\figure\fig4\..\_shared\derived\shared_pca_scores_v4.csv (no independent PCA fit in this script).
+PASS: panel(e) recomputed per-predicted-stage VB_true means match wear_by_predicted_stage.csv.
+PASS: VB means Early=100.55, Middle=126.29, Late=205.46 um, linear axis 70-240 um (no significance test added -- the real gap between groups is large enough to be self-evident without one; see README).
+Saved outputs: {'pdf': 'C:\\Users\\banghai\\Documents\\BaiduSyncdisk\\西工大\\王婷\\论文\\paper_data\\figure\\fig4\\outputs\\fig4_v4.pdf', 'svg': 'C:\\Users\\banghai\\Documents\\BaiduSyncdisk\\西工大\\王婷\\论文\\paper_data\\figure\\fig4\\outputs\\fig4_v4.svg', '600dpi_png': 'C:\\Users\\banghai\\Documents\\BaiduSyncdisk\\西工大\\王婷\\论文\\paper_data\\figure\\fig4\\outputs\\fig4_v4_600dpi.png', 'paper_preview_png': 'C:\\Users\\banghai\\Documents\\BaiduSyncdisk\\西工大\\王婷\\论文\\paper_data\\figure\\fig4\\outputs\\fig4_v4_paper_preview.png'}

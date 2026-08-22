@@ -1,0 +1,8 @@
+PASS: hidden_representation.csv=304 rows; lifecycle_semantics.csv=304 rows.
+PASS: shared_pca_scores_v4.csv found and has 304 rows -- plot_fig5_v4.m will read this file directly (not a local copy), guaranteeing identical coordinates to fig4(d).
+PASS: wrote C:\Users\banghai\Documents\BaiduSyncdisk\西工大\王婷\论文\paper_data\figure\fig5\derived\stage_ridges_v4.csv (304 rows, sorted by relative_life, 0 NaN).
+PASS: uncertainty join to lifecycle data is exact 304<->304 one-to-one via run_id (no missing, no duplication).
+PASS: wrote C:\Users\banghai\Documents\BaiduSyncdisk\西工大\王婷\论文\paper_data\figure\fig5\derived\confidence_ribbon_v4.csv (304 rows, sorted by relative_life, real uncertainty attached, 0 NaN).
+Uncertainty range for panel (e) ribbon-width mapping: min=0.0130, max=0.5118, mean=0.0770.
+PASS: read-back check stage_ridges_v4.csv: shape=(304, 5)
+PASS: read-back check confidence_ribbon_v4.csv: shape=(304, 6)

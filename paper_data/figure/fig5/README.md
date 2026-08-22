@@ -180,7 +180,85 @@ project's C6 test set is a single condition, no domain groups exist); its fully-
 surfaces for panels (d)/(e) (replaced with the real-trajectory-plus-visual-ribbon approach above,
 consistent with v1/v2's documented refusal to fabricate an interpolated measurement surface).
 
-## Open issues
+## v4: publication-grade rework — the round's centerpiece figure
+
+`prepare_fig5_v4.py` + `plot_fig5_v4.m` produce `outputs/fig5_v4.{pdf,svg}`, `fig5_v4_600dpi.png`,
+and `fig5_v4_paper_preview.png`, at true 178×132mm master physical size. Full rationale:
+`paper_data/figure/V4_DESIGN_AUDIT.md`. Detailed scoring: `VISUAL_QA_V4.md` (status: **DONE**,
+scientific faithfulness 10/10).
+
+**Two real content changes this round** (not just restyling):
+
+1. **Panels (a)/(b)/(c) now read `_shared/derived/shared_pca_scores_v4.csv` directly** (via a
+   relative path from the MATLAB script, `../_shared/derived/shared_pca_scores_v4.csv` — not a
+   local copy, so there is zero risk of drift), instead of `prepare_fig5_v4.py` fitting its own
+   PCA as v3 did. This is the *same* file `paper_data/figure/fig4/plot_fig4_v4.py`'s panel (d)
+   reads, built once by `_shared/prepare_shared_pca_v4.py` with a deterministic sign convention
+   (`corr(PC1, q_true) > 0`). Fig.4 and Fig.5 now provably show geometrically identical latent
+   geometry — verified by inspection: the "boomerang" manifold shape in this figure's panels
+   (a)/(b)/(c) matches `fig4_v4`'s panel (d) exactly.
+
+2. **Panels (d)/(e) substantially reworked**, per the brief's explicit "too thin, too much like a
+   simple ribbon" critique of v3:
+   - **(d) stage-probability ridge curtains** (not 2-point-wide ribbons): 21 y-samples per stage
+     spanning a ±0.30 visual half-width around each stage's y-level (Early=0, Middle=1, Late=2).
+     Every cross-curtain sample at a given x shares the *exact same real* `Z = p_stage(x)` value —
+     the y-width is a pure visual extrusion, never a fabricated second dimension (asserted in
+     `logs/validation_v4_matlab.txt`). Real 304-point trajectories are PCHIP-interpolated to ~800
+     display vertices for rendering smoothness only (documented, not baked into any exported CSV);
+     real per-run markers every 12 runs stay visible on top of each curtain to keep the smoothing
+     auditable against the underlying observations. The floor (z=0) carries a **real
+     probability-mixture color strip** — `pE·Early_color + pM·Middle_color + pL·Late_color`,
+     per real x, normalized (since pE+pM+pL=1 this is a true convex blend, not an invented
+     texture) — plus a **dominant-stage transition line** from real `argmax(p_E, p_M, p_L)` (this
+     specific choice over `true_stage`, documented here: argmax of the *predicted* probabilities
+     is what the ridge curtains themselves visualize, so the transition line stays consistent with
+     what's actually plotted above it, rather than mixing predicted-probability curtains with a
+     ground-truth-derived floor line).
+   - **(e) uncertainty-driven confidence ribbon**: ribbon half-width is `w_min + u_norm·(w_max −
+     w_min)` where `u_norm = (uncertainty − min)/(max − min)` is real per-run uncertainty from
+     `hidden_representation.csv`, joined to the lifecycle trajectory 1:1 by `run_id` in
+     `prepare_fig5_v4.py` and **validated as an exact 304↔304 join** before being trusted (asserted
+     in `logs/validation_v4_python.txt`). Visual width range ≈0.015–0.060×range(q_pred) — this
+     width has **no physical q-magnitude meaning**, stated explicitly in the in-figure caption
+     itself ("no physical q-meaning") as well as here. Height (`Z`) is always the real
+     `max_prob(x)`, shared identically across the ribbon's width — uncertainty drives *only* the
+     width, never the height. Face color by real `max_prob`, using a deliberate purple→teal→yellow
+     colormap (not MATLAB's default `jet`/`parula`). Thick white center trajectory + thin dark
+     outline over the real 304-point path, real markers every 17 runs, a real floor projection of
+     `(relative_life, q_pred)` colored by `max_prob`, and real vertical stems from floor to surface
+     every 28 runs. **No `Pmax=0.8` threshold plane** — the method doesn't use that threshold, and
+     the brief explicitly says to omit it in that case.
+   - Camera/lighting: `view(-52, 25)`, `camproj('perspective')`, `pbaspect([1.7 1.0 0.95])`,
+     `camlight('headlight')` + a weak second `camlight('left')`, `lighting('gouraud')`,
+     `material('dull')`, transparent axes background (`Color='none'`), light thin grid — matching
+     the brief's recipe; view angle chosen from the brief's suggested range after comparing
+     `(-52,25)`/`(-58,27)`/`(-45,23)` renders.
+
+**True-physical-size bugs found and fixed** (3 rounds, MATLAB-specific variants of the same bug
+class documented across fig1-4's Python builds):
+1. Captions for panels (a)/(b)/(c) initially collided with their own "PC1" x-axis label text —
+   `add_caption_below`'s `gap` (inherited from v3, `0.026`) was tuned for a taller v3 canvas and
+   didn't clear 2D axis-label text at this round's more compact layout. Fixed by raising to `0.075`.
+2. That fix then overshot: with `TileSpacing='compact'` (inherited from v3), the tiledlayout left
+   almost no real space between row 1 and row 2, so row-1 captions at the larger `gap` collided
+   with row-2's *own* captions instead (annotation() overlays aren't part of tiledlayout's spacing
+   accounting, so they can only occupy whatever space physically happens to be there). Fixed by
+   switching `TileSpacing` to `'loose'`, which creates real inter-row space, combined with settling
+   on a more moderate `gap=0.058`.
+3. Both fixes needed to be verified together on the actual `paper_preview.png` render — neither one
+   alone was sufficient, and the first (gap increase) actively made things worse until paired with
+   the second (TileSpacing increase). Recorded as a specific caution: a spacing fix validated in
+   isolation can still fail once its side effects on a *different* geometric constraint are
+   accounted for; always re-render and re-view after each change, not just reason about it.
+
+**Deliberately not copied from `视觉参考效果图/fig5`**: its multi-thousand-point dense cloud (real
+data is exactly 304 C6 test runs); its fully-interpolated 2D-sampled 3D surfaces in (d)/(e) (this
+project's real observations are 1-D trajectories over relative life — a literal measured surface
+would fabricate a second experimental dimension that was never collected); any of its Spearman/
+R²/confidence numbers.
+
+## Open issues (v3, retained for history)
 
 - Panel (d)'s "Early" y-axis tick label sits close to (though does not clearly overlap) its
   caption below — MATLAB 3D axes' tick/label decorations extend beyond `ax.Position`'s nominal box

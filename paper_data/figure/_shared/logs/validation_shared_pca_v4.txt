@@ -1,0 +1,6 @@
+PASS: hidden_representation.csv has 304 rows x 64 h_* columns.
+PC1 sign flipped so corr(PC1, q_true) > 0 (display convention only, no data change).
+PASS: corr(PC1, q_true) = 0.9332 (> 0, as required).
+PC2 sign left exactly as numpy SVD produced it -- no additional sign rule specified this round.
+PASS: wrote C:\Users\banghai\Documents\BaiduSyncdisk\西工大\王婷\论文\paper_data\figure\_shared\derived\shared_pca_scores_v4.csv (304 rows, 0 NaN).
+Explained variance ratio: PC1=0.6074, PC2=0.3804.

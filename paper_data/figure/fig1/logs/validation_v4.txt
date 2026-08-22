@@ -1,0 +1,14 @@
+PASS: merged D1_main_metrics.csv with taskwise_absolute.csv(Task==D1) -> 9 rows (expected 9), classwise fields non-null.
+PASS: Multi-task TCN-GRU Acc = 0.99013 (expected ≈0.99013)
+PASS: Multi-task TCN-GRU MacroF1 = 0.99023 (expected ≈0.99023)
+PASS: Multi-task TCN-GRU M_F1 = 0.98824 (expected ≈0.98824)
+PASS: Multi-task TCN-GRU M_Rec = 0.97674 (expected ≈0.97674)
+PASS: Multi-task TCN-GRU Smooth = 0.02359 (expected ≈0.02359)
+PASS: DC-PSR Acc = 0.98684 (expected ≈0.98684)
+PASS: DC-PSR MacroF1 = 0.98710 (expected ≈0.9871)
+PASS: DC-PSR M_F1 = 0.98438 (expected ≈0.98438)
+PASS: DC-PSR M_Rec = 0.97674 (expected ≈0.97674)
+PASS: DC-PSR Smooth = 0.01876 (expected ≈0.01876)
+v4: reused v1 load()/build_heatmap_table()/validate_headline()/load_predictions() unchanged.
+v4: master physical size 178x120mm (7.008x4.724in), true-scale typography, no post-hoc shrink.
+Saved outputs: {'pdf': 'C:\\Users\\banghai\\Documents\\BaiduSyncdisk\\西工大\\王婷\\论文\\paper_data\\figure\\fig1\\outputs\\fig1_v4.pdf', 'svg': 'C:\\Users\\banghai\\Documents\\BaiduSyncdisk\\西工大\\王婷\\论文\\paper_data\\figure\\fig1\\outputs\\fig1_v4.svg', '600dpi_png': 'C:\\Users\\banghai\\Documents\\BaiduSyncdisk\\西工大\\王婷\\论文\\paper_data\\figure\\fig1\\outputs\\fig1_v4_600dpi.png', 'paper_preview_png': 'C:\\Users\\banghai\\Documents\\BaiduSyncdisk\\西工大\\王婷\\论文\\paper_data\\figure\\fig1\\outputs\\fig1_v4_paper_preview.png'}

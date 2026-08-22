@@ -173,6 +173,51 @@ are B11-vs-B12-only); its 8-fictional-method legend (CNN/ResNet18/TCN/GRU/TCN-GR
 DANN/MTL); its specific percentage numbers in panel (b); its "高平衡（理想区）" callout box text in
 panel (d) (kept the balance *map* idea, dropped the fabricated-conclusion callout box).
 
+## v4: publication-grade true-physical-size refinement
+
+`plot_fig2_v4.py` produces `outputs/fig2_v4.{pdf,svg}`, `fig2_v4_600dpi.png`, and
+`fig2_v4_paper_preview.png`, using `_shared/style_v4.py`. **Statistics unchanged a third time** —
+v4 imports v1's `load()` verbatim. Full rationale: `paper_data/figure/V4_DESIGN_AUDIT.md`. Scoring:
+`VISUAL_QA_V4.md` (status: **DONE**, scientific faithfulness 10/10, every text element ≥6.5pt).
+
+**Authored at true 178×125mm print size** (7.008×4.921in) from the start, same principle as
+fig1_v4. This surfaced several real true-scale bugs not visible at v3's larger 15.5×10.2in canvas:
+1. Panel (a)'s 3 mini-heatmaps now share one y-axis (method labels on the leftmost only) and one
+   colorbar — an explicit brief requirement — which required careful column-width tuning
+   (`width_ratios=[1.42, 1.0, 1.0, 0.15]`) so the wider first column (holding the 9 method-name
+   y-tick labels) didn't visually crowd its neighbor.
+2. **A lesson that didn't transfer between panels**: fig1_v4 found that `ax.set_title(y<0)` was the
+   right fix for short per-axes labels tightly packed together (its confusion matrices). An early
+   v4 draft of this figure applied that same trick to panel (a)'s D1/D2/D3 task tags — and it
+   caused a *new* collision (the title bled into the neighboring mini-heatmap's own tick labels) at
+   this panel's different, denser geometry. The actual correct, already-working mechanism was v3's
+   original `ax.set_xlabel(task)` — reverting to it fixed the issue immediately. Kept as an explicit
+   comment in the code: a fix validated on one panel is not automatically valid on a differently
+   shaped one; each panel's true-scale render needs checking independently.
+3. Panel (c)'s shared Multi-task-TCN-GRU/DC-PSR legend, first placed as a floating
+   `bbox_to_anchor` legend above the middle radar, kept colliding with the radar titles no matter
+   how far up it was pushed (radar `pad` and legend `bbox_to_anchor` don't compose predictably at
+   this scale). Fixed by dropping the floating legend entirely and naming the two colors directly
+   in the panel caption ("Multi-task TCN-GRU (blue) vs DC-PSR (red)") — the same
+   caption-instead-of-floating-annotation fix pattern used for panel (d) below.
+4. Panel (d)'s quadrant background originally had 4 corner text labels explaining each quadrant;
+   these collided with real point labels and the panel's own x-axis label at true physical size.
+   Replaced with 4 pale background fills only (still satisfying the brief's "4 very pale regions"
+   requirement) plus a one-line explanation in the README (this section) rather than in-figure text.
+   Also needed extra `hspace` in `panel_container()` specifically because this panel's x-axis label
+   (below the tick labels) needed clearance from the caption strip below it, not just the tick
+   labels themselves — a variant of the fig1_v4 "hspace must clear axis decorations, not just
+   `caption_height`" lesson.
+
+**Panel (d) quadrant meaning** (for the record, since it's no longer spelled out in-figure): top-
+left = low classification / low consistency; top-right = balanced (both good); bottom-left =
+classification-dominant; bottom-right = consistency-dominant. Background tint only, never implying
+new data points.
+
+**Deliberately not copied from `视觉参考效果图/fig2`** (same as v3, reconfirmed this round): its
+9-method-on-NASA/MTW-CM claim; its fictional method roster; its specific percentage numbers; its
+"高平衡（理想区）" fabricated-conclusion callout box.
+
 ## Open issues (v3)
 
 - Same font-size-at-print-scale caveat as fig1_v3: dense at native full-page-thesis size, would

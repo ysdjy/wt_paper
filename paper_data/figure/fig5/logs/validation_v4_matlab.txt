@@ -1,0 +1,8 @@
+PASS: shared_pca_scores_v4.csv rows=304 (expected 304), read directly from _shared/derived (not a local copy)
+PASS: stage_ridges_v4.csv rows=304 (expected 304)
+PASS: confidence_ribbon_v4.csv rows=304 (expected 304), carries real per-run uncertainty
+PASS: shared PCA xlim=[-5.462 6.508] ylim=[-5.154 4.580] applied identically to panels a/b/c
+PASS: 3 misclassified samples (of 304) outlined in panel (c), from real misclassified column
+PASS: panel(d) ridge curtains use 21 y-samples per stage, all sharing the same real Z=p_stage(x) at each x (no fabricated 2nd dimension)
+PASS: panel(e) ribbon half-width driven by real uncertainty, range [0.0130, 0.5118]; Z=max_prob(x) shared across ribbon width
+Saved outputs: fig5_v4_600dpi.png, fig5_v4_paper_preview.png, fig5_v4.pdf (+ .svg if supported)

@@ -159,6 +159,61 @@ arrangement, never its numbers/method-roster (which are fictional there).
    redundant per-matrix axis labels entirely and stating the row/column convention once in the
    panel's own group caption instead ("rows=true, columns=predicted").
 
+## v4: publication-grade true-physical-size refinement
+
+`plot_fig1_v4.py` produces `outputs/fig1_v4.{pdf,svg}`, `fig1_v4_600dpi.png`, and
+`fig1_v4_paper_preview.png`, using new module `_shared/style_v4.py`. **Statistics unchanged a
+third time** — v4 imports v1's `load()`/`build_heatmap_table()`/`validate_headline()`/
+`load_predictions()` verbatim. Full rationale: `paper_data/figure/V4_DESIGN_AUDIT.md`. Detailed
+scoring: `VISUAL_QA_V4.md` (status: **DONE**, scientific faithfulness 10/10, every text element
+≥6.5pt).
+
+**The structural change this round**: the figure is authored at its actual print size from the
+start — 178×120mm (7.008×4.724in) — not a big screen canvas shrunk down later. This surfaced real
+layout bugs that v3's larger 15.5×10in canvas never hit, because the same *relative* GridSpec
+`hspace` fractions produce much smaller *absolute* gaps on a physically smaller canvas:
+1. Panel (a)'s and (b)'s single-line captions, which fit fine at v3's scale, overflowed
+   horizontally into each other at 178mm width (long caption text simply doesn't fit a ~60mm-wide
+   column at 8.4pt). Fixed by wrapping both to 2 lines and shortening.
+2. The confusion-matrix method-name sub-captions, first tried via `style_v3`'s `sub_caption()`
+   with a larger `hspace` correction, over-corrected: the extra-large relative gap ate so much of
+   each matrix's own tiny cell that the matrix content itself became compressed and started
+   overlapping internally. Fixed by abandoning the nested-GridSpec sub-caption for this specific
+   case and using `ax.set_title(method, y=-0.34)` instead — appropriate here because these are
+   short, single-line labels permanently tied to one specific axes (title position is relative to
+   that axes' own transform, so it's robust without needing a separately-computed cell).
+
+**Typography**: switched to Times New Roman + STIX mathtext — confirmed (not just adopted) as the
+paper's own established convention by reading `代码/1.3.1可视化.py`, `代码/7.3主实验.py`, and
+several other original plotting scripts, all of which set exactly this `rcParams` combination.
+Every text element, including the smallest (colorbar ticks, confusion-matrix cell text, CI-inset
+labels), sits at ≥6.5pt at final print size — found to be as low as 5.2–5.9pt on the first pass and
+explicitly raised after review.
+
+**Color system**: switched to the round-4 brief's exact new hex palette (`STAGE_COLORS`,
+`METHOD_COLORS`, `BENEFIT_CMAP`, `DIVERGING_CMAP` in `style_v4.py`) — a higher-contrast, more
+print-confident palette than v2/v3's more muted navy/teal/gold, while keeping the same underlying
+design language (sequential benefit scale, diverging delta scale, consistent stage/method accents).
+Confusion matrices now use true sequential `Blues` — visually distinct from the landscape heatmap's
+`BENEFIT_CMAP`, per the brief's explicit instruction not to reuse one palette for both roles.
+
+**Content restored, not just restyled**: v3 dropped the Pareto/bootstrap-CI evidence entirely from
+the main composite. `DCPSR_Chapter4_CN_Detailed.docx` §4.2 does call for this evidence, so v4 adds
+it back as a compact bootstrap-95%-CI inset (Acc, 5 representative methods) in reclaimed corner
+whitespace inside panel (c), rather than re-introducing a full separate panel that would unbalance
+the layout — exactly the brief's own suggested resolution for this tension.
+
+**Panel (c) redesigned** as one connected diagnostic landscape for 5 representative methods (RF,
+TCN-GRU, MTF-AViTK, Multi-task TCN-GRU, DC-PSR) instead of v3's 3 visually separate blocks: M-Pre/
+M-Rec as solid bars, M→E/M→L as hatched bars in the same 0–1 axis (all four are genuinely 0–1-scale
+metrics, so no third axis is needed), Smooth as an explicitly-labeled "Smooth ↓" teal line on a
+twin axis, Rev/Jump folded into the x-tick labels themselves as real integer counts (avoids wasting
+a whole sub-panel on values that are mostly zero, while keeping every number traceable).
+
+**Deliberately not copied from `视觉参考效果图/fig1`**: its bright saturated icon/badge treatment,
+top banner, and highlighted conclusion callout box (all conflict with this round's own hard rules);
+any of its numbers (fictional/illustrative there).
+
 ## Open issues (v3)
 
 - At 6.0-6.9pt base font sizes, the dense 9×12 heatmap and 2×2 confusion matrices are sized for a
