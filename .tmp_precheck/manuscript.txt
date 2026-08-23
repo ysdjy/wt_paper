@@ -1,0 +1,1250 @@
+Degradation-Consistent Probabilistic Stage Representation for
+Cross-Condition Tool Wear Monitoring
+
+Ting Wanga,b, Jiali Chenga,b, Rongze Lia,b, Zhenggeng Yec, Keqin Wangd and Zhiqiang Caia,b,
+
+aDepartment of Industrial Engineering, School of Mechanical Engineering, Northwestern Polytechnical University, Xi'an, 710072, China
+bKey Laboratory of Internet of Things-enabled Manufacturing and Quality Control Technology for Aeronautical Equipment, Ministry of Industry
+and Information Technology, Xi'an, 710072, China
+cDepartment of Industrial Engineering, School of Management, Zhengzhou University, Zhengzhou, 450001, China
+dSchool of Management, Northwestern Polytechnical University, Xi'an, 710072, China
+
+ARTICLE INFO                                 ABSTRACT
+
+Keywords:                                    Cross-condition tool wear monitoring is challenged by shifts in sensor distributions, wear scales,
+Tool wear monitoring                         and stage boundaries caused by variations in cutting parameters, workpiece materials, and wear
+Cross-condition generalization               rates. These shifts make fixed-threshold labels and ordinary hard classifiers difficult to maintain
+Probabilistic stage representation           consistent degradation semantics, often resulting in middle-stage compression, stage-boundary
+Degradation consistency                      misclassification, and fluctuating probabilistic predictions. To address this problem, this paper
+Multi-task temporal modeling                 proposes DC-PSR, a degradation-consistent probabilistic stage representation method for cross-
+                                             condition tool wear monitoring. DC-PSR first constructs condition-relative stage semantics
+                                             using relative degradation positions and local degradation rates, then introduces ordered fine-
+                                             grained degradation states to enhance the internal structural representation of the middle stage,
+                                             and finally integrates degradation-position priors, dual-side stage inhibition, and causal ordered
+                                             filtering to convert instantaneous stage predictions into smoothly evolving probabilistic states
+                                             along the tool life cycle. Experiments on the PHM2010 and NASA Milling datasets show that
+                                             DC-PSR achieves competitive stage-discrimination performance while reducing middle-stage
+                                             compression errors, suppressing non-physical stage transitions, and producing ordered stage
+                                             probabilities consistent with continuous wear evolution. This study advances cross-condition tool
+                                             wear stage monitoring from static categorical recognition to degradation-consistent probabilistic
+                                             state representation, providing a continuously updateable state basis for tool health management
+                                             under complex machining conditions.
+
+1. Introduction
+
+    Tool wear monitoring is central to intelligent machining and quality control because progressive wear alters the tool-
+workpiece contact state and directly affects surface quality, dimensional accuracy, process stability, and production cost.
+Reliable representation of tool degradation from multi-source sensing signals is therefore a fundamental requirement
+for manufacturing health management.
+
+    With advances in multi-source sensing, deep learning, and physics-informed modeling, tool wear monitoring
+has moved beyond handcrafted feature extraction and single-point state recognition toward cross-condition trans-
+fer, multimodal fusion, uncertainty quantification, and hybrid prognostics. Cheng et al. (2022) combined feature
+normalization, attention mechanisms, and deep learning for tool wear monitoring and multi-step prediction. Yue
+et al. (2026) introduced digital twins and contrastive learning for online wear-state representation. Bernini et al.
+(2023, 2024) improved milling condition monitoring under varying cutting conditions by modeling specific cutting
+force coefficients and fusing direct wear observations with particle filtering. These studies show that effective tool
+wear monitoring requires not only recognizing the current state, but also constructing a state representation that is
+continuously updateable, physically consistent, and useful for downstream prediction.
+
+    This requirement becomes more challenging under cross-condition machining. Changes in cutting speed, feed
+rate, depth of cut, workpiece material, and tool condition simultaneously affect signal amplitudes, spectral patterns,
+wear growth rates, and stage boundaries. As a result, models trained under source conditions often fail to generalize
+
+     Corresponding author
+          wt3377@mail.nwpu.edu.cn (T. Wang); chengjiali@mail.nwpu.edu.cn (J. Cheng); rongzelee@mail.nwpu.edu.cn (R. Li);
+
+yezhenggeng@zzu.edu.cn (Z. Ye); keqinwang@nwpu.edu.cn (K. Wang); caizhiqiang@nwpu.edu.cn (Z. Cai)
+      ORCID(s): 0009-0006-3052-3197 (T. Wang); 0009-0003-0560-2879 (J. Cheng); 0009-0002-5787-7367 (R. Li);
+
+0000-0002-0636-9701 (Z. Ye); 0000-0001-5248-7672 (K. Wang); 0000-0002-7380-8110 (Z. Cai)
+
+Wang et al.: Preprint submitted to Elsevier  Page 1 of 24
+                                             DC-PSR for Cross-Condition Tool Wear Monitoring
+
+to target conditions. Existing studies have addressed this issue mainly through physics-informed learning, transfer
+learning, domain adaptation, and multimodal fusion. Physics-informed and mechanism-guided methods have improved
+robustness by incorporating machining priors or mechanical coefficients (Li et al., 2025b; Liu et al., 2026; Qin et al.,
+2026; Heydarlou et al., 2026). Transfer and domain adaptation methods have reduced distribution discrepancies
+through instance transfer, pretraining­fine-tuning, hierarchical adaptation, and frequency-domain alignment (Qiang
+et al., 2023; Zhou et al., 2025a; Xin et al., 2026; Peng et al., 2026b). Multimodal and uncertainty-aware methods have
+further enhanced wear prediction through adaptive signal processing, feature fusion, probabilistic modeling, and hybrid
+forecasting (Jin et al., 2026; Zhou et al., 2025b; Wang et al., 2025c; Zhang et al., 2026b). Despite these advances,
+most studies focus on feature alignment, continuous wear prediction, or uncertainty estimation, while the semantic
+consistency of degradation stages across conditions remains insufficiently explored.
+
+    Wear stage is a critical intermediate representation between online monitoring and remaining useful life (RUL)
+prediction. Compared with a scalar wear value, a stage state provides a more interpretable indication of the tool
+position within its degradation life cycle and supports process stability assessment and parameter adjustment. Deep
+networks, graph neural networks, hidden Markov models, and clustering methods have been widely used for wear stage
+monitoring. Representative studies include dynamic graph isomorphism networks for multi-source stage monitoring
+(Cao et al., 2025), physics-informed and improved HMMs for wear-state transition modeling (Zhu et al., 2024; Tang
+et al., 2026), unsupervised clustering and deep learning for stage partitioning (Xu et al., 2025; Su et al., 2026),
+and acoustic-emission entropy features for revealing stage-dependent dynamics (Dong et al., 2026). However, these
+methods typically rely on fixed wear thresholds, empirical rules, or hard classification accuracy. Under cross-condition
+settings, absolute thresholds are easily distorted by differences in wear scale, growth rate, and failure boundary.
+Consequently, a model may learn condition-specific wear intervals rather than relative degradation states within the
+tool life cycle.
+
+    Another limitation is that hard stage classification cannot adequately represent the continuity and ordering of tool
+degradation. Tool wear is gradual and largely irreversible; thus, stage states should evolve from early to middle and
+late in an ordered manner rather than fluctuate across adjacent cuts. This issue is most critical for the middle stage.
+The middle stage usually covers the stable wear period, but it is not a static intermediate class. Instead, it contains
+a continuous internal transition from early stable wear to later accelerated degradation. With ordinary three-class
+supervision, the middle stage is often treated as a residual region between early and late. This may compress the
+stable wear period from both sides, causing samples to remain incorrectly in early, shift prematurely to late, or produce
+highly fluctuating stage probabilities. Recent studies have highlighted the internal structural differences, continuity,
+and irreversibility of tool wear processes (Zhao et al., 2026; Niu et al., 2025). These observations suggest that cross-
+condition stage modeling should move beyond macro-level hard labels toward probabilistic stage representation with
+relative degradation semantics, internal stage structure, and temporal ordering constraints.
+
+    Multi-task learning, physical constraints, and probabilistic inference provide useful foundations for such representa-
+tion. Multi-task learning can enhance degradation perception through shared representations across related tasks, such
+as joint modeling of tool wear and breakage, surface quality, or roughness prediction (Mo et al., 2025; Mei et al., 2026;
+Huang et al., 2026; Yang et al., 2026a). Li et al. (2025a) improved industrial anomaly detection using multi-stage
+one-class learning. Physical constraints and mechanism-driven models have further improved the consistency and
+interpretability through probabilistic state-space fusion, mechanism-driven data modeling, filtering-based estimation,
+online calibration, and physics-informed learning frameworks (Ma et al., 2023; Wang et al., 2025a; Feng et al., 2026;
+Han et al., 2026; Wang et al., 2025b; Zhang et al., 2026a). In addition, Li et al. (2023) connected stage recognition,
+SVR, and particle filtering for wear prediction, showing that stage information can serve as a useful preceding
+state for prognostics. Nevertheless, existing studies mostly treat stage information as a label, auxiliary variable, or
+preprocessing result. A continuous, ordered, and interpretable probabilistic stage representation for cross-condition
+tool wear monitoring remains underdeveloped.
+
+    To address this gap, this paper argues that cross-condition wear stage representation should satisfy three
+requirements. First, stage definitions should avoid dependence on fixed absolute thresholds and preserve relative
+degradation semantics across conditions. Second, the model should characterize the fine-grained internal structure
+of the middle stage to prevent compression of the stable wear period. Third, the output should not be a single hard
+label, but a probabilistic stage state that evolves smoothly and monotonically along the tool life cycle. Motivated by
+these requirements, this paper proposes a degradation-consistent probabilistic stage representation method, termed
+DC-PSR. The proposed method constructs relative stage semantics using relative degradation positions and local
+degradation rates, enhances middle-stage representation through ordered fine-grained degradation states, and integrates
+
+Wang et al.: Preprint submitted to Elsevier  Page 2 of 24
+                                             DC-PSR for Cross-Condition Tool Wear Monitoring
+
+degradation-position priors, dual-side stage inhibition, and causal ordered filtering to generate degradation-consistent
+probabilistic stage states.
+
+    The main contributions of this paper are summarized as follows.
+    (1) A degradation-consistent probabilistic stage representation framework is proposed for cross-condition tool wear
+monitoring. Instead of fixed wear thresholds, the framework uses condition-relative degradation states and online
+relative features to reduce signal-scale drift and stage-related representation bias, preserving consistent life-cycle
+semantics across conditions.
+    (2) A fine-grained-state-assisted multi-task temporal model is developed. Ordered fine-grained substates are
+constructed in the relative degradation space and jointly learned with macro-stage classification and continuous
+degradation-position estimation via TCN-GRU. This design enables the model to capture both stage boundaries and
+the internal hierarchy of the middle stage.
+    (3) A degradation-consistent probabilistic inference mechanism is designed. By integrating raw stage probabilities,
+fine-state cues, and degradation-position priors with dual-side inhibition and causal ordered filtering, the mechanism
+suppresses non-physical stage transitions and converts instantaneous stage decisions into smoothly evolving probabilis-
+tic states along the tool life cycle.
+    The remainder of this paper is organized as follows. Section 2 formulates the problem and presents the overall
+framework. Section 3 introduces the proposed method. Section 4 describes the datasets, experimental settings, and
+evaluation metrics. Section 5 reports the experimental results. Section 6 discusses the effectiveness, applicability, and
+limitations. Section 7 concludes the paper.
+
+2. Problem Formulation
+
+    An ideal probabilistic stage representation for tool wear monitoring should satisfy three requirements: semantic
+consistency across conditions, separability of the middle-stage structure, and ordered evolution of stage probabilities.
+Accordingly, stage monitoring is formulated as a probabilistic state representation problem rather than a single-point
+classification task.
+
+    Let , denote the input feature window of the -th cut under condition . The objective is to estimate the probability
+distribution of the current tool state over three macro wear stages:
+
+fi,n al = [fi,n al, , fi,n al, , fi,n al,]   (1)
+
+where , , and  denote the early, middle, and late stages, corresponding to the initial wear, stable wear, and
+accelerated wear stages, respectively. Unlike a hard label, fi,n al not only identifies the most likely current stage, but
+also characterizes the continuous evolution of stage confidence along the degradation process, especially the transition
+uncertainty and stage-related reliability near stage boundaries.
+
+    The overall framework of DC-PSR is shown in Fig. 1. It contains three coupled components: relative stage
+semantics, fine-grained degradation states, and ordered probabilistic inference. Relative stage semantics alleviate cross-
+condition shifts in degradation scale and stage boundaries. Fine-grained states enhance the internal representation of the
+middle stage. The TCN-GRU network and ordered probabilistic inference provide instantaneous stage discrimination
+and life-cycle consistency constraints, respectively.
+
+    Through this formulation, DC-PSR converts stage monitoring into probabilistic state modeling under multiple
+degradation constraints, enabling the output to represent both stage likelihood and degradation-order consistency. The
+main symbols used in this paper are summarized in Table 1.
+
+3. Proposed Method
+
+    The objective of DC-PSR is to transform cross-condition tool wear stage monitoring from discrete category
+discrimination into degradation-consistent probabilistic state representation. Accordingly, DC-PSR is developed
+through three components: condition-relative stage semantics, fine-grained degradation state modeling, and ordered
+probabilistic inference.
+
+3.1. Condition-Relative Stage Semantics
+    To maintain consistent degradation semantics across conditions, a condition-relative degradation scale is first
+
+constructed. Let  , be the flank wear of the -th cut under condition . After smoothing the wear sequence as
+
+Wang et al.: Preprint submitted to Elsevier  Page 3 of 24
+                                                 DC-PSR for Cross-Condition Tool Wear Monitoring
+
+                                                 Fig. 1. Overall framework of DC-PSR.
+
+Table 1                                          Definition                      Symbol    Definition
+Main symbols and definitions.
+                                                 Cutting condition                         Cut index
+                                         Symbol  Flank wear                        ,       Smoothed flank wear
+                                                 Relative degradation position   n ,o r m  Normalized local wear rate
+                                                 Macro-stage label               ,         Fine-grained state
+                                          ,      Feature vector                  ,,        Sliding window
+                                         ,       Raw stage probability           ,         Fine-state probability
+                                         ,       Fine-derived stage probability  m,ix      Estimated degradation position
+                                         ,                                       fi,n al
+                                         ra,w    Position-prior probability                Mixed stage probability
+                                         fi,n e  Ordered stage probability        , ,      Final stage probability
+                                         p,rior  Raw-probability weight                    Fine-probability weight
+                                         ,       Ordered-probability weight                Stage thresholds
+                                         
+                                         
+
+  ,, the relative degradation position is defined as
+
+,  =         , - min(  )                                                                                                              (2)
+      max(  ) - min(  ) +                                                                                                  Page 4 of 24
+
+Wang et al.: Preprint submitted to Elsevier
+                    DC-PSR for Cross-Condition Tool Wear Monitoring
+
+where ,  [0, 1] denotes the relative position of the current tool within its condition-specific life cycle, and  is a
+small constant. The local degradation rate is computed from the first-order difference of ,:
+
+, = , - ,-1                                                                               (3)
+
+and then smoothed and normalized as n,orm. Here, , represents the degradation position, while n,orm reflects the
+local acceleration of wear. The macro-stage label is assigned by
+
+,  =  ,  ,   ,                                                                            (4)
+      ,  ,   or n,orm   ,
+      , otherwise.
+
+where ,  {, , }. The thresholds , , and  are determined by condition-specific quantiles:
+
+ = 0.30,  = 0.72,  = 0.78                                                                 (5)
+
+    Fig. 2 shows that stage boundaries vary across conditions, supporting the need to describe tool states using relative
+degradation positions rather than fixed absolute wear thresholds.
+
+                    Fig. 2. Condition-relative stage partitioning.
+
+    Although relative stage semantics reduce label-level inconsistency, sensing features may still suffer from cross-
+
+condition scale drift. Therefore, online condition-relative features are constructed using only current and historical
+observations. For the -th raw sensing feature (,) , three online features are extracted.
+
+    First, the online relative standardized feature is defined as
+
+,,  =  (,) - ,,                                                                           (6)
+        ,, + 
+
+where ,, and ,, are computed from observations 1, ... ,  under the current condition only. This feature measures
+the deviation of the current observation from its historical distribution.
+
+    Second, the local variation feature is defined as
+
+,, = (,) - (,)-1                                                                          (7)
+
+which captures the short-term change of the feature between adjacent cuts.
+
+Wang et al.: Preprint submitted to Elsevier                                               Page 5 of 24
+                            DC-PSR for Cross-Condition Tool Wear Monitoring
+
+Third, the online relative rank feature is defined as
+
+ra,n,k  =  1        (           )                                            (8)
+                     (,)    (,)
+
+              =1
+
+where () is the indicator function. It represents the relative rank of the current observation among historical samples
+of the same condition.
+
+    To select features that are both degradation-relevant and cross-condition stable, a comprehensive score is designed
+by combining stage discriminability, degradation relevance, monotonicity, and distribution stability. Inspired by Cheng
+et al. (2026), Ismail et al. (2022), and Shang et al. (2014), the score of feature  is defined as
+
+ = 1(, ) + 2(, ) + 3|(, )| - 4                                               (9)
+
+where (, ) measures stage discriminability, (, ) measures degradation relevance, |(, )| is the absolute
+Spearman correlation coefficient, and  measures distribution instability across training conditions. Taking C1 and
+
+C4 as an example,
+
+        =      |1, - 4, |                                                    (10)
+           0.5(1, + 4, ) + 
+
+where 1, , 4, , 1, , and 4, are the means and standard deviations of  under C1 and C4. A larger  indicates
+stronger distribution discrepancy and weaker cross-condition stability.
+
+    Through this procedure, stage labels are defined by relative degradation semantics, and sensing inputs are
+
+represented by online relative variations rather than absolute magnitudes.
+
+3.2. Fine-Grained Degradation State Modeling
+
+    Relative stage labels alleviate cross-condition semantic shifts, but they do not fully capture the internal structure
+
+of each stage, especially the continuous variation within the middle stage. To address this issue, ordered fine-grained
+
+degradation states are constructed and introduced as auxiliary supervision.
+    Based on the relative degradation position , and the normalized local degradation rate n,orm, a two-dimensional
+
+degradation state variable is defined as
+
+, = [,, n,orm]                                                               (11)
+
+which jointly describes the positional and dynamic characteristics of wear evolution.
+
+    A Gaussian Mixture Model (GMM) is then used to model , in an unsupervised manner. Given  fine-grained
+states, the density function is
+
+           
+() =  (  , )                                                                 (12)
+
+           =1
+
+whe=r1e=, 1., and  denote the mixture weight, mean vector, and covariance matrix of the -th component, with
+    For each sample ,, the raw component label is obtained by maximum posterior assignment:
+
+,  =    arg max   (    ,)                                                    (13)
+
+                
+
+    Since GMM component indices are unordered, the components are reordered according to their mean relative
+
+degradation positions in the training set. Let  be the sample set assigned to component . Its average degradation
+position is
+
+  =      1                                                                   (14)
+                   ,
+
+             , 
+
+Wang et al.: Preprint submitted to Elsevier                                  Page 6 of 24
+                                      DC-PSR for Cross-Condition Tool Wear Monitoring
+
+where  is the number of samples in . Sorting  in ascending order converts the original clusters into ordered
+fine-grained degradation states:
+
+       ,  {0, 1, 2, 3, 4}                                                                  (15)
+
+where 0 and 4 correspond to the lowest and highest relative degradation levels, respectively. The ordered states are
+then mapped to macro stages as
+
+       0  , 1, 2, 3  , 4                                                                   (16)
+
+    During training, , serves as an auxiliary classification target, allowing the shared representation to learn both
+stage boundaries and internal degradation hierarchy. The five-state probability output is
+
+       , = [,0 , ,1 , ,2 , ,3 , ,4 ]                                                       (17)
+
+According to the above mapping, the corresponding three-stage auxiliary probabilities are
+
+                      fi,n e, = ,0 ,                                                       (18)
+       fi,n e, = ,1 + ,2 + ,3 ,
+
+                       fi,n e, = ,4
+
+Thus,
+
+       fi,n e = [fi,n e, , fi,n e, , fi,n e,]                                              (19)
+
+Fig. 3 summarizes the fine-grained state construction and stage mapping process.
+
+       Fig. 3. Fine-grained state construction and stage mapping.
+
+3.3. Multi-Task Temporal Modeling and Ordered Probabilistic Inference
+
+    After the procedures in Sections 3.1 and 3.2, each cutting sample is assigned a macro-stage label ,, a fine-grained
+degradation state ,, and a relative degradation position ,. A multi-task temporal network is then built to learn a
+shared degradation representation from these supervisory signals, and ordered probabilistic inference is used to convert
+
+instantaneous stage predictions into life-cycle-consistent stage probabilities.
+    Let ,   denote the condition-relative feature vector of the -th cut under condition . A sliding window of
+
+length  is used to form the temporal input:
+
+       , = [,-+1, ,-+2, ... , ,]  ×                                                        (20)
+
+    Tool wear stage is a temporal degradation state rather than an isolated sample attribute. Peng et al. (2026a) showed
+that local variation patterns and cross-time dependencies are important for RUL prediction based on multi-scale
+
+Wang et al.: Preprint submitted to Elsevier                                                Page 7 of 24
+                        DC-PSR for Cross-Condition Tool Wear Monitoring
+
+time­frequency milling force information. Accordingly, a TCN-GRU backbone is adopted, where TCN captures local
+degradation patterns and GRU models stage-evolution dependencies:
+
+T,C N = TCN(,),                                                          (21)
+
+, = GRU(T,C N)
+
+where , is the shared degradation representation.
+    Three output heads are built on ,: a macro-stage classification head, a fine-grained state classification head, and
+
+a degradation-position regression head. They are respectively defined as
+
+ra,w = Sof tmax(, + ),
+
+ra,w = [ra,w , , ra,w , , ra,w ,],                                       (22)
+ , = Sof tmax(, + ),
+
+, = (, + ).
+
+where () denotes the sigmoid activation function, ra,w denotes the raw early­middle­late probability, , corresponds
+to the ordered fine-grained states 0, ... , 4, and ,  [0, 1] is the estimated relative degradation position.
+
+    The overall training objective is
+
+ = stage + fine +  + mono                                                (23)
+
+where stage and fine are cross-entropy losses for macro-stage and fine-grained state classification,  is the Smooth
+L1 loss for degradation-position regression, and mono is a weak monotonic regularization term.
+
+    Although ra,w provides sensing-based instantaneous discrimination, it may be affected by noise, local disturbances,
+and cross-condition shifts. Therefore, a degradation-position prior is constructed from ,. Let ,  , and  denote
+
+the position centers of the early, middle, and late stages. The basic prior is
+
+                  [- (, - )2  ]
+                         22
+(,) = exp                           ,          {, , }                    (24)
+
+To reduce two-sided compression of the middle stage, premature-early inhibition and late suppression are
+
+introduced as
+
+               [        ]
+ (,) =   ( - ,) ,
+
+ (,) = [ (,) (,)],                                                       (25)
+(,) =  (, - ) ,
+
+(,) = (,)(,).
+
+Here, () suppresses persistently high early probabilities after the early region, whereas () suppresses premature
+assignment to the late stage. To avoid over-compression of the middle stage, a middle-floor prior is imposed:
+
+ (,) = max( (,), min)                                                    (26)
+
+The adjusted priors are normalized as
+
+                     [                       ]
+p,rior = Normalize  (,),  (,), (,)
+                                                                         (27)
+
+    The final probability integrates raw stage discrimination, fine-state auxiliary information, and degradation-position
+constraints. First, the auxiliary probability is computed by
+
+au,x =  fi,n e + (1 -  )p,rior                                           (28)
+
+Wang et al.: Preprint submitted to Elsevier                              Page 8 of 24
+                          DC-PSR for Cross-Condition Tool Wear Monitoring
+
+and then fused with the raw stage probability:
+
+m,ix = ra,w + (1 - )au,x                                                                                   (29)
+
+where  and  are fusion weights. This yields a mixed probability that combines sensing-based discrimination, fine-
+grained degradation structure, and position-aware constraints.
+
+    Since tool wear generally follows the ordered progression from early to middle and late, causal ordered filtering
+is further used to suppress reverse transitions and non-physical probability fluctuations. The stage transition matrix is
+defined as
+
+   0.9400 0.0550 0.0050
+ = 00..00000550          00..90480905
+                 0.9550                                                                                    (30)
+                 0.0100
+
+For the -th cut, the ordered stage probability is recursively updated by
+
+,  =  (,-1)  m,ix                                                                                          (31)
+      
+        [(,-1)           m,ix]
+
+where  denotes element-wise multiplication. To balance temporal smoothness and boundary responsiveness, the
+mixed and ordered probabilities are finally combined as
+
+fi,n al = (1 - )m,ix + ,                                                                                   (32)
+
+where  is the fusion weight of the ordered probability.
+    The final probabilistic stage representation is
+
+fi,n al = [fi,n al, , fi,n al, , fi,n al,]                                                                 (33)
+
+Overall, Fig. 4 summarizes the multi-task degradation representation and ordered stage inference process.
+
+3.4. Algorithm Procedure
+    The overall implementation of DC-PSR is divided into two stages: offline training and online monitoring. In the
+
+offline stage, relative stage semantics are constructed, fine-grained degradation states are mined, and the multi-task
+temporal network is trained. In the online stage, the probabilistic stage representation is generated using the current
+and historical monitoring information. The detailed procedure is summarized in Algorithm 1.
+
+4. Experimental Settings
+
+4.1. Datasets
+    Two public milling datasets, PHM2010 and NASA Milling, are used for validation. PHM2010 provides multi-
+
+source sensing signals and flank wear measurements under several milling conditions and serves as the main benchmark
+for cross-condition evaluation. NASA Milling contains more cutting cases but fewer samples per case, and is used as
+an external validation dataset under small-sample, multi-case settings.
+
+    After feature extraction from raw signals, all data are organized as run-level feature sequences. Yang et al. (2026b)
+also showed that milling sensing features can effectively support tool wear state recognition. Fig. 5 shows the PHM2010
+high-speed milling platform.
+
+    To further examine the link between stage state and the reliability of continuous degradation representation, the
+wear-estimation errors of aligned window samples in the external test condition are analyzed, as shown in Table 2. Here,
+Bias is defined as mean(   -  ), where negative and positive values indicate underestimation and overestimation,
+respectively. The results reveal clear stage-related bias: the early stage is systematically underestimated, the late stage
+is systematically overestimated, and the middle stage shows relatively smaller errors. This indicates that stage state is
+not merely a discrete class label, but also reflects the reliability variation of degradation representation across different
+life-cycle regions. Therefore, a continuous, ordered, and degradation-consistent probabilistic stage state is necessary.
+
+    Fig. 6 shows the time- and frequency-domain characteristics of milling force signals at different wear stages. For
+the test condition, , and the stage labels derived from the complete VB sequence are used only as offline evaluation
+references.
+
+Wang et al.: Preprint submitted to Elsevier                                Page 9 of 24
+                           DC-PSR for Cross-Condition Tool Wear Monitoring
+
+             Fig. 4. Multi-task degradation representation and ordered stage inference.
+
+Algorithm 1 DC-PSR for Cross-Condition Tool Wear Monitoring
+
+Input: Training data  = {,,  ,}; window length ; fine-state number ; fusion weights ,  , .
+Output: Final stage probability fi,n al, predicted stage ,, and degradation position ,.
+
+     Part 1. Offline training and prior construction
+
+1. for each training condition    do
+2. Smooth  , and compute , and n,orm.
+3. Define ,  {, , } using  , , and .
+4. end for
+
+5. Select sensitive and condition-invariant features using the multi-objective score .
+6. Fit a -component GMM on , = [,, n,orm] .
+7. Map ordered fine-grained states ,  {0, ... , -1} to macro stages.
+8. Train the TCN-GRU network by minimizing  = stage + fine +  + mono.
+
+   Part 2. Online monitoring and ordered probabilistic inference
+
+ 9.  for  each time step   ifneatthueretess{t con}diatinodn     do
+10.       Generate online                                    construct sliding-window
+11.       Infer ra,w , ,, and , via parallel output heads.                             ,.
+
+12.       Map , to fi,n e, and construct p,rior from , with dual-side inhibition.
+
+13. Fuse raw probability, fine-state probability and position prior to obtain m,ix.
+
+14. Apply causal ordered filtering with , and generate fi,n al = (1 - ) m,ix + ,
+          Assign the predicted stage , = arg max{,,} fi,n al,.
+15.
+
+16. end for
+
+Wang et al.: Preprint submitted to Elsevier                                                Page 10 of 24
+DC-PSR for Cross-Condition Tool Wear Monitoring
+Fig. 5. PHM2010 tool wear experimental platform.
+
+                                             Fig. 6. Milling force signals at different wear stages.  Page 11 of 24
+Wang et al.: Preprint submitted to Elsevier
+                   DC-PSR for Cross-Condition Tool Wear Monitoring
+
+Table 2
+Stage-related bias in wear-value estimation.
+
+                   True stage                 Samples  MAE    RMSE    Bias              MaxAE
+
+                   early                         106   12.21  12.52  -12.21              16.78
+                   middle                         97   4.52    5.68  -2.75               11.26
+                   late                           93   12.35  13.21  12.34               20.63
+
+Table 3
+Baseline methods.
+
+                   ID Method                  Stage definition       Model
+
+                   B1 Fixed-stage Rule        Fixed threshold        Rule
+
+                   B2 Relative-stage Rule     Condition-relative stage Rule
+
+                   B3 Fixed-stage RF          Fixed threshold        RF
+
+                   B4 Relative-stage SVM      Condition-relative stage SVM
+
+                   B5 Relative-stage RF       Condition-relative stage RF
+
+                   B6 Relative-stage XGBoost Condition-relative stage XGBoost
+
+                   B7 Relative-stage MLP      Condition-relative stage MLP
+
+                   B8 Relative-stage TCN      Condition-relative stage TCN
+
+                   B9 Relative-stage GRU      Condition-relative stage GRU
+
+                   B10 Relative-stage TCN-GRU Condition-relative stage TCN-GRU
+
+                   B11 Multi-task TCN-GRU     Condition-relative stage TCN-GRU + auxiliary heads
+
+                   B12 DC-PSR                 Condition-relative stage Proposed
+
+Table 4
+Cross-condition generalization tasks.
+
+                   Dataset             Task   Training conditions                       Test conditions
+                   PHM2010
+                                       D1     C1 + C4                                   C6
+                   NASA Milling        D2     C4 + C6                                   C1
+                                       S1     C4                                        C1
+                                       S2     C6                                        C1
+                                       N1     1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14    3, 12, 15, 16
+                                       N2     1, 3, 4, 5, 6, 7, 11, 12, 13, 14, 15, 16  2, 8, 9, 10
+                                       N3     1, 2, 4, 6, 7, 8, 9, 11, 13, 14, 15, 16   3, 5, 10, 12
+                                       N4     1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 14, 15    8, 12, 13, 16
+
+4.2. Experimental Design
+    Three experiments are conducted to evaluate DC-PSR: main comparison, cross-condition generalization, and
+
+ablation analysis. They assess the overall stage representation capability, generalization stability under different transfer
+settings, and the contribution of each module, respectively. The main comparison is performed on the C1+C4 C6
+task, with the compared methods listed in Table 3.
+
+    The baselines are designed with reference to recent studies on deep temporal modeling for small-sample tool
+wear prediction (Zhang et al., 2025; Zhu et al., 2026). B1­B3 examine fixed-threshold stage definitions; B4­B6 are
+conventional machine-learning classifiers; B7­B10 are deep temporal baselines; B11 is the multi-task TCN-GRU
+baseline; and B12 is the complete DC-PSR.
+
+    Since heterogeneous working conditions can affect degradation representation and RUL prediction stability (Ye
+et al., 2025), additional cross-condition tasks are constructed on PHM2010 and NASA Milling, as shown in Table 4.
+PHM2010 is used for dual-source and single-source transfer tasks, whereas NASA Milling provides external cross-case
+validation under small-sample and more heterogeneous cutting conditions.
+
+    The ablation study uses the same data split, feature input, and backbone network. Fine-grained state assistance,
+degradation-position prior, ordered filtering, and final fusion are progressively introduced to quantify their effects. The
+settings are listed in Table 5.
+
+4.3. Parameter and Evaluation Metrics
+    DC-PSR contains network parameters and probability-fusion parameters. Network parameters are selected through
+
+bidirectional proxy validation between training conditions, while fusion parameters are determined using the internal
+validation set. The final settings are given in Table 6.
+
+Wang et al.: Preprint submitted to Elsevier                                                              Page 12 of 24
+                         DC-PSR for Cross-Condition Tool Wear Monitoring
+
+Table 5                  ID Method                 Information used                      Output
+Ablation settings.
+                         A1 Raw                    Stage head                            ra,w
+Table 6
+Model parameters.        A2 Raw + Fine Stage head + Fine-state head                      ra,w + fi,n e
+
+Table 7                  A3 Raw + Prior Stage head + -prior                              ra,w + p,rior
+Evaluation metrics.
+                         A4 Mix                    Stage head + Fine-state head + -prior m,ix
+
+                         A5 Ordered                Mix + ordered filtering               ,
+
+                         A6 Final                  All                                   fi,n al
+
+                         Category     Parameter         Description                      Value
+                         Network
+                                      Window length     Input window length              12
+                         Fusion       Dropout           Dropout rate                     0.20
+                                      Learning rate     Learning rate                    0.0005
+                                      TCN channels      Channels of TCN layers           (32, 64, 64)
+                                      GRU hidden size   Hidden size of GRU               64
+                                                        Raw-probability weight           0.75
+                                                        Fine-state probability weight    0.30
+                                      Temperature       Probability temperature scaling  1.20
+                                      min               Middle-prior floor               0.12
+                                                        Late-suppression threshold       0.66
+                                                        Premature-early threshold        0.38
+                                                        Ordered-probability weight       0.25
+
+                         Category            Metrics                        Description
+
+                         Overall             Acc, Macro-F1                  Overall stage recognition
+                         Stage-wise          E-F1, M-F1, L-F1               Per-stage recognition
+                         Middle stage        M-Pre, M-Rec, M-F1             Middle-stage reliability
+                         Misclassification     ,                            Middle-stage error direction
+                         Consistency         Rev, Jump, Smooth              Stage-order stability
+                         Regression          q-MAE, q-RMSE, q-2             Position estimation
+
+    The evaluation metrics cover classification accuracy, middle-stage reliability, stage-sequence consistency, proba-
+
+bility smoothness, and degradation-position estimation. Let  denote the number of samples whose true stage is 
+and predicted stage is . The two middle-stage misclassification rates are defined as
+
+      =                               +  ,
+                         + 
+                                                                                                          (34)
+                             
+      =                  +            +   
+
+where    measures the proportion of middle samples misclassified as early, and    measures the proportion
+misclassified as late.
+
+    Smooth measures the average variation of stage probability distributions between adjacent cuts:
+
+      =              1                - fi,n-al11                                                         (35)
+                     -1      fi,n al
+
+                         =2
+
+where  is the test-sequence length. A smaller Smooth indicates smoother probability evolution. The complete metric
+set is summarized in Table 7.
+
+    The overall experimental workflow is shown in Fig. 7.
+
+Wang et al.: Preprint submitted to Elsevier                                                               Page 13 of 24
+DC-PSR for Cross-Condition Tool Wear Monitoring
+
+                                             Fig. 7. Experimental workflow.
+
+5. Experimental Analysis
+
+5.1. Main Comparison Results
+    This section compares B1­B12 on the D1 task. The results are reported in Table 8. Beyond classification accuracy,
+
+the analysis focuses on middle-stage error direction and stage-probability consistency.
+    As shown in Table 8, rule-based methods perform poorly in cross-condition stage monitoring, indicating that fixed
+
+thresholds or simple relative rules are insufficient for stable stage-state representation. Conventional machine-learning
+and deep temporal models improve classification performance, but still suffer from inadequate middle-stage coverage
+or fluctuating probabilistic outputs. Some methods achieve high overall accuracy but exhibit large Smooth values,
+suggesting unstable stage-probability sequences that are unsuitable for continuous state modeling.
+
+    Compared with B10 and other single-task temporal models, B11 substantially improves stage discrimination,
+showing that fine-grained classification and degradation-position estimation enhance the shared degradation repre-
+sentation. B12 achieves slightly lower hard-classification scores than B11, but maintains a high overall level while
+reducing    to zero and further decreasing Smooth. This indicates that DC-PSR does not simply maximize
+hard classification accuracy; instead, it calibrates instantaneous stage outputs into smoother probabilistic states with
+stronger degradation consistency.
+
+    Fig. 8 compares the overall performance of different methods. B12 maintains a strong balance between stage
+discrimination and probability stability. The normalized confusion matrices in Fig. 9 support the same conclusion.
+B12 preserves clear stage boundaries and effectively reduces premature misclassification from the middle stage to the
+late stage.
+
+    Fig. 10 further evaluates middle-stage recognition, misclassification direction, and stage consistency. B12 sup-
+presses premature middle-to-late transitions while keeping Rev and Jump at zero and achieving a low Smooth
+value. This confirms that ordered probabilistic inference can reduce non-physical transitions and improve temporal
+consistency of stage probabilities.
+
+Wang et al.: Preprint submitted to Elsevier                                  Page 14 of 24
+                          DC-PSR for Cross-Condition Tool Wear Monitoring
+
+Table 8
+Main comparison results.
+
+ID Acc  Macro-F1 E-F1                        M-F1 L-F1  M-Pre M-Rec       Rev Jump Smooth
+
+B1 0.6447 0.6145          0.4587 0.5970 0.7879 0.5755 0.6202 0.0000 0.3798 0         0   0.0132
+B2 0.5757 0.4871                                                                         0.0726
+B3 0.9474 0.9490          0.7304 0.0000 0.7309 0.0000 0.0000 0.4806 0.5194 5         11  0.1096
+B4 0.8651 0.8695                                                                         0.1578
+B5 0.9770 0.9773          0.9231 0.9350 0.9889 0.9829 0.8915 0.1085 0.0000 5         0   0.1105
+B6 0.8783 0.8765                                                                         0.1390
+B7 0.8618 0.8651          0.8737 0.8379 0.8970 0.8548 0.8217 0.1783 0.0000 9         0   0.1554
+B8 0.9539 0.9550                                                                         0.1245
+B9 0.9539 0.9560          0.9651 0.9723 0.9945 0.9919 0.9535 0.0388 0.0078 5         0   0.0398
+B10 0.8684 0.8746                                                                        0.0219
+B11 0.9901 0.9902         0.8054 0.8702 0.9540 0.7949 0.9612 0.0388 0.0000 9         0   0.0236
+B12 0.9868 0.9871                                                                        0.0188
+                          0.8889 0.8174 0.8889 0.9307 0.7287 0.1628 0.1085 16 0
+
+                          0.9385 0.9426 0.9838 1.0000 0.8915 0.0853 0.0233 10 0
+
+                          0.9825 0.9426 0.9430 1.0000 0.8915 0.0233 0.0853 1         0
+
+                          0.8317 0.8261 0.9659 0.9406 0.7364 0.2636 0.0000 0         0
+
+                          0.9825 0.9882 1.0000 1.0000 0.9767 0.0233 0.0000 0         0
+
+                          0.9825 0.9844 0.9945 0.9921 0.9767 0.0233 0.0000 0         0
+
+                                             Fig. 8. Overall method comparison.
+
+                                             Fig. 9. Normalized confusion matrices.
+
+    Overall, DC-PSR is advantageous not because it maximizes a single classification metric, but because it jointly
+improves stage discrimination, middle-stage coverage, and ordered probability evolution.
+
+5.2. Cross-Condition Generalization Results
+    To evaluate the generalization ability of DC-PSR under different transfer difficulties, dual-source and single-source
+
+cross-condition tasks are first constructed on PHM2010. B9­B12 are compared, and the results are shown in Table 9.
+    Table 9 shows that B9 and B10 exhibit noticeable fluctuations across transfer tasks, especially in D1 and S2, where
+
+middle-stage recall is insufficient. This suggests that single temporal networks can capture certain degradation patterns,
+but their stage semantics remain unstable when source and target conditions differ substantially. In contrast, B11 and
+
+Wang et al.: Preprint submitted to Elsevier                                              Page 15 of 24
+                                  DC-PSR for Cross-Condition Tool Wear Monitoring
+
+                                      Fig. 10. Middle-stage and consistency metrics.
+
+Table 9
+PHM2010 cross-condition results.
+
+Task Method Acc                              Macro-F1 M-F1 M-Rec       Rev Smooth
+
+D1 B9                             0.8026     0.8013  0.6970 0.5349 0.2713 0.1938 1              0.0300
+                                  0.7928     0.7904  0.6769 0.5116 0.2713 0.2171 1              0.0391
+        B10                       0.9868     0.9871  0.9844 0.9767 0.0233 0.0000 0              0.0247
+                                  0.9836     0.9840  0.9805 0.9767 0.0233 0.0000 0              0.0192
+        B11                       0.8816     0.8840  0.8407 0.8559 0.0000 0.1441 0              0.0152
+                                  0.8816     0.8840  0.8407 0.8559 0.0000 0.1441 0              0.0186
+        B12                       0.8553     0.8575  0.7963 0.7748 0.0000 0.2252 0              0.0136
+                                  0.8651     0.8674  0.8128 0.8018 0.0000 0.1982 0              0.0145
+D2 B9                             0.8849     0.8869  0.8416 0.8378 0.0090 0.1532 1              0.0232
+                                  0.9145     0.9177  0.8898 0.9459 0.0180 0.0360 1              0.0208
+        B10                       0.9145     0.9172  0.8898 0.9459 0.0000 0.0541 0              0.0144
+                                  0.9243     0.9271  0.9030 0.9640 0.0000 0.0360 0              0.0134
+        B11                       0.7961     0.8017  0.6837 0.6036 0.3333 0.0631 2              0.0412
+                                  0.8816     0.8846  0.8571 0.9730 0.0000 0.0270 0              0.0185
+        B12                       0.9375     0.9406  0.9212 0.9876 0.0000 0.0000 0              0.0196
+                                  0.9309     0.9341  0.9136 1.0000 0.0000 0.0000 0              0.0144
+S1      B9
+
+        B10
+
+        B11
+
+        B12
+
+S2      B9
+
+        B10
+
+        B11
+
+        B12
+
+Table 10
+Average cross-condition performance.
+
+Method  Acc                                  Macro-F1         M-F1             M-Rec            Smooth
+
+B9      0.8413 ± 0.0485                      0.8435 ± 0.0485  0.7658 ± 0.0817  0.7080 ± 0.1629  0.0272 ± 0.0113
+B10     0.8676 ± 0.0522                      0.8692 ± 0.0548  0.8161 ± 0.0947  0.8216 ± 0.2126  0.0243 ± 0.0100
+B11     0.9235 ± 0.0546                      0.9256 ± 0.0539  0.8980 ± 0.0792  0.9244 ± 0.1022  0.0181 ± 0.0052
+B12     0.9260 ± 0.0485                      0.9281 ± 0.0478  0.9025 ± 0.0714  0.9356 ± 0.0905  0.0156 ± 0.0025
+
+B12 achieve stronger overall performance, indicating that fine-grained state classification and continuous degradation-
+position estimation improve cross-condition stage representation.
+
+    A further comparison between B11 and B12 shows that their classification metrics are close in most tasks, whereas
+B12 usually achieves lower Smooth and fewer reverse transitions. This demonstrates that the advantage of DC-PSR is
+not limited to improving pointwise classification accuracy. More importantly, it calibrates instantaneous stage outputs
+into smoother probabilistic states that better follow the degradation order.
+
+    Table 10 reports the mean and standard deviation over the four PHM2010 cross-condition tasks. B12 achieves
+the best average results across all listed metrics, indicating both strong mean generalization performance and reduced
+variability in stage-probability evolution.
+
+    Figs. 11­13 further support these findings from different perspectives.
+    Fig. 11 shows that DC-PSR maintains clear stage boundaries under typical cross-condition settings. Fig. 12 presents
+the evolution of stage probabilities along the tool life cycle, indicating that the output probabilities carry explicit life-
+cycle semantics. Fig. 13 further shows that DC-PSR improves mean performance while reducing cross-task variability.
+    To further examine the applicability of DC-PSR under external small-sample, multi-case conditions, candidate
+cross-case tasks are constructed on NASA Milling. The results are shown in Table 11.
+    As shown in Table 11, DC-PSR remains applicable under external cross-case settings. Compared with B9­
+B11, B12 generally improves middle-stage recognition and substantially reduces Rev and Smooth, indicating that
+
+Wang et al.: Preprint submitted to Elsevier                                                                      Page 16 of 24
+  DC-PSR for Cross-Condition Tool Wear Monitoring
+Fig. 11. DC-PSR confusion matrices across conditions.
+
+                                            Fig. 12. Stage partitioning and probability evolution.
+
+degradation-consistent constraints can suppress stage jumps and improve probability continuity under small-sample,
+multi-case conditions. However, NASA Milling contains limited samples per case, and its cases differ in material,
+cutting parameters, and stage distributions. Therefore, these results are better interpreted as external complementary
+validation rather than a replacement for the PHM2010 main benchmark.
+
+    Fig. 14 summarizes the comprehensive performance of different methods. The results show that DC-PSR still
+improves middle-stage recognition and probability smoothness on more difficult external data, although its stability is
+affected by the limited data scale and case heterogeneity.
+
+    Overall, DC-PSR provides a more stable probabilistic stage representation across different transfer difficulties. Its
+advantage lies not only in classification improvement, but also in the joint enhancement of middle-stage coverage,
+stage-jump suppression, and probability-evolution continuity.
+
+Wang et al.: Preprint submitted to Elsevier            Page 17 of 24
+                                   DC-PSR for Cross-Condition Tool Wear Monitoring
+
+                                   Fig. 13. Mean and variability of cross-condition performance.
+
+Table 11
+NASA external cross-case results.
+
+                   Task Method Acc           Macro-F1 M-F1 M-Rec       Rev Smooth
+
+                   N1 B9           0.5385    0.5713  0.4545 0.3571 0.0714 0.5714 1                0.1462
+                              B10  0.5000    0.4179  0.6047 0.6842 0.1053 0.2632 1                0.1834
+                              B11  0.7059    0.7019  0.7300 0.7895 0.1053 0.1053 2                0.3315
+                              B12  0.7059    0.6873  0.7619 0.8421 0.0526 0.0526 0                0.0563
+                                   0.4074    0.3638  0.2222 0.5000 0.5000 0.0000 1                0.0737
+                   N2 B9           0.5161    0.3761  0.0000 0.0000 0.5000 0.5000 1                0.1451
+                              B10  0.7037    0.6455  0.5000 0.5000 0.5000 0.0000 1                0.1781
+                              B11  0.7163    0.6895  0.6270 0.6305 0.5000 0.0000 0                0.0562
+                              B12  0.4848    0.4675  0.4286 0.3750 0.1250 0.5000 2                0.0797
+                                   0.4242    0.4334  0.5714 0.7500 0.1250 0.2222 4                0.1302
+                   N3 B9           0.6676    0.6952  0.5167 0.6556 0.1111 0.3333 1                0.1561
+                              B10  0.7946    0.7720  0.7800 0.7667 0.1002 0.1250 0                0.0116
+                              B11  0.4706    0.4180  0.1429 0.0769 0.8462 0.0769 1                0.2211
+                              B12  0.4706    0.4651  0.3810 0.3077 0.6923 0.0000 0                0.0670
+                                   0.6667    0.5810  0.6897 0.8151 0.1297 0.0000 1                0.0805
+                   N4 B9           0.6867    0.6956  0.7667 0.9091 0.0909 0.0000 0                0.0582
+                              B10
+                              B11
+                              B12
+
+Table 12
+Ablation results.
+
+                   ID Acc          Macro-F1 E-F1     M-F1 L-F1       M-Pre M-Rec Smooth
+
+                   A1 0.9705 0.9601          0.9625  0.9532  0.9880  0.9852  0.9561  0.0236
+                   A2 0.9803 0.9732          0.9678  0.9772  0.9778  0.9834  0.9663  0.0199
+                   A3 0.9816 0.9772          0.9725  0.9782  0.9876  0.9889  0.9678  0.0209
+                   A4 0.9901 0.9902          0.9825  0.9882  1.0000  1.0000  0.9767  0.0236
+                   A5 0.9770 0.9775          0.9711  0.9725  0.9889  0.9841  0.9612  0.0146
+                   A6 0.9868 0.9871          0.9825  0.9844  0.9945  0.9921  0.9767  0.0188
+
+5.3. Ablation Results
+    To analyze the contribution of each module, ablation experiments are conducted by focusing on the effects of
+
+fine-grained state assistance, degradation-position prior, and ordered probabilistic inference on stage discrimination
+and probability-evolution stability. The results are shown in Table 12.
+
+    Table 12 shows that A1, which uses only the stage classification head, already provides a strong baseline, but the
+middle stage still has room for improvement. Adding fine-grained state assistance improves both overall performance
+and M-F1, confirming that ordered fine-grained states provide useful internal structure for stable wear representation.
+Incorporating the degradation-position prior further improves A3, indicating that continuous degradation position
+constrains stage-boundary judgment effectively. A4 achieves the highest classification accuracy, suggesting strong
+complementarity among multiple degradation-related information sources.
+
+    However, the highest hard-classification accuracy does not necessarily imply the best probabilistic stage represen-
+tation. Although A4 achieves the strongest classification scores, its Smooth remains relatively high. In contrast, A5
+
+Wang et al.: Preprint submitted to Elsevier                                                               Page 18 of 24
+DC-PSR for Cross-Condition Tool Wear Monitoring
+
+                                               Fig. 14. Radar comparison across transfer tasks.
+
+substantially reduces Smooth through ordered filtering, but its Acc and M-F1 decrease compared with A4, indicating
+that overly strong ordering constraints may delay boundary response.
+
+    Fig. 15 compares the classification performance of different ablation methods. A6 achieves a better balance
+between accuracy and smoothness: it maintains high classification performance while keeping Smooth at a low level.
+This demonstrates that the final fusion strategy improves probability-evolution consistency without sacrificing stage
+discrimination.
+
+                                                  Fig. 15. Ablation classification performance.
+
+    Fig. 16 further illustrates the trade-off between accuracy and smoothness. Pursuing instantaneous classification
+accuracy alone may lead to probability fluctuations, whereas relying excessively on ordered filtering may cause
+boundary lag. Therefore, the performance gain of DC-PSR comes from the coordinated effect of fine-grained states,
+degradation-position priors, and ordered probabilistic inference: the first two enhance stage discrimination and internal
+structure modeling, while the last constrains stage probabilities to evolve stably along the tool life cycle.
+
+Wang et al.: Preprint submitted to Elsevier      Page 19 of 24
+DC-PSR for Cross-Condition Tool Wear Monitoring
+
+                                          Fig. 16. Accuracy­smoothness trade-off.
+
+Table 13
+Degradation-position estimation results.
+
+Dataset       -MAE                           -RMSE                              -2      Spearman  Pearson  -Smooth
+
+PHM2010       0.1252                         0.1590                             0.8672  0.9635    0.9388   0.0082
+NASA Milling  0.1784                         0.2087                             0.7087  0.8136    0.7959   0.0616
+
+Table 14                                                                        Mean ,  Mean ,    Mean  
+Wear semantics of predicted stages.
+                                                                                0.2110  0.2248    100.55
+                                                               Predicted stage  0.3629  0.3444    126.29
+                                                                                0.8289  0.8451    205.46
+                                                               early
+                                                               middle
+                                                               late
+
+5.4. Wear-Estimation Consistency Analysis
+
+    To examine whether the proposed method carries actual wear semantics, the consistency between the estimated
+degradation position , and the true relative degradation position , is analyzed. The degradation positions and wear
+levels under different predicted stages are also summarized in Tables 13 and 14.
+
+    Table 13 shows that , is highly consistent with ,. The low -Smooth values further indicate that the estimated
+degradation position evolves smoothly, providing a stable degradation scale for probabilistic stage inference.
+
+    Table 14 shows a monotonic increase in ,, ,, and VB from early to middle and late. This confirms that the
+stage output of DC-PSR is not an isolated classification result, but a degradation-semantic representation aligned with
+
+actual wear levels and continuous degradation positions.
+
+    To further evaluate representation capability, two-dimensional PCA visualization is performed on the raw online
+relative features and the shared hidden representation ,, as shown in Fig. 17. In the raw feature space, samples from
+different stages overlap and are scattered along the degradation position . In contrast, the shared hidden representation
+
+forms clearer stage separation and a more continuous degradation trajectory, indicating that the model jointly encodes
+
+stage-discrimination information, continuous degradation position, and boundary uncertainty.
+    Fig. 18 further presents the joint evolution of stage probabilities and , along the tool life cycle. Overall, DC-PSR
+
+produces stage probabilities that are not only accurate and temporally smooth, but also consistent with continuous
+
+degradation position and actual wear level. Therefore, the proposed method forms a degradation state representation
+
+supported by explicit wear semantics.
+
+Wang et al.: Preprint submitted to Elsevier                                                                         Page 20 of 24
+DC-PSR for Cross-Condition Tool Wear Monitoring
+
+Fig. 17. Low-dimensional feature representations.
+
+Fig. 18. Joint evolution of stage probability and degradation position.
+
+6. Discussion
+
+    The primary challenge in cross-condition stage representation is stage semantic drift. Under different cutting
+conditions, wear magnitude, growth rate, and failure boundary may vary substantially. If stages are directly defined
+by absolute thresholds, the model tends to learn condition-specific wear intervals rather than relative degradation
+states within the tool life cycle. More importantly, stage semantic drift can also weaken the reliability of continuous
+degradation representation: when the same wear level corresponds to different signal scales across conditions, the
+model may exhibit different bias patterns at different stages. DC-PSR addresses this issue by constructing stage
+semantics from condition-relative degradation positions and local degradation rates. In this way, absolute wear levels
+are transformed into relative degradation processes, providing a more consistent semantic basis for cross-condition
+stage representation.
+
+    The middle stage is the most easily simplified and misclassified part of wear stage monitoring. The stable wear
+period usually contains a continuous transition from early stable wear to later accelerated degradation. By introducing
+
+Wang et al.: Preprint submitted to Elsevier                              Page 21 of 24
+                                             DC-PSR for Cross-Condition Tool Wear Monitoring
+
+ordered fine-grained degradation states, DC-PSR provides internal hierarchical support for the middle stage, enabling
+the model to learn not only stage boundaries but also progressive variations within stable wear. The ablation results
+show that fine-grained state assistance significantly improves middle-stage recognition, confirming that the middle
+stage should be modeled as a structured degradation process rather than a simple intermediate label.
+
+    The goal of probabilistic stage representation is to generate a state distribution that can be continuously updated
+along the degradation process. Multi-task TCN-GRU is closer to an instantaneous discrimination optimum, whereas
+DC-PSR is closer to a degradation-state representation optimum. The former improves current-stage recognition
+through auxiliary tasks, while the latter further uses degradation-position priors, dual-side inhibition, and causal
+ordered filtering to calibrate instantaneous probabilities into smoothly evolving stage states. The results show that
+DC-PSR maintains strong discrimination performance while reducing Smooth and suppressing unreasonable mis-
+classifications. Its advantage therefore lies in balancing stage accuracy, temporal stability, and degradation-evolution
+consistency.
+
+    The wear-estimation consistency analysis further indicates that the stage probabilities generated by DC-PSR are not
+isolated classification confidences, but state representations with continuous wear semantics. Across different predicted
+stages, the probabilistic states produced by DC-PSR remain consistent with actual wear levels and degradation
+directions. The low-dimensional representation visualization also shows that, compared with raw online relative
+features, the shared hidden representation , forms clearer stage separation and a more continuous degradation
+trajectory along the life cycle. These results suggest that DC-PSR has the potential to support stage-aware RUL
+prediction and predictive maintenance decision-making.
+
+    Nevertheless, DC-PSR still assumes that tool wear follows a relatively clear progressive degradation trend. In cases
+of sudden chipping, strongly interrupted cutting, or abrupt changes in wear mechanisms, an overly strong ordered-stage
+prior may delay the response to rapid state changes. In addition, the experiments are mainly conducted on PHM2010
+and NASA Milling. Future work should validate the robustness of DC-PSR on broader tool types, workpiece materials,
+and industrial field data, and further explore stage-probability-driven RUL distribution prediction models.
+
+7. Conclusions
+
+    This paper proposed DC-PSR for cross-condition tool wear monitoring, aiming to address stage semantic drift,
+middle-stage compression, stage-related bias, and unstable probabilistic outputs. The method constructs relative
+stage semantics, introduces ordered fine-grained degradation states, and integrates degradation-position priors with
+causal ordered filtering. In this way, conventional hard stage classification is reformulated as degradation-consistent
+probabilistic state representation along the tool life cycle.
+
+    Experiments on PHM2010 show that DC-PSR achieves strong cross-condition stage discrimination while improv-
+ing middle-stage coverage, suppressing non-physical transitions, and smoothing stage probabilities. External validation
+on NASA Milling further indicates that DC-PSR remains effective under small-sample, multi-case conditions, although
+its stability is affected by data scale and case heterogeneity. Ablation results verify that fine-grained state assistance,
+degradation-position priors, and ordered inference contribute complementary benefits in terms of internal stage
+structure, position consistency, and temporal order. Wear-estimation consistency analysis further shows that the stage
+probabilities produced by DC-PSR are not merely classification confidences, but degradation-state representations
+aligned with continuous degradation position, actual wear level, and stage-related representation reliability.
+
+    Overall, DC-PSR advances cross-condition tool wear st age modeling from discrete category recognition to
+degradation-consistent probabilistic representation, providing a continuously updateable state basis for stage-aware
+decision-making. Future work will validate the method on broader tool types, workpiece materials, and industrial field
+data, and explore learnable stage-transition mechanisms and stage-probability-driven RUL prediction.
+
+CRediT authorship contribution statement
+
+    Ting Wang: Conceptualization, Methodology, Software, Validation, Formal analysis, Investigation, Writing ­
+original draft, Visualization. Jiali Cheng: Methodology, Validation, Writing ­ review & editing. Rongze Li: Data
+curation, Software, Validation, Visualization. Zhenggeng Ye: Formal analysis, Writing ­ review & editing. Keqin
+Wang: Funding acquisition, Resources, Writing ­ review & editing. Zhiqiang Cai: Supervision, Project administration,
+Resources, Writing ­ review & editing.
+
+Wang et al.: Preprint submitted to Elsevier  Page 22 of 24
+                                             DC-PSR for Cross-Condition Tool Wear Monitoring
+
+Funding
+
+    This work was supported by the Key Project of the Natural Science Foundation of Shaanxi Province (Grant No.
+2025JC-QYXQ-043) and the Natural Science Foundation of Shaanxi Province (Grant No. 2025JC-YBMS-807).
+
+Data availability
+
+    The PHM2010 dataset is publicly available at https://www.kaggle.com/datasets/rabahba/phm-data-challenge-2010.
+The NASA Milling dataset is publicly available from the NASA Prognostics Center of Excellence data repository at
+https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/. The
+processed data and implementation details are available from the corresponding author upon reasonable request.
+
+References
+
+Bernini, L., Albertelli, P., & Monno, M. (2023). Mill condition monitoring based on instantaneous identification of specific force coefficients under
+   variable cutting conditions. Mechanical Systems and Signal Processing, 185, 109820.
+
+Bernini, L., Malguzzi, U., Albertelli, P., et al. (2024). Hybrid prognostics to estimate cutting inserts remaining useful life based on direct wear
+   observation. Mechanical Systems and Signal Processing, 210, 111163.
+
+Cao, F., Zhang, X., Zhang, Z., et al. (2025). Research on dynamic graph isomorphism network for tool wear stage monitoring based on multi-source
+   information fusion. Measurement, 119007.
+
+Cheng, J., Wang, Y., Li, B., et al. (2026). Mutual information-guided causal feature selection method for quality prediction of complex products.
+   Reliability Engineering & System Safety, 112536.
+
+Cheng, M., Jiao, L., Yan, P., et al. (2022). Intelligent tool wear monitoring and multi-step prediction based on deep learning model. Journal of
+   Manufacturing Systems, 62, 286­300.
+
+Dong, X., Liu, S., Li, X., et al. (2026). Tool wear trend prediction using acoustic emission signals: A composite multiscale fractional diversity
+   entropy approach. Results in Engineering, 110719.
+
+Feng, C., Ye, H., Li, W., et al. (2026). A hybrid model for tool wear monitoring via physics-based and data-driven utilizing unscented Kalman filter.
+   Advanced Engineering Informatics, 72, 104448.
+
+Han, Z., Luo, W., Liang, X., et al. (2026). Online dynamic parameter calibration of a physics-driven hybrid model for tool wear prediction. Journal
+   of Manufacturing Systems, 86, 676­693.
+
+Heydarlou, M. M., Araghizad, A. E., Yamada, Y., et al. (2026). On-machine tool wear monitoring system using strain-gauge signals and edge force
+   coefficients with physics-informed machine learning. CIRP Annals.
+
+Huang, J., Liu, K., Jiang, Y., et al. (2026). Cascaded self-attention hybrid model for synergistic prediction of tool wear and classification of surface
+   roughness in the turning process. Mechanical Systems and Signal Processing, 244, 113785.
+
+Ismail, M., Mostafa, N. A., & El-Assal, A. (2022). Quality monitoring in multistage manufacturing systems by using machine learning techniques.
+   Journal of Intelligent Manufacturing, 33(8), 2471­2486.
+
+Jin, S., Cheng, Y., Zhai, W., et al. (2026). Research on transfer monitoring model of tool wear driven by adaptive signal processing and multimodal
+   feature fusion. Measurement, 121688.
+
+Li, P., Wu, G., Zhou, Y., et al. (2025a). Enhancing random surface anomaly detection in real-world using a four-stage one-class approach. Pattern
+   Recognition Letters, 194, 32­40.
+
+Li, Y., Huang, X., Tang, J., et al. (2023). A steps-ahead tool wear prediction method based on support vector regression and particle filtering.
+   Measurement, 218, 113237.
+
+Li, Z., You, Z., Gu, D., et al. (2025b). A novel physics-informed model for tool wear monitoring under multi-machining conditions. Measurement,
+   119191.
+
+Liu, J., Wang, P., Zhou, K., et al. (2026). Physics-informed multi-task heterogeneous transfer learning network for robust milling tool wear and RUL
+   prediction under anomalous data conditions. Journal of Manufacturing Systems, 84, 403­425.
+
+Ma, Z., Zhao, M., Dai, X., et al. (2023). A hybrid-driven probabilistic state space model for tool wear monitoring. Mechanical Systems and Signal
+   Processing, 200, 110599.
+
+Mei, S., Mo, X., Xia, M., et al. (2026). A novel multi-task sequential network integrating wear information for tool breakage monitoring. Advanced
+   Engineering Informatics, 71, 104342.
+
+Mo, X., Mei, S., & Hu, X. (2025). Semi-supervised multi-task learning approach for simultaneously monitoring tool wear and breakage using
+   reliable pseudo-labels. Journal of Manufacturing Processes, 149, 610­631.
+
+Niu, M., Liu, K., & Wang, Y. (2025). A semi-supervised learning method combining tool wear laws for machining tool wear states monitoring.
+   Mechanical Systems and Signal Processing, 224, 112032.
+
+Peng, C., Zheng, J., Chen, T., et al. (2026a). A novel tool wear and remaining useful life prediction network based on multi-scale time­frequency
+   information of milling force. Mechanical Systems and Signal Processing, 244, 113763.
+
+Peng, Y., Kang, W., Hu, Q., et al. (2026b). Frequency-aware and bionic-aligned collaborative modeling for cross-domain tool wear monitoring under
+   small-sample conditions. Journal of Manufacturing Systems, 84, 223­241.
+
+Qiang, B., Shi, K., Liu, N., et al. (2023). Integrating physics-informed recurrent Gaussian process regression into instance transfer for predicting
+   tool wear in milling process. Journal of Manufacturing Systems, 68, 42­55.
+
+Qin, Y., Liu, X., Huang, L., et al. (2026). A tool wear state monitoring method for SSAE based on mechanism prior weight adaptation. Robotics
+   and Computer-Integrated Manufacturing, 101, 103316.
+
+Wang et al.: Preprint submitted to Elsevier  Page 23 of 24
+                                             DC-PSR for Cross-Condition Tool Wear Monitoring
+
+Shang, Y., Zi, X., Tsung, F., et al. (2014). LASSO-based diagnosis scheme for multistage processes with binary data. Computers & Industrial
+   Engineering, 72, 198­205.
+
+Su, Z., Yang, Y., He, L., et al. (2026). A data-driven multi-stage framework for optimization of machining parameters in TC4 turning against
+   cemented carbide tool wear evolution. Materials Today Communications, 114936.
+
+Tang, H., Liu, W., Li, L., et al. (2026). Research on multi-sensor tool wear monitoring based on an improved hidden Markov model. Procedia CIRP,
+   139, 304­312.
+
+Wang, S., Li, S., Lin, X., et al. (2025a). Mechanism-driven data model for tool condition monitoring. Mechanical Systems and Signal Processing,
+   237, 113042.
+
+Wang, Z., Lu, Y., Deng, K., et al. (2025b). Physics-informed self-supervised learning for tool wear monitoring leveraging signal and degradation
+   features under limited labels. Advanced Engineering Informatics, 67, 103503.
+
+Wang, Z., Zhou, G., Zhang, C., et al. (2025c). Physics-informed Gaussian process regression for tool wear monitoring with uncertainty quantification.
+   Reliability Engineering & System Safety, 111984.
+
+Xin, J., Huang, H., Wu, Y., et al. (2026). Multi-task hierarchical domain adaptation multi-expert attention network for cross-domain tool wear
+   monitoring and remaining useful life estimation. Computers & Industrial Engineering, 112114.
+
+Xu, Z., Zhang, B., Fan, L. L., et al. (2025). Deep-learning-driven intelligent tool wear identification of high-precision machining with multi-scale
+   CNN-BiLSTM-GCN. Advanced Engineering Informatics, 65, 103234.
+
+Ye, Z., Wang, L., Yang, H., et al. (2025). Multivariate failure prognosis of cutting tools under heterogeneous operating conditions. Advanced
+   Engineering Informatics, 65, 103198.
+
+Yang, H., Jiang, G., Tian, W., et al. (2026a). Simultaneous tool wear condition and surface roughness prediction under limited samples. Journal of
+   Manufacturing Processes, 157, 912­921.
+
+Yang, S., Jiang, R., Song, Z., et al. (2026b). Intelligent tool wear monitoring approach in milling of titanium alloys. Robotics and Computer-Integrated
+   Manufacturing, 98, 103181.
+
+Yue, C., Yue, Z., Lu, Y., et al. (2026). Research on tool wear monitoring based on digital twin and contrastive learning. Journal of Manufacturing
+   Systems, 86, 1272­1289.
+
+Zhang, H., Yang, W., Xu, W., et al. (2025). Tool wear prediction with few samples based on stacked BiLSTM and parallel residuals with multi-head
+   self-attention. Measurement, 119078.
+
+Zhang, L., Song, Q., Ma, H., et al. (2026a). PI-KAF: A physics-informed constrained online interpretable monitoring method for tool wear. Journal
+   of Manufacturing Systems, 84, 135­151.
+
+Zhang, P., Zhao, H., Sun, C., et al. (2026b). Tool wear monitoring and multi-step forecasting in deep hole boring based on physics-informed neural
+   network and ARIMA model. Mechanical Systems and Signal Processing, 249, 114078.
+
+Zhao, S., Peng, F., Hao, X., et al. (2026). Towards interpretable foreknowledge with multimodal information fusion: Physical-knowledge inspired
+   time-varying tool wear intelligent prediction. Journal of Manufacturing Systems, 86, 435­455.
+
+Zhou, T., Xing, C., Hu, T., et al. (2025a). An online cutting tool wear monitoring method based on the integration of DSCNN and pre-training/fine-
+   tuning transfer learning. Digital Engineering, 100085.
+
+Zhou, Y., Li, R., Xia, T., et al. (2025b). Hierarchical temporal-modal synchronous fusion framework for tool wear recognition with multimodal
+   monitoring data integrating uncertainty quantification. Journal of Manufacturing Processes, 149, 964­986.
+
+Zhu, K., Li, X., Li, S., et al. (2024). Physics-informed hidden Markov model for tool wear monitoring. Journal of Manufacturing Systems, 72,
+   308­322.
+
+Zhu, Y., Huang, H., Yi, J., et al. (2026). Enhancing tool wear state identification in imbalanced and small sample scenarios through conservative
+   adaptive synthetic sampling. Engineering Applications of Artificial Intelligence, 177, 114797.
+
+Wang et al.: Preprint submitted to Elsevier  Page 24 of 24
+

@@ -1,0 +1,8 @@
+panel,source_file,columns_used,n_rows,config_scope,preprocessing,transformation,display_only_interpolation
+a (bars),paper_data/07_figure_ready/fig4/A1_A6_absolute.csv,"Acc,Macro-F1,M-Rec",6 (A1-A6),"A1-A6, D1/C6",none,none,no
+a (line),paper_data/07_figure_ready/fig4/A1_A6_absolute.csv,Smooth,6 (A1-A6),"A1-A6, D1/C6",none,"plotted on secondary axis, each node value-labeled",no
+b,paper_data/07_figure_ready/fig4/A1_A6_probability_trajectories.csv (recomputed via New_figure/_shared/data_utils.py::precision_recall_f1_per_class),"true_stage,pred_stage -> E_F1,M_F1,L_F1",304 x 6 configs,"A1-A6, D1/C6, 304 runs each",per-class precision/recall/F1 from sample-level labels,none (cross-validated M_F1 exactly matches A1_A6_absolute.csv authoritative M-F1),no
+c,paper_data/07_figure_ready/fig4/A1_A6_probability_trajectories.csv,"p_E,p_M,p_L,relative_tool_life,true_stage","304 x 4 configs (A1,A4,A5,A6)","A1,A4,A5,A6, D1/C6, 304 runs each",none,none (raw per-run probabilities plotted directly),no
+d1,paper_data/07_figure_ready/fig4/A1_A6_lifecycle_variation.csv,"local_variation_l1_smoothed,relative_tool_life",304 x 6 configs,"A1-A6, D1/C6","7-run centered rolling mean (precomputed upstream, not recomputed here)",none,no
+d2,paper_data/07_figure_ready/fig4/A1_A6_cumulative_variation.csv,"cumulative_variation_l1,relative_tool_life",304 x 6 configs,"A1-A6, D1/C6","none (running cumulative sum, precomputed upstream)",none,no
+e,paper_data/07_figure_ready/fig4/A1_A6_absolute.csv,"Configuration (text only, for labels)",6 (A1-A6),A1-A6,none,"conceptual diagram, no plotted metric values",no

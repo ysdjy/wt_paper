@@ -1,0 +1,22 @@
+PASS: loaded 9-method D1 main table, E_F1/L_F1/M_Precision merged, M_F1/M_Rec cross-checked identical vs taskwise_absolute.csv.
+PASS: loaded accuracy_consistency_points.csv (9 rows) and B11_B12_controlled_comparison.csv (2 rows).
+PASS: RF recomputed Acc=0.976974 vs authoritative 0.976974
+PASS: RF recomputed M_Rec=0.953488 vs authoritative 0.953488
+PASS: MTF-AViTK recomputed Acc=0.970395 vs authoritative 0.970395
+PASS: MTF-AViTK recomputed M_Rec=0.984496 vs authoritative 0.984496
+PASS: Multi-task TCN-GRU recomputed Acc=0.990132 vs authoritative 0.990132
+PASS: Multi-task TCN-GRU recomputed M_Rec=0.976744 vs authoritative 0.976744
+PASS: DC-PSR recomputed Acc=0.986842 vs authoritative 0.986842
+PASS: DC-PSR recomputed M_Rec=0.976744 vs authoritative 0.976744
+PASS: representative-method recomputed Acc/M_Rec match D1_main_metrics.csv (atol=2e-4).
+PASS: all 4 representative confusion matrices sum to exactly 304.
+PASS: headline Multi-task TCN-GRU Acc=0.990132 vs expected 0.990132
+PASS: headline Multi-task TCN-GRU MacroF1=0.990230 vs expected 0.99023
+PASS: headline Multi-task TCN-GRU M_F1=0.988235 vs expected 0.988235
+PASS: headline Multi-task TCN-GRU M_Rec=0.976744 vs expected 0.976744
+PASS: headline Multi-task TCN-GRU Smooth=0.023590 vs expected 0.02359
+PASS: headline DC-PSR Acc=0.986842 vs expected 0.986842
+PASS: headline DC-PSR MacroF1=0.987102 vs expected 0.987102
+PASS: headline DC-PSR M_F1=0.984375 vs expected 0.984375
+PASS: headline DC-PSR M_Rec=0.976744 vs expected 0.976744
+PASS: headline DC-PSR Smooth=0.018763 vs expected 0.018763

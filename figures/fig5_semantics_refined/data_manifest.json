@@ -1,0 +1,119 @@
+{
+  "figure": "Figure 5 — degradation-semantic consistency",
+  "audit_status": "PASSED_AUTHORITATIVE_VISUAL_REFINEMENT_ONLY",
+  "generated_at": "2026-08-21T23:05:48+08:00",
+  "script": {
+    "path": "figures/fig5_semantics_refined/make_fig5_semantics_refined.py",
+    "version": "2.0.0",
+    "backend": "Python/matplotlib"
+  },
+  "authority_basis": {
+    "path": "nature_figures/FIGURE_DATA_AUDIT.md",
+    "sha256": "21b3362500ba27ad0466f85f6bc57e64b49f9054829f7aefd810c0cab184e802",
+    "reason": "The project figure audit explicitly designates the full C6 trajectory for panels a,b,c,e and saved test_C6/C6 hidden representations for panel d."
+  },
+  "sources": {
+    "lifecycle_trajectory": {
+      "path": "补充材料/小论文/9_probability_wear_consistency_analysis/Data_5_4_A6_probability_wear_trajectory.csv",
+      "sha256": "c20016d4479b6faa7de4a3f5205f2517c6b67d62f75d6f98daa07fd930102557",
+      "authoritative": true,
+      "rows_used": 304,
+      "panels": [
+        "a",
+        "b",
+        "c",
+        "e"
+      ],
+      "filter": "full C6 lifecycle; no row selection"
+    },
+    "hidden_representation": {
+      "path": "补充材料/小论文/10_第五章顶刊风格可视化/figures_representation_space/repr_hidden_hct.csv",
+      "sha256": "b259ac455887fe1b49e26afa54fe4f3e199a390623532210a1e0b16360ebb923",
+      "authoritative": true,
+      "rows_used": 304,
+      "panels": [
+        "d"
+      ],
+      "filter": "split=test_C6 and condition=C6"
+    }
+  },
+  "panel_map": {
+    "a": {
+      "source": "lifecycle_trajectory",
+      "display": "raw stage probabilities and q_pred over min-max normalized run_id",
+      "visual_derivation": "true_stage contiguous spans provide pale background zones"
+    },
+    "b": {
+      "source": "lifecycle_trajectory",
+      "display": "standard ternary barycentric mapping ordered by relative life",
+      "visual_derivation": "arrows follow existing ordered trajectory; no interpolation model"
+    },
+    "c": {
+      "source": "lifecycle_trajectory",
+      "display": "log-count hexbin of all q_true/q_pred pairs plus y=x",
+      "visual_derivation": "12 equal-width q_true bins summarized by medians"
+    },
+    "d": {
+      "source": "hidden_representation",
+      "display": "feature-wise standardization and deterministic two-component NumPy SVD PCA",
+      "visual_derivation": "18 equal-width q_true bins summarized by median PCA centers"
+    },
+    "e": {
+      "source": "lifecycle_trajectory",
+      "display": "VB_true grouped by pred_stage as half-violin, boxplot, and every raw point",
+      "visual_derivation": "deterministic jitter only; no observation removed"
+    }
+  },
+  "reference_script": {
+    "path": "nature_figures/scripts/fig5_semantics.py",
+    "sha256": "4c2b25d4c61f511a9c10937a66713cc7db71023427f8e32d628d5c5faca864fa",
+    "role": "scientific logic and calculation reference"
+  },
+  "metrics": {
+    "n": 304,
+    "R2": 0.7478018752663804,
+    "Spearman_rho": 0.9634587570320886,
+    "MAE": 0.11323099450294768,
+    "stage_agreement": 0.9868421052631579,
+    "stage_boundaries_relative_life": [
+      {
+        "stage": "early",
+        "left": 0.0,
+        "right": 0.2755775577557756
+      },
+      {
+        "stage": "middle",
+        "left": 0.2755775577557756,
+        "right": 0.7013201320132013
+      },
+      {
+        "stage": "late",
+        "left": 0.7013201320132013,
+        "right": 1.0
+      }
+    ],
+    "predicted_stage_counts": {
+      "Early": 87,
+      "Middle": 127,
+      "Late": 90
+    },
+    "predicted_stage_median_VB": {
+      "Early": 102.6088418,
+      "Middle": 123.1410717,
+      "Late": 210.39229075
+    },
+    "PCA_explained_variance": [
+      0.5518348967944975,
+      0.36478100342278397
+    ],
+    "q_agreement_binned_median_points": 12,
+    "PCA_center_path_points": 18
+  },
+  "integrity": {
+    "model_retrained": false,
+    "experiment_protocol_changed": false,
+    "synthetic_data_used": false,
+    "observations_removed_for_display": false,
+    "statistics_redefined": false
+  }
+}

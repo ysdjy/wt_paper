@@ -1,0 +1,8 @@
+PASS: loaded taskwise_absolute (27 rows), cross_dataset_absolute (12 rows), cross_dataset_deltas (6 rows), NASA task_level_results (16 rows).
+PASS: PHM D1 Smooth_benefit_pct=20.464 vs expected 20.5 (atol=1.0)
+PASS: NASA (N1–N4 avg) Smooth_benefit_pct=34.963 vs expected 35.0 (atol=1.0)
+PASS: NASA (N1–N4 avg) Jump_benefit_pct=50.000 vs expected 50.0 (atol=1.0)
+PASS: MTW-CM (3-task avg) delta_MF1_pp=10.044 vs expected 10.04 (atol=0.5)
+PASS: MTW-CM (3-task avg) Smooth_benefit_pct=23.923 vs expected 23.9 (atol=1.0)
+PASS: MTW-CM (3-task avg) Jump_benefit_pct=82.479 vs expected 82.5 (atol=1.0)
+PASS: panel (c) table has 7 tasks (NASA N1-N4 + MTW-CM D1-M/D2-M/D3-M) x 2 methods = 14 rows.

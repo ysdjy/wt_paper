@@ -1,0 +1,17 @@
+PASS: loaded A1_A6_absolute (6 rows), delta_vs_A1 (6 rows), probability_trajectories (1824 rows), lifecycle_variation (1824 rows), cumulative_variation (1824 rows).
+PASS: A1-A4 Acc byte-identical = True (values=[0.9901315789473684, 0.9901315789473684, 0.9901315789473684, 0.9901315789473684])
+PASS: A1-A4 Macro-F1 byte-identical = True (values=[0.9902304781561748, 0.9902304781561748, 0.9902304781561748, 0.9902304781561748])
+PASS: A1-A4 M-F1 byte-identical = True (values=[0.9882352941176472, 0.9882352941176472, 0.9882352941176472, 0.9882352941176472])
+PASS: A1-A4 M-Rec byte-identical = True (values=[0.9767441860465116, 0.9767441860465116, 0.9767441860465116, 0.9767441860465116])
+PASS: A1 Smooth=0.02359 vs expected 0.023593 (atol=0.0002)
+PASS: A5 Smooth=0.01359 vs expected 0.013595 (atol=0.0002)
+PASS: A5 vs A1 Smooth reduction pct=42.37754 vs expected 42.4 (atol=0.5)
+PASS: A6 Smooth=0.01876 vs expected 0.018761 (atol=0.0002)
+PASS: A6 vs A1 Smooth reduction pct=20.47986 vs expected 20.5 (atol=0.5)
+PASS: A5 Acc=0.97697 vs expected 0.976974 (atol=0.0002)
+PASS: A6 Acc=0.98684 vs expected 0.986842 (atol=0.0002)
+PASS: A6 vs A5 Acc recovery pp=0.98684 vs expected 0.99 (atol=0.1)
+PASS: A6 vs A5 M-F1 recovery pp=1.18260 vs expected 1.18 (atol=0.15)
+PASS: A6 vs A5 M-Rec recovery pp=1.55039 vs expected 1.55 (atol=0.15)
+PASS: A5 Acc (0.9770) is materially below A1-A4 Acc (0.9901) -- confirmed real trade-off, not a monotonic-improvement artifact.
+PASS: recomputed per-config M-F1 matches A1_A6_absolute.csv's authoritative M-F1 exactly (atol=1e-6) -- confirms same underlying classification.

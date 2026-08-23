@@ -1,0 +1,30 @@
+[
+  {
+    "file": "repr_raw_features_frozen_780.csv",
+    "rows": 780,
+    "cols": 60,
+    "sha256": "708f4ef11a2e1b8b428a6dcc1114725a0a19d02adbbed1730ae53bec212a1f82",
+    "source": "补充材料/小论文/10_第五章顶刊风格可视化/figures_representation_space/repr_raw_features.csv"
+  },
+  {
+    "file": "repr_hidden_hct_frozen_780.csv",
+    "rows": 780,
+    "cols": 79,
+    "sha256": "32480cca38bfbe6edb4cfafdf46e21182e7db5bb9a0a95525f44ac7c2716943d",
+    "source": "补充材料/小论文/10_第五章顶刊风格可视化/figures_representation_space/repr_hidden_hct.csv"
+  },
+  {
+    "file": "repr_raw_features_frozen_C6_304.csv",
+    "rows": 304,
+    "cols": 60,
+    "sha256": "1bfbf50cfdf544505d41935cfba764715f7bc89ffc268dd0102a41b1d1b8a20d",
+    "source": "补充材料/小论文/10_第五章顶刊风格可视化/figures_representation_space/repr_raw_features.csv"
+  },
+  {
+    "file": "repr_hidden_hct_frozen_C6_304.csv",
+    "rows": 304,
+    "cols": 79,
+    "sha256": "d947100c6a412b4318bde65d550cb0f9044baacabfec31075c012f42f51bf49d",
+    "source": "补充材料/小论文/10_第五章顶刊风格可视化/figures_representation_space/repr_hidden_hct.csv"
+  }
+]

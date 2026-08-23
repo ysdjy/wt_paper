@@ -1,0 +1,11 @@
+PASS: loaded raw (780x60), hidden (780x79), lifecycle_semantics (304 rows), q_agreement (304 rows), wear_by_predicted_stage (3 rows).
+PASS: q-agreement R2=0.7478 vs expected 0.748 (atol=0.01)
+PASS: q-agreement Spearman rho=0.9635 vs expected 0.963 (atol=0.01)
+PASS: q-agreement MAE=0.1132 vs expected 0.113 (atol=0.005)
+PASS: VB_mean[early]=100.55 vs expected 100.55
+PASS: VB_mean[middle]=126.29 vs expected 126.29
+PASS: VB_mean[late]=205.46 vs expected 205.46
+raw: PC1 sign already satisfies corr(PC1, q_true) > 0, no flip needed.
+raw: PCA done (45 features -> 2D), explained variance PC1=0.4925 PC2=0.1019, corr(PC1,q_true)=0.7752.
+hidden: PC1 sign flipped so corr(PC1, q_true) > 0 (display convention, no data change).
+hidden: PCA done (64 features -> 2D), explained variance PC1=0.5476 PC2=0.3726, corr(PC1,q_true)=0.8346.

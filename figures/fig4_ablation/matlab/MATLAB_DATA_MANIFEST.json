@@ -1,0 +1,79 @@
+{
+  "audit_result": "PASS_MATLAB_VISUAL_REPRODUCTION",
+  "backend": "MATLAB R2021a (9.10.0.1602886)",
+  "renderer": "painters",
+  "experiment_protocol_changed": false,
+  "training_performed": false,
+  "inference_performed": false,
+  "visual_changes_only": true,
+  "task": "PHM2010 D1: train C1+C4, test C6",
+  "test_universe": {
+    "window_length": 12,
+    "runs_per_configuration": 304,
+    "configurations": 6,
+    "trajectory_rows": 1824
+  },
+  "sources": {
+    "AUTHORITATIVE_A1_A6.csv": {
+      "bytes": 1060,
+      "sha256": "2bd8032f8e7e0261cd957cd9ed44381c58ebf781990e19fe2976eb13af6f2bd4"
+    },
+    "ABLATION_RECOMPUTED.csv": {
+      "bytes": 3737,
+      "sha256": "ffbeb6d2d0c153debad716f9a216cf74a739715145e31da564d15f79abc3571c"
+    },
+    "A1_A6_lifecycle_variation.csv": {
+      "bytes": 137587,
+      "sha256": "ac291edbb6b52c992e7314b327ebcc1bb13503a040ceb8849d4aa0d7a33cd7a9"
+    },
+    "A1_A6_cumulative_variation.csv": {
+      "bytes": 88688,
+      "sha256": "1b318c8148d54f2fc7b5b1dd5eedf746fc4e8aef4eaeb05d456c35b5061674fb"
+    }
+  },
+  "code": {
+    "plot_fig4_ablation_refined_matlab.m": {
+      "bytes": 18817,
+      "sha256": "0aa3ae432c42b19122320e24a2810b352255338be6837dce6376ac13f7271072"
+    },
+    "README_MATLAB.md": {
+      "bytes": 1836,
+      "sha256": "abc72eaf031f892bc1268ecf835da2bc41b8d3f3213a3098df0d7cccd07a254f"
+    }
+  },
+  "outputs": {
+    "fig4_ablation_refined_matlab.pdf": {
+      "bytes": 79234,
+      "sha256": "65f672b2c8ee75470bcd4448c9e2639895c31b601eb8c779f18e7bea4129a12a",
+      "type": "vector PDF"
+    },
+    "fig4_ablation_refined_matlab.png": {
+      "bytes": 712377,
+      "sha256": "d59bb738dd711470b8fc0f9d2f4df75ad2562a9bf51ad9e793d571082923eeef",
+      "width_px": 4320,
+      "height_px": 3450,
+      "dpi": 600
+    },
+    "fig4_ablation_refined_matlab.svg": {
+      "bytes": 707860,
+      "sha256": "4d83fe8960d0f049b5b3acc0e9e7fa6f68b93d537ebafda782a1bfc5409aec42",
+      "type": "vector SVG",
+      "embedded_raster_images": 0,
+      "matlab_r2021a_text_behavior": "text may be converted to vector outlines"
+    },
+    "fig4_ablation_refined_matlab.fig": {
+      "bytes": 148758,
+      "sha256": "1ae79d47557af942dbf223bf70c52edf03db64506a78ac9b6e3d669fcf66fc8e",
+      "type": "native editable MATLAB figure"
+    }
+  },
+  "validation": {
+    "A1_A6_order_checked": true,
+    "all_sources_read_only": true,
+    "all_local_means_equal_authoritative_smooth": true,
+    "all_cumulative_endpoints_equal_smooth_times_303": true,
+    "right_panel_legends_single_column": true,
+    "titles_below_panels": true,
+    "point_value_labels_preserved": true
+  }
+}

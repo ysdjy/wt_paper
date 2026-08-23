@@ -1,58 +1,69 @@
-# Figure 5 — semantic consistency (refined)
+# Figure 5 — semantic consistency / probability trajectory (refined)
 
-This directory contains a visual refinement of the existing Figure 5. The scientific evidence chain, sample set, stage definitions, continuous-degradation variables, PCA procedure, and physical-wear grouping are unchanged.
+## Purpose
 
-## Outputs
+This figure shows that DC-PSR produces a continuous and ordered degradation representation rather than isolated stage labels. The five panels connect lifecycle probabilities, continuous degradation position, the saved hidden-space manifold, and true physical flank wear.
 
-- `fig5_semantics_refined.svg` — primary editable vector figure; text remains editable.
-- `fig5_semantics_refined.pdf` — publication vector export with Type-42 fonts.
-- `fig5_semantics_refined.png` — 600 dpi review/preview image.
-- `plot_fig5_semantics_refined.py` — complete Python/matplotlib source.
-- `data_manifest.md` — traceable source files, hashes, transformations, and recomputed audit values.
+## Panel story
 
-## Original data used
+- **(a) Full lifecycle probability trajectory** — Early/Middle/Late probabilities and continuous `q_pred` across the complete C6 lifecycle. Pale background zones are calculated from contiguous `true_stage` spans.
+- **(b) Ordered trajectory in probability simplex** — the same three probabilities mapped to an equilateral simplex and ordered by relative life. Sparse arrows, start/end markers, and the continuous colorbar expose direction without changing the trajectory.
+- **(c) Continuous degradation-position agreement** — all `q_true`/`q_pred` pairs as log-density hexbins, with `y=x`, the unchanged audit statistics, and a display-only 12-bin median trend.
+- **(d) Shared latent degradation manifold** — deterministic PCA of the saved 64-dimensional test-C6 hidden representations. Marker shape denotes stage, color denotes `q_true`, and a restrained guide path connects median PCA centers from 18 `q_true` bins.
+- **(e) Physical wear semantics** — a half-violin raincloud, boxplot, and every raw `VB_true` observation grouped by predicted stage. No significance marks are added.
+
+## Authoritative data
+
+The project-level audit `nature_figures/FIGURE_DATA_AUDIT.md` explicitly designates these sources:
 
 1. `补充材料/小论文/9_probability_wear_consistency_analysis/Data_5_4_A6_probability_wear_trajectory.csv`
-   - Full C6 lifecycle (304 observations).
-   - Supplies `run_id`, `VB_true`, `q_true`, `q_pred`, true/predicted stage, and Early/Middle/Late probabilities.
+   - Panels `(a)`, `(b)`, `(c)`, and `(e)`.
+   - Complete C6 lifecycle, 304 runs; no row selection.
 2. `补充材料/小论文/10_第五章顶刊风格可视化/figures_representation_space/repr_hidden_hct.csv`
-   - Only rows with `split=test_C6` and `condition=C6` are used (304 observations).
-   - Supplies saved `h_00`–`h_63` hidden features and labels needed for the unchanged deterministic PCA display.
+   - Panel `(d)`.
+   - Only `split=test_C6` and `condition=C6`, giving 304 saved real hidden representations.
 
-## Original scripts and figures consulted
+The script validates required columns, probability sums, lifecycle stage order, 64 hidden features, and row alignment before drawing. Source hashes, generated time, panel-level transformations, and integrity statements are recorded in `data_manifest.json`.
 
-- `figures/fig5_semantics/plot_fig5.py`
-- `nature_figures/scripts/fig5_semantics.py`
-- `figures/fig5_semantics/fig5_semantics.{svg,pdf,png}`
-- `nature_figures/fig5_semantics/fig5_semantics.{svg,pdf,png}`
+## Files
 
-The attached old-figure preview was used only for visual audit, never as a data source.
-
-## Visual refinements
-
-- Rebuilt the page as a compact two-row composition: `(a)–(c)` above and wider `(d)–(e)` below; panel `(b)` receives slightly more width as the geometric focal panel.
-- Moved every panel identifier and title into a dedicated, centered caption band directly below its panel. No panel title remains above a plot.
-- Unified stage semantics throughout: Early = deep blue, Middle = muted teal, Late = warm amber.
-- Standardized typography, axis weights, tick sizes, colorbar geometry, whitespace, and restrained reference/grid lines for full two-column journal width.
-- Refined the simplex boundary/grid, lifecycle gradient, start/end markers, density statistics box, PCA marker hierarchy, and violin/box/raw-point layering.
-- Panel `(e)` displays every raw observation with deterministic jitter; no observations are removed for appearance.
-- SVG text remains editable and the PNG is exported at 600 dpi.
-
-## Scientific content deliberately unchanged
-
-- The same 304 C6 lifecycle observations are used.
-- The probability curves, q values, VB values, stage labels, and predicted-stage grouping are unmodified.
-- `R²`, Spearman `ρ`, and MAE are recomputed from all `q_true`/`q_pred` pairs using the existing definitions.
-- The simplex uses the same three probabilities and standard barycentric mapping.
-- PCA uses the same saved 64-dimensional test-C6 hidden representations, feature-wise standardization, and deterministic NumPy SVD; there is no retraining, UMAP/t-SNE optimization, or label fitting.
-- No smoothing, synthetic data, cherry-picking, or conclusion-changing transformation is introduced.
+- `fig5_semantics_refined.svg` — primary editable vector output; SVG text remains editable.
+- `fig5_semantics_refined.pdf` — publication vector output with embedded Type-42 fonts.
+- `fig5_semantics_refined.png` — 600 dpi review preview.
+- `make_fig5_semantics_refined.py` — canonical reproducible Python source.
+- `data_manifest.json` — source provenance, authority status, hashes, transformations, metrics, and generation metadata.
+- `plot_fig5_semantics_refined.py` — backward-compatible entry point that calls the canonical script.
+- `data_manifest.md` — human-readable compatibility pointer to the JSON manifest.
 
 ## Reproduce
 
 From the project root:
 
 ```powershell
-C:\Users\banghai\miniconda3\python.exe figures\fig5_semantics_refined\plot_fig5_semantics_refined.py
+C:\Users\banghai\miniconda3\python.exe figures\fig5_semantics_refined\make_fig5_semantics_refined.py
 ```
 
-The script validates required columns, probability sums, hidden-feature count, and source row alignment before exporting all deliverables.
+No model training, inference rerun, or alternative embedding is performed.
+
+## Where to modify appearance
+
+Open `make_fig5_semantics_refined.py` and edit:
+
+- **Titles:** `PANEL_TITLES`.
+- **Stage colors:** `STAGE_COLORS`; pale zone colors are in `STAGE_ZONE_COLORS`.
+- **Continuous colormaps:** `LIFE_CMAP` and `DENSITY_CMAP`.
+- **Font and line sizes:** `apply_style()`.
+- **Whole-figure size:** `figsize=(7.20, 6.15)` inside `build_figure()`.
+- **Panel width/height allocation:** the `outer`, `top`, and `bottom` GridSpec definitions in `build_figure()`.
+- **Caption typography and vertical position:** `add_caption()`.
+- **PNG resolution:** `dpi=600` inside `export_figure()`.
+- **Simplex arrows:** the `add_path_arrows(...)` call in panel `(b)`.
+- **PCA center-path granularity:** `manifold_centers(..., bins=18)` in panel `(d)`.
+
+## Scientific content held fixed
+
+- The same audited 304 C6 observations and 304 saved hidden representations are used.
+- Probabilities, `q_true`, `q_pred`, stage labels, and `VB_true` are not altered.
+- `R²`, Spearman `ρ`, and MAE retain the existing definitions and are recomputed from every pair.
+- PCA remains feature-standardized deterministic NumPy SVD; no UMAP/t-SNE, label fitting, retraining, or simulated point is used.
+- Background zones, direction arrows, binned median guides, and deterministic jitter are display aids derived directly from existing observations.

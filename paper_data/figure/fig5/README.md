@@ -282,3 +282,82 @@ R²/confidence numbers.
 - 3D panels (d)/(e) are matplotlib's default 3D renderer (not plotly); viewing angle is fixed at
   `elev=22, azim=-60` for the static PNG/PDF/SVG export. If an interactive version is later wanted
   for a supplementary HTML figure, the same 304-row data supports it directly.
+
+## v5 — MATLAB rebuild of panels (d)/(e), true 3D volume/tube presence
+
+**Goal of this round**: v4's panels (d)/(e) were correct but visually thin — the v3/v4 matplotlib
+3D renderer produced flat, low-relief ridges/ribbon that read as "potato-like" rather than solid
+geometry, and the top-row PCA trio felt like an ordinary code-generated scatter rather than an
+intentionally designed hero figure. This round's brief was explicit: make Fig.5 the paper's most
+visually convincing figure, keep every plotted value real, and — critically — do not touch
+fig1/fig2/fig3/fig4 at all.
+
+**Tooling change**: panels (d) and (e) were moved from matplotlib to **MATLAB** (R2021a, run via
+`matlab.exe -batch`) specifically because MATLAB's `surf`/lighting/camera pipeline gives much finer
+control over multi-surface shading, specular highlights, and camera-angle iteration than
+`mpl_toolkits.mplot3d`. Panels (a)/(b)/(c) stayed conceptually the same (shared PCA scatter) but
+were also reimplemented in MATLAB inside the same `plot_fig5_v5.m`, so all 5 panels share one
+consistent rendering pipeline, font, and export path for this round. All source data is unchanged
+from v4 — same `derived/shared_pca_scores_v4.csv`, `derived/stage_ridges_v4.csv`,
+`derived/confidence_ribbon_v4.csv`, same 304 rows, no refit, no new columns invented.
+
+**Mandated workflow actually followed**: every panel was first rendered completely standalone
+(`outputs/panel_{a,b,c,d,e}_preview.png`), opened and visually inspected with the Read tool, and
+compared against `视觉参考效果图/ChatGPT Image 2026年8月22日 13_11_59 (5).png` for layout/style/
+proportion/hierarchy only (never its data). Concrete gaps were written down per panel (see
+`VISUAL_QA_V5.md`), fixed, and re-rendered — panels (d) and (e) each went through a **5-candidate
+camera-angle comparison** (`outputs/panel_d_camera_trials/`, `outputs/panel_e_camera_trials/`)
+before a final angle was chosen. Only after all 5 panels were individually approved was the final
+composed figure assembled.
+
+**Panel (d) — stage-probability ridges, now a solid volume, not a curtain**: each of the three
+stage ridges (Early/Middle/Late) is now a closed solid — a top cap surface (`surf`, Z = real
+`p_stage(x)` from `stage_ridges_v4.csv`), two vertical side-wall surfaces (geometric drop from that
+same real top edge down to the floor, each wall shaded differently under lighting), and two end
+caps — instead of v4's flat 2-sample-wide curtain. The Y half-width of the ridge (`HALF_W=0.40`) is
+a documented visual-only extrusion, never a second measured axis. A real probability-mixture floor
+strip (`pE·navy + pM·green + pL·red`) and the real `argmax`-derived dominant-stage transition line
+were added for floor context. Final camera angle: `az=-35°, el=35°`, chosen from 5 candidates for
+giving the least mutual occlusion between the three ridges while showing full ridge height and
+side-wall shading.
+
+**Panel (e) — confidence trajectory, now a genuine 3D tube, not a flat ribbon**: the centerline
+(`relative_life, q_pred, max_prob`) is exactly the real data from `confidence_ribbon_v4.csv`,
+unchanged. The tube's cross-sectional radius (not just a ribbon half-width, as in v4) is driven by
+each run's real, normalized `uncertainty` (`W_MIN=0.012` to `W_MAX=0.075`, documented as a visual
+encoding with no physical q-magnitude meaning), built via a parallel-transport frame computed in
+per-axis-normalized space so the tube reads as genuinely round despite the three axes having
+different physical ranges. Surface color encodes real `max_prob`. Final camera angle: `az=-60°,
+el=30°`, chosen from 5 candidates for showing the trajectory's real high-life loop as legible 3D
+structure rather than an ambiguous tangle.
+
+**Composition layout change**: the final figure abandons `tiledlayout`/`nexttile` (whose child axes
+refuse direct `Position` writes in this MATLAB version — confirmed by a hard runtime error) in
+favor of plain `axes(fig, 'Position', [left bottom width height])` rectangles, matching the
+approach already used in v3/v4's Python `GridSpec`. The fixed `pbaspect` ratio previously applied
+to panels (d)/(e) was removed so their 3D content can expand to fill its allocated rectangle,
+eliminating the dead space that a fixed aspect ratio was causing. Below-panel captions are placed
+via `annotation(fig,'textbox',...)` positioned from each axes' post-`drawnow` `Position`, with
+enough clearance (`pad=0.075`) to clear both the tick-number row and the axes' own x-axis label
+below it — an earlier, smaller `pad` was found (by visual inspection, not by reasoning about the
+code) to collide with each 2D panel's own "PC1"-style xlabel. No figure-level title; every caption
+(a)-(e) is centered directly below its panel.
+
+**Deliverables added this round** (inside `paper_data/figure/fig5/`, nothing in fig1-4 touched):
+- `panel_d_standalone_v5.m`, `panel_e_standalone_v5.m` — 5-camera-angle comparison scripts for the
+  two 3D panels (kept as standalone artifacts documenting the angle-selection process).
+- `plot_fig5_v5.m` — the single main script: loads data, renders all 5 standalone previews, then
+  assembles and exports the final composed figure (`outputs/fig5_final_v5.png/.pdf/.svg`).
+- `outputs/panel_{a,b,c,d,e}_preview.png` — standalone per-panel renders (mandatory deliverable).
+- `outputs/panel_d_camera_trials/`, `outputs/panel_e_camera_trials/` — 5 angle comparisons each.
+- `VISUAL_QA_V5.md` — per-panel gap list (≥5 per panel) vs. the reference mockup, with fixes, plus
+  an explicit real-data-traceability confirmation and honestly-stated remaining limitations.
+- v2/v3/v4 scripts, outputs, and README sections above are all untouched.
+
+**Known tradeoffs, carried into v5**: `fig5_final_v5.pdf` is large (~57MB) for the same reason
+v3/v4's PDF was — many overlapping semi-transparent 3D surfaces rasterize poorly to compact vector
+paths; the PNG remains the practical default for most uses. SVG export succeeded but MATLAB emitted
+a non-fatal "depth sort" warning given the surface count; `ContentType='image'` would likely be more
+robust if the SVG's vector-editability is ever actually needed, not changed this round since export
+completed successfully as-is. Full gap-by-gap detail, the real-data traceability confirmation, and
+the honest limitations list all live in `VISUAL_QA_V5.md`.
