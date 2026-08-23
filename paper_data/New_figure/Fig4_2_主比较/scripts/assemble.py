@@ -37,7 +37,7 @@ ROW1_H, SPACER1_H, ROW2_H, SPACER2_H, ROW3_H = 1.30, 0.085, 0.85, 0.050, 1.05
 
 
 def build():
-    main_df, ac_df, ci_df, rep_df = pn.load_all()
+    main_df, ac_df, ci_df, rep_df, paired_df = pn.load_all()
 
     fig = plt.figure(figsize=(WIDTH_MM / MM_PER_IN, HEIGHT_MM / MM_PER_IN))
     gs = fig.add_gridspec(5, 1, height_ratios=[ROW1_H, SPACER1_H, ROW2_H, SPACER2_H, ROW3_H],
@@ -51,10 +51,36 @@ def build():
     # (a)-(b) gap widened again (was 0.20) to shift the (b)+(c) pair further right as a group,
     # per explicit request -- (b)-(c) gap itself is unchanged (their relative spacing was already
     # correct, only the whole pair needed to move right).
-    row1 = gs[0].subgridspec(1, 5, width_ratios=[1.25, 0.32, 0.85, 0.42, 0.90], wspace=0.0)
+    row1 = gs[0].subgridspec(1, 5, width_ratios=[1.25, 0.32, 0.85, 0.42, 1.05], wspace=0.0)
     ax_a = fig.add_subplot(row1[0]); pn.panel_a(ax_a, main_df)
     ax_b = fig.add_subplot(row1[2]); pn.panel_b(ax_b, ac_df)
-    ax_c = fig.add_subplot(row1[4]); pn.panel_c(ax_c, main_df)
+    # (c) is now a two-part panel (paired-effect forest on top, Smooth-reduction strip below),
+    # sharing row1's height but split internally -- its own subgridspec, not a single Axes.
+    col_c = row1[4].subgridspec(2, 1, height_ratios=[0.56, 0.44], hspace=0.70)
+    ax_c_top = fig.add_subplot(col_c[0])
+    ax_c_bot = fig.add_subplot(col_c[1])
+    pn.panel_c(ax_c_top, ax_c_bot, main_df, paired_df)
+    # (c)'s caption and two short annotation lines are placed here (not inside panels.py) using
+    # REAL rendered positions of ax_c_top/ax_c_bot -- panel (c) is internally two differently-sized
+    # sub-axes, so a flat axes-fraction guess (the bug class hit repeatedly on (d) and Fig4-5 A/B)
+    # would not reliably land at the same figure-height as (a)/(b)'s captions or clear ax_c_bot's
+    # own x-axis label. The caption's y is pinned to (a)'s actual caption baseline (same row,
+    # same ROW1_CAPTION_Y offset) so all three of (a)/(b)/(c) align; the two annotation lines are
+    # anchored to ax_c_bot's real bottom edge via caption_bottom_fig_frac.
+    pos_a = ax_a.get_position()
+    row1_caption_fig_y = pos_a.y0 + pn.ROW1_CAPTION_Y * pos_a.height
+    pos_c_bot = ax_c_bot.get_position()
+    x_c_center = (pos_c_bot.x0 + pos_c_bot.x1) / 2
+    ann1_y = st.caption_bottom_fig_frac(ax_c_bot, -0.58, extra=0.010)
+    ann2_y = ann1_y - 0.022
+    fig.text(x_c_center, ann1_y, "point estimate only, no CI (order-dependent metric)",
+              ha="center", va="top", fontsize=5.4, color="#7A7A7A", style="italic")
+    fig.text(x_c_center, ann2_y,
+              "Rev = 0 → 0;  Jump = 0 → 0  (both methods, identical on the 304-run sequence)",
+              ha="center", va="top", fontsize=5.6, color="#555555")
+    fig.text(x_c_center, min(row1_caption_fig_y, ann2_y - 0.028),
+              "(c) Paired effect of DC-PSR\nrelative to its backbone",
+              ha="center", va="top", fontsize=9.0, fontweight="bold", color=st.AXIS_COLOR)
 
     # Row 2: (d) 4 confusion matrices + thin shared colorbar (gs[1] is spacer)
     row2 = gs[2].subgridspec(1, 5, width_ratios=[1, 1, 1, 1, 0.055], wspace=0.28)

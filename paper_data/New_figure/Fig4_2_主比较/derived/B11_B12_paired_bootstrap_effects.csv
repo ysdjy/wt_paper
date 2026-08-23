@@ -1,0 +1,10 @@
+metric,B11_value,B12_value,effect,effect_unit,CI_low,CI_high,bootstrap_type,n_test,block_length,n_bootstrap,seed
+Acc,0.9901315789473685,0.9868421052631579,-0.328947368421062,pp,-0.9868421052631637,0.0,paired_moving_block_bootstrap,304,12,5000,20260820
+MacroF1,0.9902304781561747,0.9871020928241414,-0.3128385332033301,pp,-1.12768644857176,0.0,paired_moving_block_bootstrap,304,12,5000,20260820
+M_F1,0.988235294117647,0.9843749999999999,-0.38602941176471006,pp,-1.3688693993269923,0.0,paired_moving_block_bootstrap,304,12,5000,20260820
+M_Rec,0.9767441860465116,0.9767441860465116,0.0,pp,0.0,0.0,paired_moving_block_bootstrap,304,12,5000,20260820
+M_to_E,0.023255813953488372,0.023255813953488372,0.0,pp,0.0,0.0,paired_moving_block_bootstrap,304,12,5000,20260820
+M_to_L,0.0,0.0,0.0,pp,0.0,0.0,paired_moving_block_bootstrap,304,12,5000,20260820
+Smooth,0.023590099009900993,0.018762706270627056,20.463639161700144,relative_%,,,point_estimate_no_CI (order-dependent metric; block resampling injects artificial sequence-boundary discontinuities -- same exclusion already applied to every per-method bootstrap in paper_data/01_PHM2010/01_main_D1/bootstrap/),304,12,5000,20260820
+Rev,0.0,0.0,0.0,count,,,"point_estimate_no_CI (both methods 0 on the true sequence; order-dependent, not bootstrapped)",304,12,5000,20260820
+Jump,0.0,0.0,0.0,count,,,"point_estimate_no_CI (both methods 0 on the true sequence; order-dependent, not bootstrapped)",304,12,5000,20260820

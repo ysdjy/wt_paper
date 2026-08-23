@@ -127,6 +127,70 @@ def pca_2d_standardized(X):
     return scores, explained, Vt[:2]
 
 
+STAGE_ID = {"early": 0, "middle": 1, "late": 2}
+
+
+def stage_id(value):
+    return STAGE_ID[str(value).strip().lower()]
+
+
+def ordered_prediction_arrays(df, run_id_col="run_id"):
+    """Sort by run_id (the ordered per-run test sequence) and return integer-coded
+    (truth_ids, pred_ids, probs[N,3]) arrays. probs columns are [p_early, p_middle, p_late].
+    Formula/ordering ported from paper_data/99_scripts/build_paper_data.py::recompute_transfer_metrics
+    (the authoritative source of the frozen Acc/MacroF1/M_F1/M_Rec/M_to_E/M_to_L/Rev/Jump/Smooth
+    numbers in D1_9methods_bootstrap_CI.csv) -- reused here, not reinvented."""
+    d = df.sort_values(run_id_col).reset_index(drop=True)
+    truth = np.array([stage_id(v) for v in d["true_stage"]], dtype=int)
+    pred = np.array([stage_id(v) for v in d["pred_stage"]], dtype=int)
+    probs = d[["p_early", "p_middle", "p_late"]].to_numpy(dtype=float)
+    return truth, pred, probs
+
+
+def classification_metrics_from_ids(truth_ids, pred_ids, labels=(0, 1, 2)):
+    """Order-independent subset of recompute_transfer_metrics: Acc, MacroF1, M_F1, M_Rec,
+    M_to_E, M_to_L. Safe to evaluate on a block-resampled (reordered/duplicated) index sequence,
+    unlike Rev/Jump/Smooth which depend on consecutive-sample order."""
+    truth_ids = np.asarray(truth_ids); pred_ids = np.asarray(pred_ids)
+    n = len(labels)
+    cm = np.zeros((n, n), dtype=int)
+    for t, p in zip(truth_ids, pred_ids):
+        cm[t, p] += 1
+    precision, recall, f1 = [], [], []
+    for lab in labels:
+        tp = cm[lab, lab]
+        fp = cm[:, lab].sum() - tp
+        fn = cm[lab, :].sum() - tp
+        p_ = tp / (tp + fp) if (tp + fp) > 0 else 0.0
+        r_ = tp / (tp + fn) if (tp + fn) > 0 else 0.0
+        f_ = 2 * p_ * r_ / (p_ + r_) if (p_ + r_) > 0 else 0.0
+        precision.append(p_); recall.append(r_); f1.append(f_)
+    m_total = cm[1, :].sum()
+    return {
+        "Acc": float(np.mean(truth_ids == pred_ids)),
+        "MacroF1": float(np.mean(f1)),
+        "M_F1": f1[1], "M_Rec": recall[1],
+        "M_to_E": float(cm[1, 0] / m_total) if m_total > 0 else 0.0,
+        "M_to_L": float(cm[1, 2] / m_total) if m_total > 0 else 0.0,
+    }
+
+
+def sequence_diagnostics_from_ids(pred_ids, probs):
+    """Order-DEPENDENT diagnostics: Rev, Jump, Smooth. Only valid on the TRUE, unresampled
+    per-run sequence -- block resampling concatenates non-adjacent blocks and would inject
+    artificial sequence-boundary jumps into these metrics (documented, pre-existing project
+    decision: see the "note" field of paper_data/01_PHM2010/01_main_D1/bootstrap/*/bootstrap_config.json,
+    which is why those per-method bootstraps only report point estimates for Rev/Jump/Smooth too)."""
+    pred_ids = np.asarray(pred_ids)
+    diffs = np.diff(pred_ids)
+    variation = np.abs(np.diff(probs, axis=0)).sum(axis=1)
+    return {
+        "Rev": int(np.sum(diffs < 0)),
+        "Jump": int(np.sum(np.abs(diffs) >= 2)),
+        "Smooth": float(np.mean(variation)),
+    }
+
+
 def ternary_coords(p_early, p_middle, p_late):
     """Map (p_E, p_M, p_L) simplex coordinates to 2D ternary-plot (x, y).
     Vertex order: Early=left(0,0), Late=right(1,0), Middle=top(0.5, sqrt(3)/2)."""

@@ -14,8 +14,14 @@ Multi-task TCN-GRU winning on raw classification honestly.
   DC-PSR's column highlighted.
 - (b) Accuracy–consistency trade-off scatter (raw Accuracy vs. raw Smooth, Smooth axis explicitly
   labeled "↓ better", never inverted-without-saying-so). DC-PSR and Multi-task TCN-GRU emphasized.
-- (c) Bootstrap 95% CI forest plot (Acc/Macro-F1/M-F1), 4 representative methods (RF, MTF-AViTK,
-  Multi-task TCN-GRU, DC-PSR).
+- (c) **DC-PSR vs backbone: paired effect** (redesigned, see §12) — top: paired moving-block-
+  bootstrap forest plot of Delta (pp), DC-PSR (B12) vs Multi-task TCN-GRU (B11), for
+  Acc/Macro-F1/M-F1/M-Rec (positive always favors DC-PSR); bottom: Smooth reduction, B11→B12
+  dumbbell with relative-% point estimate (separate axis/unit from the pp forest above it,
+  deliberately not sharing one numeric scale). Replaces the earlier 4-method absolute-CI forest
+  plot (RF/MTF-AViTK/Multi-task TCN-GRU/DC-PSR x Acc/Macro-F1/M-F1), which was redundant with
+  Table 5 and did not isolate the DC-PSR-vs-its-own-backbone comparison this figure's narrative
+  needs.
 - (d) Representative confusion matrices (row-normalized + count), same 4 methods, custom
   white→blue→purple→red colormap ported from `代码/8.2图9.py`.
 - (e) Middle-stage & consistency triptych (原 Fig.10 framework): (e1) M-Pre/M-Rec/M-F1,
@@ -27,7 +33,9 @@ See `inputs_manifest.csv`. Primary: `paper_data/07_figure_ready/fig1/D1_main_met
 plotted — CI for the other 7 methods drawn straight from `D1_main_metrics.csv`'s own CI columns),
 `paper_data/07_figure_ready/fig2/taskwise_absolute.csv` (D1 rows, E_F1/L_F1/M_Precision
 completion), and 4 sample-level prediction files under
-`paper_data/01_PHM2010/01_main_D1/predictions_common_universe/`.
+`paper_data/01_PHM2010/01_main_D1/predictions_common_universe/`. Panel (c) additionally reads the
+Multi-task TCN-GRU and DC-PSR 304-run prediction files directly (`run_id,true_stage,pred_stage,
+p_early,p_middle,p_late`) to run its own paired moving-block bootstrap — see §12.
 
 ## 4. Original manuscript code reused (visual framework, never hardcoded data)
 - `代码/8.2图10.py`: `add_axis_arrows()`, `style_axis()`, `add_highlight_for_last_group()` ported
@@ -96,7 +104,76 @@ content or panel layout changed:
   unambiguously; the markers' near-total overlap is itself a real, disclosed finding (panel (c)'s
   CI strip is the correct place for the statistical-closeness claim, not a crowded inline label).
 
-## 11. Remaining limitations (disclosed, not hidden)
+## 12. Panel (c) redesign: DC-PSR vs backbone paired effect (this round)
+Replaces the old absolute-CI forest plot with a **paired** comparison, DC-PSR (B12) vs its own
+backbone Multi-task TCN-GRU (B11) only. Full detail in `CHANGELOG_fig6_paired_effect.md`; summary:
+
+- **Protocol reuse, not invention**: `block_length=12`, `n_bootstrap=5000`, `random_seed=20260820`,
+  `n_test_runs=304` are traced verbatim from
+  `paper_data/01_PHM2010/01_main_D1/bootstrap/{multitask_tcn_gru,dc_psr}/bootstrap_config.json`
+  (both agree). No generating script or `PROTOCOL.md` exists anywhere under `paper_data/` for the
+  per-method bootstraps (searched `01_PHM2010`, `99_scripts`, `90_provenance` for
+  "block_length"/"moving_block"/"moving-block" — no hits besides these two config files and their
+  aggregate `D1_9methods_bootstrap_CI.csv`) — this is itself a disclosed gap, see §13.
+- **True pairing**: `scripts/load_data.py::paired_moving_block_bootstrap()` draws ONE shared
+  sequence of block-start indices per replicate and applies it to BOTH methods' aligned (same
+  `run_id` order, verified identical truth sequence) 304-run predictions, then computes
+  Delta = metric_B12 − metric_B11 per replicate. The existing per-method `bootstrap_samples.csv`
+  files are NOT reused for this — no script exists to confirm their draws are replicate-aligned
+  across methods, and subtracting two independently-bootstrapped CIs is explicitly out of scope.
+- **Direction convention**: positive always favors DC-PSR. Acc/MacroF1/M_F1/M_Rec:
+  `(B12−B11)×100` pp. M_to_E/M_to_L (lower=better, computed but not plotted, see below):
+  `(B11−B12)×100` pp. Smooth (lower=better, order-dependent): relative improvement
+  `(Smooth_B11−Smooth_B12)/Smooth_B11×100`, point estimate only.
+- **Smooth has no bootstrap CI, by design**: block resampling concatenates non-adjacent 12-run
+  blocks, injecting artificial sequence-boundary jumps into this order-dependent metric — the exact
+  reason the existing per-method bootstraps never gave Smooth (or Rev/Jump) a CI either (see their
+  `bootstrap_config.json` `"note"` field). The new panel respects this same, already-established
+  project decision rather than fabricating a CI band with no defensible basis.
+- **A striking finding, disclosed**: the entire Acc/Macro-F1/M-F1 gap traces to **exactly one**
+  disagreeing prediction out of 304 (`run_id=225`, true stage=late; Multi-task TCN-GRU predicts
+  `late` correctly, DC-PSR predicts `middle`). Every middle-stage prediction (n=129) is identical
+  between the two methods, which is why M-Rec/M_to_E/M_to_L bootstrap CIs are degenerate
+  (width exactly 0 — every possible block resample gives Delta=0 for these). Because this single
+  disagreement always hurts B12 and never helps it, the Acc/MacroF1/M-F1 bootstrap CIs are
+  one-sided: `CI_high` is exactly `0.0` for all three (DC-PSR is never favored, at best tied), while
+  `CI_low` is a small negative number. This is reported plainly, not smoothed over.
+- **M_to_E/M_to_L**: computed and written to `derived/B11_B12_paired_bootstrap_effects.csv` (both
+  identical between methods, same reason as M-Rec) but not drawn in the forest plot — optional per
+  the task brief, and would only add two more degenerate zero-CI rows without new information; the
+  "identical" annotation on the M-Rec row already communicates this.
+- **New derived output**: `derived/B11_B12_paired_bootstrap_effects.csv` — columns `metric,
+  B11_value, B12_value, effect, effect_unit, CI_low, CI_high, bootstrap_type, n_test, block_length,
+  n_bootstrap, seed`. Every row's point estimates (`B11_value`/`B12_value`) are asserted
+  (`np.isclose`, atol=2e-4) against the frozen `D1_9methods_bootstrap_CI.csv` values before being
+  written (see `logs/validation.txt`).
+- **Layout**: panel (c) is now internally two stacked sub-axes (a paired-effect forest on top, a
+  Smooth dumbbell strip below) inside the same GridSpec column, sized via
+  `col_c = row1[4].subgridspec(2, 1, height_ratios=[0.56, 0.44], hspace=0.70)` in `assemble.py`;
+  its column width-ratio widened slightly (0.90→1.05) to fit the wider "Multi-task TCN-GRU" tick
+  label plus whisker+value-label text at this panel's true physical size. Its caption and two short
+  annotation lines ("point estimate only, no CI...", "Rev = 0 → 0; Jump = 0 → 0...") are placed in
+  `assemble.py` (not inside `panels.py`) from the REAL rendered positions of `ax_c_top`/`ax_c_bot`
+  (`ax.get_position()` / `caption_bottom_fig_frac()`), not guessed offsets — this project's standing
+  rule after repeated caption-collision bugs on panel (d) and Fig4-5 blocks A/B.
+- **Panels (a)/(b)/(d)/(e1)-(e3) untouched** in this round except (a)/(b) receiving zero changes and
+  (b) already having its legend style from a prior round; no scientific content, method roster, or
+  color scheme changed anywhere else.
+
+## 13. Newly-discovered protocol gap (disclosed)
+No script or `PROTOCOL.md` documenting the original 9-method moving-block bootstrap procedure was
+found anywhere under `paper_data/` — the `bootstrap_config.json`/`bootstrap_samples.csv`/
+`bootstrap_summary.csv` files under `paper_data/01_PHM2010/01_main_D1/bootstrap/{method}/` are the
+only formal record, and even their own `"note"` field references a `PROTOCOL.md` that does not
+exist in this repository. This round's paired bootstrap reuses their three numeric parameters
+exactly (block_length/n_bootstrap/seed) but had to write its own block-resampling implementation
+(non-circular overlapping-block moving-block bootstrap, `ceil(n/block_length)` blocks drawn per
+replicate then truncated to n=304) since no generating script exists to reuse directly. Recommended
+follow-up: locate or reconstruct that original script/PROTOCOL.md so future work (e.g. Table 5) can
+verify this round's implementation choice (non-circular blocks) matches the one used to produce the
+original 9-method `D1_9methods_bootstrap_CI.csv`.
+
+## 14. Remaining limitations (disclosed, not hidden)
 - Panel (b)'s "Multi-source Attention" label sits high on the panel because that method genuinely
   has the highest Smooth (0.342) of all 9 methods — not a clipping bug (headroom above it was
   re-confirmed after the ylim adjustment), just visually close to the legend box; acceptable.

@@ -42,9 +42,10 @@ def load_all():
     ac_df = pd.read_csv(os.path.join(DERIVED_DIR, "accuracy_consistency_points.csv"), encoding="utf-8")
     ci_df = pd.read_csv(os.path.join(DERIVED_DIR, "B11_B12_controlled_comparison.csv"), encoding="utf-8")
     rep_df = pd.read_csv(os.path.join(DERIVED_DIR, "representative_recomputed.csv"), encoding="utf-8")
+    paired_df = pd.read_csv(os.path.join(DERIVED_DIR, "B11_B12_paired_bootstrap_effects.csv"), encoding="utf-8")
     main_df["Method"] = pd.Categorical(main_df["Method"], st.METHOD_ORDER, ordered=True)
     main_df = main_df.sort_values("Method").reset_index(drop=True)
-    return main_df, ac_df, ci_df, rep_df
+    return main_df, ac_df, ci_df, rep_df, paired_df
 
 
 # ---------------------------------------------------------------------------
@@ -114,45 +115,91 @@ def panel_b(ax, ac_df):
 
 
 # ---------------------------------------------------------------------------
-# (c) Bootstrap 95% CI forest plot, representative methods, Acc / Macro-F1 / M-F1
+# (c) DC-PSR vs backbone: paired effect. Two stacked areas sharing one panel:
+#   ax_top -- paired moving-block-bootstrap forest plot, Delta (pp), positive = favors DC-PSR.
+#   ax_bot -- Smooth reduction, a SEPARATE unit (relative %, point estimate only) -- deliberately
+#             not sharing ax_top's pp x-axis (mixing pp and a relative-% metric on one numeric
+#             scale would misrepresent both).
+# Every number plotted here comes from derived/B11_B12_paired_bootstrap_effects.csv (paired
+# moving-block bootstrap, load_data.py::paired_moving_block_bootstrap) -- never independently
+# subtracted from two separately-bootstrapped CIs.
 # ---------------------------------------------------------------------------
-def panel_c(ax, main_df):
-    methods = st.REPRESENTATIVE_METHODS
-    metrics = [("Acc", "#0072B2"), ("MacroF1", "#009E73"), ("M_F1", "#D55E00")]
-    y0 = np.arange(len(methods))[::-1]
-    offsets = [0.22, 0.0, -0.22]
-    # Values plotted in percentage points (x100) -- same underlying CI data, display-only unit
-    # change, per user refinement request.
-    all_lo, all_hi = [], []
-    for (metric, color), off in zip(metrics, offsets):
-        sub = main_df[main_df["Method"].isin(methods)].copy()
-        sub["Method"] = pd.Categorical(sub["Method"], methods, ordered=True)
-        sub = sub.sort_values("Method")
-        y = y0 + off
-        val = sub[metric].values * 100
-        lo = val - sub[f"{metric}_CI_low"].values * 100
-        hi = sub[f"{metric}_CI_high"].values * 100 - val
-        all_lo.append((sub[f"{metric}_CI_low"].values * 100).min())
-        all_hi.append((sub[f"{metric}_CI_high"].values * 100).max())
-        ax.errorbar(val, y, xerr=[lo, hi], fmt="o", color=color, ecolor=color,
-                    elinewidth=1.8, capsize=3.0, capthick=1.6, markersize=5.4,
-                    label={"Acc": "Acc", "MacroF1": "Macro-F1", "M_F1": "M-F1"}[metric])
-    ax.set_yticks(y0)
-    # "Multi-task TCN-GRU" wrapped to two lines -- the single longest label, was pushing this
-    # panel's own left margin (and neighboring panel (b)'s space) wider than necessary.
-    ytick_labels = [m.replace("Multi-task TCN-GRU", "Multi-task\nTCN-GRU") for m in methods]
-    ax.set_yticklabels(ytick_labels, fontsize=7.0)
-    ax.set_ylim(y0.min() - 0.55, y0.max() + 0.55)  # compress top/bottom margin, no empty rows
-    # Shortened axis label -- the statistical meaning (moving-block bootstrap 95% CI) now lives in
-    # the panel caption only, per explicit refinement-round instruction, not lost, just relocated.
-    ax.set_xlabel("Score (%)")
-    # Tighten to the actual data range (~91-100%) instead of the old 55-103% span, with a small
-    # fixed margin -- found empirically to bracket every representative-method CI bound exactly.
-    ax.set_xlim(min(all_lo) - 1.6, max(all_hi) + 1.2)
-    st.style_axis(ax, add_arrows=True, grid_axis="x")
-    ax.legend(loc="lower left", ncol=3, fontsize=6.5, bbox_to_anchor=(0.0, 1.0),
-              handlelength=1.0, columnspacing=0.8)
-    st.panel_caption_below(ax, "(c) Moving-block bootstrap 95% CIs", y=ROW1_CAPTION_Y)
+FOREST_METRIC_ORDER = ["Acc", "MacroF1", "M_F1", "M_Rec"]
+FOREST_METRIC_LABELS = {"Acc": "Acc", "MacroF1": "Macro-F1", "M_F1": "M-F1", "M_Rec": "M-Rec"}
+NEUTRAL_EFFECT_COLOR = "#5B7A96"  # muted blue-gray -- small pp gaps must not read as "alarming"
+
+
+def panel_c(ax_top, ax_bot, main_df, paired_df):
+    pd_idx = paired_df.set_index("metric")
+    n_m = len(FOREST_METRIC_ORDER)
+    y0 = np.arange(n_m)[::-1]
+    effects = np.array([pd_idx.loc[m, "effect"] for m in FOREST_METRIC_ORDER])
+    ci_lo = np.array([pd_idx.loc[m, "CI_low"] for m in FOREST_METRIC_ORDER])
+    ci_hi = np.array([pd_idx.loc[m, "CI_high"] for m in FOREST_METRIC_ORDER])
+    xerr_lo = effects - ci_lo
+    xerr_hi = ci_hi - effects
+
+    ax_top.axvline(0.0, color="#B9BEC3", linewidth=1.1, zorder=1)
+    ax_top.errorbar(effects, y0, xerr=[xerr_lo, xerr_hi], fmt="o", color=NEUTRAL_EFFECT_COLOR,
+                     ecolor=NEUTRAL_EFFECT_COLOR, elinewidth=1.8, capsize=3.2, capthick=1.6,
+                     markersize=5.6, zorder=4)
+    # Value labels sit ABOVE each dot (not inline with the whisker) so they never overlap the CI
+    # line, the x=0 reference line, or the vertical gridlines.
+    m_rec_i = FOREST_METRIC_ORDER.index("M_Rec")
+    for i, (xi, yi) in enumerate(zip(effects, y0)):
+        label = "identical" if i == m_rec_i else f"{xi:+.2f}"
+        style = "italic" if i == m_rec_i else "normal"
+        ax_top.text(xi, yi + 0.30, label, ha="center", va="bottom", fontsize=6.0,
+                    color="#555555" if i == m_rec_i else "#333333", style=style)
+
+    ax_top.set_yticks(y0)
+    ax_top.set_yticklabels([FOREST_METRIC_LABELS[m] for m in FOREST_METRIC_ORDER], fontsize=7.2)
+    ax_top.set_ylim(y0.min() - 0.55, y0.max() + 0.55)
+    lo_pad = min(ci_lo.min(), effects.min()) - 0.55
+    hi_pad = max(ci_hi.max(), effects.max()) + 0.85
+    ax_top.set_xlim(lo_pad, hi_pad)
+    ax_top.set_xlabel(r"$\Delta$ (pp), DC$-$PSR $-$ backbone   (favors DC-PSR $\rightarrow$)", fontsize=6.8)
+    st.style_axis(ax_top, add_arrows=False, grid_axis="x")
+    ax_top.spines["bottom"].set_visible(True)
+    ax_top.spines["bottom"].set_color(st.AXIS_COLOR)
+    ax_top.spines["bottom"].set_linewidth(0.9)
+    ax_top.spines["left"].set_visible(True)
+    ax_top.spines["left"].set_color(st.AXIS_COLOR)
+    ax_top.spines["left"].set_linewidth(0.9)
+    ax_top.tick_params(axis="x", labelsize=6.4)
+
+    # --- Smooth: separate area, separate unit (relative % reduction, point estimate only) ---
+    # No separate legend here -- panel (b) immediately to the left already establishes the
+    # diamond=Multi-task TCN-GRU / star=DC-PSR convention in the same colors; this panel just
+    # labels each point directly instead of repeating a legend.
+    smooth_row = pd_idx.loc["Smooth"]
+    b11_s, b12_s = smooth_row["B11_value"], smooth_row["B12_value"]
+    rel_pct = smooth_row["effect"]
+    ax_bot.set_xlim(0, b11_s * 1.30)
+    ax_bot.set_ylim(-1.35, 1.35)
+    ax_bot.plot([b12_s, b11_s], [0, 0], color="#B9BEC3", linewidth=2.4, zorder=2,
+                solid_capstyle="round")
+    ax_bot.scatter([b11_s], [0], marker="D", s=48, color=st.METHOD_COLORS["Multi-task TCN-GRU"],
+                   edgecolor="white", linewidth=0.6, zorder=5)
+    ax_bot.scatter([b12_s], [0], marker="*", s=95, color=st.METHOD_COLORS["DC-PSR"],
+                   edgecolor="white", linewidth=0.6, zorder=5)
+    # b11_s (diamond) and b12_s (star) are close together in x (~15% of the axis span), so
+    # center-anchored labels above/below each point collide -- instead each label is anchored AT
+    # its own point and grows OUTWARD, away from the other point.
+    ax_bot.text(b11_s, -0.40, "Multi-task\nTCN-GRU", ha="left", va="top", fontsize=5.4,
+               color=st.METHOD_COLORS["Multi-task TCN-GRU"])
+    ax_bot.text(b12_s, -0.40, "DC-PSR", ha="right", va="top", fontsize=5.4,
+               color=st.METHOD_COLORS["DC-PSR"])
+    ax_bot.annotate(f"-{rel_pct:.1f}%", xy=((b11_s + b12_s) / 2, 0.40),
+                    ha="center", va="bottom", fontsize=7.2, fontweight="bold", color=st.METHOD_COLORS["DC-PSR"])
+    ax_bot.set_yticks([])
+    for spine in ["top", "right", "left"]:
+        ax_bot.spines[spine].set_visible(False)
+    ax_bot.spines["bottom"].set_color(st.AXIS_COLOR)
+    ax_bot.spines["bottom"].set_linewidth(0.9)
+    ax_bot.tick_params(axis="y", left=False)
+    ax_bot.tick_params(axis="x", labelsize=6.2, direction="in", length=3.0)
+    ax_bot.set_xlabel("Smooth (↓ better)", fontsize=6.8, labelpad=1.5)
 
 
 # ---------------------------------------------------------------------------
@@ -255,7 +302,7 @@ def panel_e_consistency(ax, main_df):
 
 
 def render_previews():
-    main_df, ac_df, ci_df, rep_df = load_all()
+    main_df, ac_df, ci_df, rep_df, paired_df = load_all()
 
     fig, ax = plt.subplots(figsize=(3.4, 2.6)); panel_a(ax, main_df)
     fig.savefig(os.path.join(PREVIEW_DIR, "panel_a_preview.png"), dpi=200, bbox_inches="tight"); plt.close(fig)
@@ -263,7 +310,10 @@ def render_previews():
     fig, ax = plt.subplots(figsize=(3.0, 2.6)); panel_b(ax, ac_df)
     fig.savefig(os.path.join(PREVIEW_DIR, "panel_b_preview.png"), dpi=200, bbox_inches="tight"); plt.close(fig)
 
-    fig, ax = plt.subplots(figsize=(3.0, 2.6)); panel_c(ax, main_df)
+    fig = plt.figure(figsize=(3.2, 3.2))
+    gs_c = fig.add_gridspec(2, 1, height_ratios=[0.66, 0.34], hspace=0.55, top=0.95, bottom=0.20)
+    ax_top = fig.add_subplot(gs_c[0]); ax_bot = fig.add_subplot(gs_c[1])
+    panel_c(ax_top, ax_bot, main_df, paired_df)
     fig.savefig(os.path.join(PREVIEW_DIR, "panel_c_preview.png"), dpi=200, bbox_inches="tight"); plt.close(fig)
 
     fig, axes = plt.subplots(1, 4, figsize=(7.0, 2.1))

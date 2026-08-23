@@ -76,6 +76,161 @@ def load_predictions(method_name):
     return df
 
 
+# ---------------------------------------------------------------------------
+# Panel (c) v2: DC-PSR vs backbone paired effect -- paired moving-block bootstrap
+#
+# Protocol reuse: block_length=12, n_bootstrap=5000, random_seed=20260820, n_test_runs=304 are
+# traced verbatim from paper_data/01_PHM2010/01_main_D1/bootstrap/{multitask_tcn_gru,dc_psr}/
+# bootstrap_config.json (both files agree; identical values). No generating script or PROTOCOL.md
+# was found anywhere under paper_data/ (searched paper_data/01_PHM2010, 99_scripts, 90_provenance
+# for "block_length"/"moving_block"/"moving-block") -- the config JSONs are the only formal record
+# of this protocol, so these three parameters are reused exactly, per explicit instruction not to
+# invent a new protocol. The per-method bootstrap_samples.csv files themselves are NOT reused here
+# (no script exists to confirm their block draws are aligned per-replicate across methods, and using
+# two independently-resampled distributions to derive a paired CI is explicitly forbidden by the
+# task brief) -- this function performs its own block resampling, drawing ONE shared set of block
+# start indices per replicate and applying it to BOTH methods' aligned (same run_id order) sequences.
+PAIRED_BLOCK_LENGTH = 12
+PAIRED_N_BOOTSTRAP = 5000
+PAIRED_SEED = 20260820
+PAIRED_PROTOCOL_SOURCE = (
+    "paper_data/01_PHM2010/01_main_D1/bootstrap/multitask_tcn_gru/bootstrap_config.json ; "
+    "paper_data/01_PHM2010/01_main_D1/bootstrap/dc_psr/bootstrap_config.json"
+)
+
+# Frozen point estimates (Acc/MacroF1/M_F1/M_Rec/M_to_E/M_to_L/Rev/Jump/Smooth), authoritative,
+# from D1_9methods_bootstrap_CI.csv / D1_main_metrics.csv -- used only to cross-validate the local
+# recomputation below (assert-and-fail-loud, never silently substituted).
+FROZEN_B11_B12 = {
+    "Multi-task TCN-GRU": {
+        "Acc": 0.9901315789473685, "MacroF1": 0.9902304781561747, "M_F1": 0.9882352941176471,
+        "M_Rec": 0.9767441860465116, "M_to_E": 0.02325581395348819, "M_to_L": 0.0,
+        "Rev": 0, "Jump": 0, "Smooth": 0.023590099009900993,
+    },
+    "DC-PSR": {
+        "Acc": 0.9868421052631579, "MacroF1": 0.9871020928241414, "M_F1": 0.984375,
+        "M_Rec": 0.9767441860465116, "M_to_E": 0.02325581395348819, "M_to_L": 0.0,
+        "Rev": 0, "Jump": 0, "Smooth": 0.018762706270627056,
+    },
+}
+
+
+def paired_moving_block_bootstrap(log_lines, block_length=PAIRED_BLOCK_LENGTH,
+                                   n_bootstrap=PAIRED_N_BOOTSTRAP, seed=PAIRED_SEED):
+    """Paired moving-block bootstrap of the DC-PSR (B12) vs Multi-task TCN-GRU (B11) effect.
+
+    For each of n_bootstrap replicates, ONE shared sequence of resampled positions (drawn from the
+    same 304-run common test universe, non-circular overlapping-block draws, block_length=12) is
+    applied to BOTH methods -- preserving the run-to-run pairing/correlation between the two methods'
+    predictions on the same underlying test runs. The replicate-level difference is computed AFTER
+    resampling (Delta = metric_B12 - metric_B11 per replicate), never by subtracting two
+    independently-bootstrapped CIs.
+
+    Direction convention: positive always favors DC-PSR.
+      - Acc/MacroF1/M_F1/M_Rec (higher=better): effect_pp = (B12-B11)*100, in percentage points.
+      - M_to_E/M_to_L (lower=better): effect_pp = (B11-B12)*100, in percentage points.
+      - Smooth (lower=better, order-dependent): point-estimate-only relative-improvement %,
+        (Smooth_B11 - Smooth_B12) / Smooth_B11 * 100. NOT bootstrapped -- block resampling breaks
+        the true temporal adjacency this metric depends on (same documented reason the existing
+        per-method bootstraps in paper_data/01_PHM2010/01_main_D1/bootstrap/ never gave Smooth a CI
+        either; see their bootstrap_config.json "note" field). Reported as a point estimate only.
+      - Rev/Jump: both methods are 0->0 on the true sequence (frozen data); point-estimate only,
+        no CI, annotation-only in the figure.
+    """
+    df11 = load_predictions("Multi-task TCN-GRU")
+    df12 = load_predictions("DC-PSR")
+    truth11, pred11, probs11 = du.ordered_prediction_arrays(df11)
+    truth12, pred12, probs12 = du.ordered_prediction_arrays(df12)
+    n = len(truth11)
+    assert n == len(truth12) == 304, f"expected 304 aligned runs, got {n}/{len(truth12)}"
+    assert np.array_equal(truth11, truth12), \
+        "Multi-task TCN-GRU and DC-PSR prediction files are not aligned on the same run/truth sequence"
+
+    point11 = du.classification_metrics_from_ids(truth11, pred11)
+    point12 = du.classification_metrics_from_ids(truth12, pred12)
+    seq11 = du.sequence_diagnostics_from_ids(pred11, probs11)
+    seq12 = du.sequence_diagnostics_from_ids(pred12, probs12)
+
+    for name, computed, frozen_key in [("Multi-task TCN-GRU", {**point11, **seq11}, "Multi-task TCN-GRU"),
+                                        ("DC-PSR", {**point12, **seq12}, "DC-PSR")]:
+        frozen = FROZEN_B11_B12[frozen_key]
+        for metric, val in computed.items():
+            exp = frozen[metric]
+            close = np.isclose(val, exp, atol=2e-4) if metric != "Rev" and metric != "Jump" else (val == exp)
+            log_lines.append(f"{'PASS' if close else 'FAIL'}: paired-bootstrap point estimate {name} "
+                              f"{metric}={val:.6f} vs frozen {exp}")
+            assert close, f"{name} recomputed {metric}={val} does not match frozen {exp}"
+    log_lines.append("PASS: paired-bootstrap point estimates (Acc/MacroF1/M_F1/M_Rec/M_to_E/M_to_L/"
+                      "Rev/Jump/Smooth) for Multi-task TCN-GRU and DC-PSR match FROZEN_B11_B12 "
+                      "(atol=2e-4), recomputed independently from sample-level 304-run predictions.")
+
+    pp_metrics_higher = ["Acc", "MacroF1", "M_F1", "M_Rec"]
+    pp_metrics_lower = ["M_to_E", "M_to_L"]
+    all_pp_metrics = pp_metrics_higher + pp_metrics_lower
+    rng = np.random.RandomState(seed)
+    n_starts = n - block_length + 1
+    n_blocks_needed = int(np.ceil(n / block_length))
+    deltas = {m: np.empty(n_bootstrap, dtype=float) for m in all_pp_metrics}
+    for b in range(n_bootstrap):
+        starts = rng.randint(0, n_starts, size=n_blocks_needed)
+        idx = np.concatenate([np.arange(s, s + block_length) for s in starts])[:n]
+        m11 = du.classification_metrics_from_ids(truth11[idx], pred11[idx])
+        m12 = du.classification_metrics_from_ids(truth12[idx], pred12[idx])
+        for m in pp_metrics_higher:
+            deltas[m][b] = (m12[m] - m11[m]) * 100.0
+        for m in pp_metrics_lower:
+            deltas[m][b] = (m11[m] - m12[m]) * 100.0
+    log_lines.append(f"PASS: paired moving-block bootstrap complete -- block_length={block_length}, "
+                      f"n_bootstrap={n_bootstrap}, seed={seed}, n_test={n}, identical block-start "
+                      f"indices applied to both methods per replicate (source: {PAIRED_PROTOCOL_SOURCE}).")
+
+    rows = []
+    for m in pp_metrics_higher:
+        effect = (point12[m] - point11[m]) * 100.0
+        rows.append({
+            "metric": m, "B11_value": point11[m], "B12_value": point12[m],
+            "effect": effect, "effect_unit": "pp",
+            "CI_low": float(np.percentile(deltas[m], 2.5)), "CI_high": float(np.percentile(deltas[m], 97.5)),
+            "bootstrap_type": "paired_moving_block_bootstrap",
+            "n_test": n, "block_length": block_length, "n_bootstrap": n_bootstrap, "seed": seed,
+        })
+    for m in pp_metrics_lower:
+        effect = (point11[m] - point12[m]) * 100.0
+        rows.append({
+            "metric": m, "B11_value": point11[m], "B12_value": point12[m],
+            "effect": effect, "effect_unit": "pp",
+            "CI_low": float(np.percentile(deltas[m], 2.5)), "CI_high": float(np.percentile(deltas[m], 97.5)),
+            "bootstrap_type": "paired_moving_block_bootstrap",
+            "n_test": n, "block_length": block_length, "n_bootstrap": n_bootstrap, "seed": seed,
+        })
+    smooth_effect = (seq11["Smooth"] - seq12["Smooth"]) / seq11["Smooth"] * 100.0
+    rows.append({
+        "metric": "Smooth", "B11_value": seq11["Smooth"], "B12_value": seq12["Smooth"],
+        "effect": smooth_effect, "effect_unit": "relative_%",
+        "CI_low": "", "CI_high": "",
+        "bootstrap_type": "point_estimate_no_CI (order-dependent metric; block resampling injects "
+                           "artificial sequence-boundary discontinuities -- same exclusion already "
+                           "applied to every per-method bootstrap in paper_data/01_PHM2010/01_main_D1/bootstrap/)",
+        "n_test": n, "block_length": block_length, "n_bootstrap": n_bootstrap, "seed": seed,
+    })
+    for m in ("Rev", "Jump"):
+        rows.append({
+            "metric": m, "B11_value": seq11[m], "B12_value": seq12[m],
+            "effect": seq11[m] - seq12[m], "effect_unit": "count",
+            "CI_low": "", "CI_high": "",
+            "bootstrap_type": "point_estimate_no_CI (both methods 0 on the true sequence; "
+                               "order-dependent, not bootstrapped)",
+            "n_test": n, "block_length": block_length, "n_bootstrap": n_bootstrap, "seed": seed,
+        })
+    out = pd.DataFrame(rows, columns=["metric", "B11_value", "B12_value", "effect", "effect_unit",
+                                       "CI_low", "CI_high", "bootstrap_type", "n_test",
+                                       "block_length", "n_bootstrap", "seed"])
+    log_lines.append(f"PASS: DC-PSR vs Multi-task TCN-GRU paired effects -- "
+                      + "; ".join(f"{r['metric']}={r['effect']:+.3f}{r['effect_unit'] if r['effect_unit']!='pp' else 'pp'}"
+                                  for r in rows if r["metric"] not in ("Rev", "Jump")))
+    return out
+
+
 def recompute_representative_diagnostics(methods, log_lines):
     rows = []
     conf = {}
@@ -152,10 +307,13 @@ def main():
         log_lines.append(f"{'PASS' if close else 'FAIL'}: headline {m} {col}={val:.6f} vs expected {exp}")
         assert close
 
+    paired_df = paired_moving_block_bootstrap(log_lines)
+
     main_df.to_csv(os.path.join(DERIVED_DIR, "D1_heatmap_table.csv"), index=False, encoding="utf-8")
     ac_df.to_csv(os.path.join(DERIVED_DIR, "accuracy_consistency_points.csv"), index=False, encoding="utf-8")
     b1112_df.to_csv(os.path.join(DERIVED_DIR, "B11_B12_controlled_comparison.csv"), index=False, encoding="utf-8")
     rep_df.to_csv(os.path.join(DERIVED_DIR, "representative_recomputed.csv"), index=False, encoding="utf-8")
+    paired_df.to_csv(os.path.join(DERIVED_DIR, "B11_B12_paired_bootstrap_effects.csv"), index=False, encoding="utf-8")
     for m in st.REPRESENTATIVE_METHODS:
         counts, row_norm = conf[m]
         mid = METHOD_ID_MAP[m]

@@ -20,3 +20,24 @@ PASS: headline DC-PSR MacroF1=0.987102 vs expected 0.987102
 PASS: headline DC-PSR M_F1=0.984375 vs expected 0.984375
 PASS: headline DC-PSR M_Rec=0.976744 vs expected 0.976744
 PASS: headline DC-PSR Smooth=0.018763 vs expected 0.018763
+PASS: paired-bootstrap point estimate Multi-task TCN-GRU Acc=0.990132 vs frozen 0.9901315789473685
+PASS: paired-bootstrap point estimate Multi-task TCN-GRU MacroF1=0.990230 vs frozen 0.9902304781561747
+PASS: paired-bootstrap point estimate Multi-task TCN-GRU M_F1=0.988235 vs frozen 0.9882352941176471
+PASS: paired-bootstrap point estimate Multi-task TCN-GRU M_Rec=0.976744 vs frozen 0.9767441860465116
+PASS: paired-bootstrap point estimate Multi-task TCN-GRU M_to_E=0.023256 vs frozen 0.02325581395348819
+PASS: paired-bootstrap point estimate Multi-task TCN-GRU M_to_L=0.000000 vs frozen 0.0
+PASS: paired-bootstrap point estimate Multi-task TCN-GRU Rev=0.000000 vs frozen 0
+PASS: paired-bootstrap point estimate Multi-task TCN-GRU Jump=0.000000 vs frozen 0
+PASS: paired-bootstrap point estimate Multi-task TCN-GRU Smooth=0.023590 vs frozen 0.023590099009900993
+PASS: paired-bootstrap point estimate DC-PSR Acc=0.986842 vs frozen 0.9868421052631579
+PASS: paired-bootstrap point estimate DC-PSR MacroF1=0.987102 vs frozen 0.9871020928241414
+PASS: paired-bootstrap point estimate DC-PSR M_F1=0.984375 vs frozen 0.984375
+PASS: paired-bootstrap point estimate DC-PSR M_Rec=0.976744 vs frozen 0.9767441860465116
+PASS: paired-bootstrap point estimate DC-PSR M_to_E=0.023256 vs frozen 0.02325581395348819
+PASS: paired-bootstrap point estimate DC-PSR M_to_L=0.000000 vs frozen 0.0
+PASS: paired-bootstrap point estimate DC-PSR Rev=0.000000 vs frozen 0
+PASS: paired-bootstrap point estimate DC-PSR Jump=0.000000 vs frozen 0
+PASS: paired-bootstrap point estimate DC-PSR Smooth=0.018763 vs frozen 0.018762706270627056
+PASS: paired-bootstrap point estimates (Acc/MacroF1/M_F1/M_Rec/M_to_E/M_to_L/Rev/Jump/Smooth) for Multi-task TCN-GRU and DC-PSR match FROZEN_B11_B12 (atol=2e-4), recomputed independently from sample-level 304-run predictions.
+PASS: paired moving-block bootstrap complete -- block_length=12, n_bootstrap=5000, seed=20260820, n_test=304, identical block-start indices applied to both methods per replicate (source: paper_data/01_PHM2010/01_main_D1/bootstrap/multitask_tcn_gru/bootstrap_config.json ; paper_data/01_PHM2010/01_main_D1/bootstrap/dc_psr/bootstrap_config.json).
+PASS: DC-PSR vs Multi-task TCN-GRU paired effects -- Acc=-0.329pp; MacroF1=-0.313pp; M_F1=-0.386pp; M_Rec=+0.000pp; M_to_E=+0.000pp; M_to_L=+0.000pp; Smooth=+20.464relative_%
